@@ -45,12 +45,12 @@
   }
 
   .month-nav button {
-    width: 40px; height: 40px; /* 大きく修正 */
+    width: 48px; height: 48px;
     border-radius: 50%;
     border: 2px solid #bbb;
     background: #fff;
     color: #666;
-    font-size: 18px; /* 大きく修正 */
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.15s;
     display: flex;
@@ -61,7 +61,7 @@
   .month-nav button:hover { border-color: #1565c0; color: #1565c0; }
 
   .month-label {
-    font-size: 24px; /* 大きく修正 */
+    font-size: 28px; /* さらに大きく */
     font-weight: 900;
     color: #333;
     min-width: 180px;
@@ -74,9 +74,9 @@
     gap: 6px;
     background: #fff8e1;
     border: 2px solid #ffb300;
-    padding: 6px 14px; /* 大きく修正 */
+    padding: 6px 14px;
     border-radius: 16px;
-    font-size: 14px; /* 大きく修正 */
+    font-size: 16px;
     font-weight: 700;
     color: #e65100;
   }
@@ -87,12 +87,12 @@
   }
 
   .pill {
-    padding: 6px 14px; /* 大きく修正 */
+    padding: 6px 14px;
     border-radius: 12px;
     border: 2px solid #ccc;
     background: #fff;
     font-family: inherit;
-    font-size: 14px; /* 大きく修正 */
+    font-size: 16px;
     font-weight: 700;
     color: #888;
     cursor: pointer;
@@ -103,7 +103,7 @@
   .pill.active { border-color: #1565c0; background: #1565c0; color: #fff; }
 
   .toolbar-right {
-    font-size: 16px; /* 大きく修正 */
+    font-size: 20px;
     font-weight: bold;
     color: #888;
   }
@@ -130,46 +130,70 @@
   .wb-rows {
     position: absolute;
     top: 13%; left: 8.0%; width: 83.5%; bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 案件多数の場合にスクロール可能に */
+    overflow-x: hidden;
+  }
+
+  /* スクロールバーのカスタマイズ (目立たなくする) */
+  .wb-rows::-webkit-scrollbar {
+    width: 8px;
+  }
+  .wb-rows::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .wb-rows::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  .wb-rows::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.3);
   }
 
   .wb-row {
     position: relative;
     cursor: pointer;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* 行の区切りを少し見やすく */
     transition: background 0.15s;
+    /* 8行表示をベースの高さとし、縮まないように設定 */
+    height: 12.5%;
+    min-height: 80px; 
+    flex-shrink: 0;
   }
 
-  .wb-row:hover { background: rgba(21, 101, 192, 0.04); border-radius: 2px; }
-  .wb-row.expanded { background: rgba(21, 101, 192, 0.06); }
+  .wb-row:hover { background: rgba(255, 235, 59, 0.2); border-radius: 2px; }
 
   /* Project label */
   .row-label {
     position: absolute;
-    left: 0; top: 3px; width: 100%; height: 60%;
+    left: 0; top: 0; width: 100%; height: 70%;
     display: flex; align-items: flex-start;
-    padding-top: 2px; padding-left: 3px;
+    padding-top: 4px; padding-left: 4px;
     pointer-events: none; z-index: 3;
   }
 
   .row-label-text {
-    font-size: 16px; /* 大きく修正 */
-    font-weight: 800; color: #111; white-space: nowrap;
-    background: rgba(255,255,255,0.85);
-    padding: 2px 8px; border-radius: 4px; line-height: 1.35;
+    font-size: 20px; /* 画像のように非常に大きく強調 */
+    font-weight: 900; color: #111; white-space: nowrap;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 10px; border-radius: 4px; line-height: 1.35;
     max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 
   .row-label-sub {
-    font-size: 13px; /* 大きく修正 */
+    font-size: 16px; /* 担当者名なども大きく */
     font-weight: 700; color: #333; white-space: nowrap;
-    background: rgba(255,255,255,0.78);
-    padding: 2px 6px; border-radius: 3px; line-height: 1.3;
+    background: rgba(255,255,255,0.85);
+    padding: 2px 8px; border-radius: 3px; line-height: 1.3;
+    margin-top: 2px;
   }
 
   /* Gantt bar */
   .gantt-bar {
     position: absolute;
-    height: 26%; bottom: 8%;
+    height: 28%; bottom: 6%;
     border-radius: 4px; z-index: 2;
     display: flex; align-items: center; justify-content: flex-end;
     overflow: hidden; cursor: pointer;
@@ -178,12 +202,12 @@
   }
 
   .gantt-bar:hover {
-    transform: scaleY(1.4); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    filter: saturate(1.1); z-index: 4;
+    transform: scaleY(1.4); box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    filter: saturate(1.2); z-index: 4;
   }
 
   .gantt-bar .bar-text {
-    font-size: 14px; /* 大きく修正 */
+    font-size: 16px; /* 進捗率も大きく */
     font-weight: 900; color: #fff;
     text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     white-space: nowrap; padding: 0 8px; position: relative; z-index: 2;
@@ -191,7 +215,7 @@
 
   .bar-prog {
     position: absolute; left: 0; top: 0; height: 100%;
-    background: rgba(255,255,255,0.25); pointer-events: none;
+    background: rgba(255,255,255,0.3); pointer-events: none;
   }
 
   /* Marker colors */
@@ -212,122 +236,10 @@
     background: #e65100; opacity: 0.5; z-index: 1; pointer-events: none;
   }
 
-  /* ═══ Detail popup ═══ */
-  .detail-popup {
-    position: absolute; left: 0; width: 100%;
-    background: rgba(255, 255, 252, 0.98);
-    border: 3px solid #b8bab0; border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    z-index: 20; overflow: hidden; transform-origin: top;
-    animation: popIn 0.3s ease forwards; backdrop-filter: blur(8px);
-  }
-
-  @keyframes popIn {
-    from { opacity: 0; transform: scaleY(0.8); }
-    to { opacity: 1; transform: scaleY(1); }
-  }
-
-  .detail-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 20px;
-    background: linear-gradient(90deg, #1565c0, #0d47a1); color: #fff;
-  }
-
-  .detail-header h3 { font-size: 20px; font-weight: 700; } /* 大きく修正 */
-
-  .detail-close {
-    width: 32px; height: 32px; /* 大きく修正 */
-    border-radius: 50%; border: none;
-    background: rgba(255,255,255,0.2); color: #fff;
-    font-size: 16px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s;
-  }
-  .detail-close:hover { background: rgba(255,255,255,0.4); }
-
-  .detail-body {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 20px;
-  }
-
-  .db h4 {
-    font-size: 16px; /* 大きく修正 */
-    font-weight: 700; color: #1565c0;
-    margin-bottom: 10px; padding-bottom: 6px;
-    border-bottom: 2px solid rgba(21,101,192,0.12);
-  }
-
-  .di {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 6px 0; font-size: 15px; /* 大きく修正 */
-    border-bottom: 1px dotted #e0e0d8;
-  }
-  .di:last-child { border-bottom: none; }
-  .di-l { color: #666; font-weight: 500;}
-  .di-v { color: #222; font-weight: 700; }
-
-  .pbar {
-    width: 100%; height: 10px; background: #e8e8e0;
-    border-radius: 6px; overflow: hidden; margin-top: 8px;
-  }
-  .pbar .fill { height: 100%; border-radius: 6px; }
-
-  .stag {
-    display: inline-block; padding: 4px 10px; border-radius: 8px;
-    font-size: 13px; font-weight: 700; border: 1.5px solid;
-  }
-  .stag-active { border-color: #2e7d32; color: #2e7d32; background: rgba(46,125,50,0.06); }
-  .stag-upcoming { border-color: #1565c0; color: #1565c0; background: rgba(21,101,192,0.06); }
-  .stag-delayed { border-color: #c62828; color: #c62828; background: rgba(198,40,40,0.06); }
-  .stag-completed { border-color: #888; color: #888; background: rgba(0,0,0,0.03); }
-
-  .ms-i {
-    font-size: 14px; /* 大きく修正 */
-    color: #444; font-weight: 500;
-    padding: 4px 0; display: flex; align-items: center; gap: 8px;
-  }
-  .ms-i::before {
-    content: ''; width: 6px; height: 6px; background: #e65100;
-    border-radius: 50%; flex-shrink: 0;
-  }
-
-  .nbox {
-    font-size: 14px; /* 大きく修正 */
-    color: #444; line-height: 1.6; font-weight: 500;
-    margin-top: 8px; padding: 10px 12px;
-    background: rgba(0,0,0,0.03); border-radius: 4px;
-    border-left: 4px solid #e65100;
-  }
-
-  /* 新設: kintone連携ボタン */
-  .kintone-link-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background-color: #F7D43F; /* kintoneイエロー */
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    border: 1px solid #d4b533;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.2s;
-    width: 100%;
-    margin-top: 16px;
-  }
-  .kintone-link-btn:hover {
-    background-color: #fce268;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  }
-
   /* Hint */
   .hint {
     width: 100%; max-width: 1400px; text-align: right;
-    padding: 10px 16px 0; font-size: 16px; /* 大きく修正 */
-    font-weight: 700; color: #1565c0;
+    padding: 10px 16px 0; font-size: 18px; font-weight: 900; color: #1565c0;
     animation: hblink 2.5s ease-in-out infinite;
   }
   @keyframes hblink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
@@ -335,19 +247,14 @@
   /* Tooltip */
   .tip {
     position: fixed; background: #fff; border: 2px solid #ccc;
-    border-radius: 8px; padding: 12px 16px; font-size: 15px; /* 大きく修正 */
+    border-radius: 8px; padding: 12px 16px; font-size: 16px;
     pointer-events: none; z-index: 1000; opacity: 0;
     transition: opacity 0.12s; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
   .tip.show { opacity: 1; }
-  .tip-n { font-weight: 800; color: #222; }
-  .tip-s { color: #666; font-size: 13px; margin-top: 4px; font-weight: 500; }
+  .tip-n { font-weight: 900; color: #222; font-size: 18px; }
+  .tip-s { color: #555; font-size: 15px; margin-top: 4px; font-weight: 700; }
 
-  @media (max-width: 900px) {
-    .detail-body { grid-template-columns: 1fr; }
-    body { padding: 4px; }
-    .toolbar { flex-wrap: wrap; gap: 8px; }
-  }
 </style>
 </head>
 <body>
@@ -361,7 +268,7 @@
       <button id="nextM">▶</button>
     </div>
     <div class="kt-tag">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#e65100"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#e65100"/></svg>
       kintone連携中
     </div>
     <div class="pills">
@@ -383,68 +290,36 @@
   </div>
 </div>
 
-<div class="hint">👆 バーまたは行を押下すると工事詳細が展開されます</div>
+<div class="hint">👆 行またはバーを押下すると即座にkintoneへ遷移します (スクロール可能)</div>
 
 <!-- Tooltip -->
 <div class="tip" id="tip"></div>
 
 <script>
 // ═══ Data ═══
-// IDをkintoneモックアップで作成した「12731001」等の形式に合わせて一部変更・追加
+// 画像から読み取ったデータと、スクロール確認用の追加ダミーデータ
 const P = [
-  { id:"12731001", name:"鹿児島市役所 本庁舎改修工事", client:"鹿児島市", mgr:"田中 太郎",
-    status:"active", s:"2026-02-10", e:"2026-05-30", prog:45,
-    budget:158000000, spent:68500000, cat:"公共建築", loc:"鹿児島市山下町11-1", wk:24,
-    notes:"2F〜4Fの内装改修。3月末までに2F完了予定。",
-    ms:["2F完了 (3/31)","3F完了 (4/30)","検査 (5/25)"] },
-  { id:"12731002", name:"天文館通り 道路拡幅工事", client:"鹿児島県", mgr:"山田 花子",
-    status:"active", s:"2026-01-15", e:"2026-04-15", prog:68,
-    budget:92000000, spent:61200000, cat:"土木", loc:"鹿児島市千日町", wk:18,
-    notes:"夜間工事区間あり（22:00-5:00）。騒音対策実施中。",
-    ms:["路盤完了 (3/15)","舗装 (4/01)","開放 (4/15)"] },
-  { id:"12731003", name:"桜島フェリーターミナル 耐震補強", client:"鹿児島市船舶部", mgr:"佐藤 健一",
-    status:"delayed", s:"2025-11-01", e:"2026-03-31", prog:52,
-    budget:245000000, spent:142000000, cat:"港湾", loc:"鹿児島市桜島横山町", wk:32,
-    notes:"⚠ 資材調達遅延により2週間の工期遅れ。完了予定4/14に変更。",
-    ms:["基礎完了 (1/31)","上部工 (3/15)","完了予定 (4/14)"] },
-  { id:"12731004", name:"城山展望台 休憩施設新築", client:"鹿児島市観光課", mgr:"中村 美咲",
-    status:"upcoming", s:"2026-04-01", e:"2026-08-31", prog:0,
-    budget:78000000, spent:0, cat:"建築", loc:"鹿児島市城山町", wk:0,
-    notes:"4月着工予定。景観審査は3月に承認済み。",
-    ms:["着工 (4/01)","上棟 (6/15)","竣工 (8/31)"] },
-  { id:"KJ-2026-005", name:"甲突川 護岸修繕工事", client:"鹿児島県土木部", mgr:"鈴木 一郎",
-    status:"active", s:"2026-03-01", e:"2026-06-30", prog:18,
-    budget:64000000, spent:9800000, cat:"河川", loc:"鹿児島市甲突町", wk:12,
-    notes:"渇水期に合わせた施工。梅雨前の完了を目指す。",
-    ms:["仮締切 (3/10)","本体工 (5/01)","撤去 (6/25)"] },
-  { id:"KJ-2026-006", name:"鴨池運動公園 照明LED化", client:"鹿児島市", mgr:"高橋 誠",
-    status:"completed", s:"2025-12-01", e:"2026-02-28", prog:100,
-    budget:35000000, spent:33200000, cat:"電気設備", loc:"鹿児島市与次郎2丁目", wk:0,
-    notes:"全灯具のLED化完了。検査合格済み。",
-    ms:["野球場完了 (1/15)","陸上競技場 (2/10)","検査 (2/25)"] },
-  { id:"KJ-2026-007", name:"谷山駅前 再開発ビル基礎工事", client:"谷山駅前再開発組合", mgr:"伊藤 大輔",
-    status:"active", s:"2026-01-20", e:"2026-07-31", prog:30,
-    budget:420000000, spent:118000000, cat:"建築", loc:"鹿児島市谷山中央1丁目", wk:45,
-    notes:"杭打ち完了。地下躯体工事に移行中。",
-    ms:["杭完了 (3/01)","地下躯体 (5/15)","1F床 (7/31)"] },
-  { id:"KJ-2026-008", name:"指宿スカイライン 法面補修", client:"NEXCO西日本", mgr:"渡辺 裕子",
-    status:"upcoming", s:"2026-04-15", e:"2026-06-15", prog:0,
-    budget:52000000, spent:0, cat:"道路", loc:"鹿児島市田上8丁目", wk:0,
-    notes:"片側交互通行規制あり。夜間作業主体。",
-    ms:["着手 (4/15)","モルタル吹付 (5/20)","完了 (6/15)"] }
+  { id:"12731001", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"田中 一郎 (一土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:10 },
+  { id:"12731002", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"鈴木 二郎 (一土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:12 },
+  { id:"12731003", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"佐藤 三郎 (一土)", status:"upcoming", s:"2026-04-10", e:"2027-03-31", prog:0 },
+  { id:"12731004", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"鈴木 四郎 (二土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:5 },
+  // 案件多数・スクロール動作確認用のダミーデータ
+  { id:"12731005", name:"△△ビル 新築工事", client:"(株)△△", mgr:"高橋 健太", status:"active", s:"2026-02-01", e:"2026-08-31", prog:25 },
+  { id:"12731006", name:"国道〇号線 舗装補修", client:"国土交通省", mgr:"渡辺 裕子", status:"delayed", s:"2026-01-15", e:"2026-03-20", prog:85 },
+  { id:"12731007", name:"〇〇市民体育館 耐震補強", client:"〇〇市", mgr:"伊藤 大輔", status:"active", s:"2026-03-05", e:"2026-10-31", prog:5 },
+  { id:"12731008", name:"(仮称)〇〇商業施設 新築", client:"〇〇不動産", mgr:"山本 誠", status:"upcoming", s:"2026-04-15", e:"2027-02-28", prog:0 },
+  { id:"12731009", name:"〇〇川 護岸工事", client:"〇〇県", mgr:"中村 美咲", status:"active", s:"2025-11-01", e:"2026-05-31", prog:60 },
+  { id:"12731010", name:"〇〇小学校 空調設備改修", client:"〇〇市教育委員会", mgr:"小林 剛", status:"completed", s:"2025-12-01", e:"2026-02-28", prog:100 },
+  { id:"12731011", name:"△△地区 下水道管渠布設", client:"〇〇市水道局", mgr:"加藤 修", status:"active", s:"2026-01-20", e:"2026-06-30", prog:40 },
+  { id:"12731012", name:"〇〇公園 遊具更新工事", client:"〇〇市緑地課", mgr:"吉田 恵", status:"upcoming", s:"2026-03-25", e:"2026-04-30", prog:0 }
 ];
 
-const SL={active:'施工中',upcoming:'着工予定',delayed:'遅延',completed:'完了'};
+const SL={active:'施工中',upcoming:'予定',delayed:'遅延',completed:'完了'};
 const today=new Date(2026,2,23);
-let vY=2026, vM=2, filt='all', openId=null;
+let vY=2026, vM=2, filt='all';
 
 function dim(y,m){return new Date(y,m+1,0).getDate();}
 function pd(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
-function yen(n){
-  if(n>=100000000)return(n/100000000).toFixed(1)+'億円';
-  if(n>=10000)return Math.round(n/10000).toLocaleString()+'万円';
-  return n.toLocaleString()+'円';
-}
 function fl(){return filt==='all'?P:P.filter(p=>p.status===filt);}
 
 function render() {
@@ -456,20 +331,20 @@ function render() {
   const container = document.getElementById('wbRows');
   container.innerHTML = '';
 
-  const maxRows = Math.max(list.length, 1);
-  const rowH = 100 / maxRows;
-
   list.forEach((p, idx) => {
     const ci = idx % 8;
 
     const row = document.createElement('div');
-    row.className = `wb-row ${openId===p.id?'expanded':''}`;
-    row.style.cssText = `height:${rowH}%;position:relative;`;
-    row.onclick = () => toggleDetail(p.id, row);
+    row.className = 'wb-row';
+    
+    // クリックで即座にkintoneモックアップへ遷移
+    row.onclick = () => {
+      window.location.href = `kintone_mockup.html?工事番号=${p.id}`;
+    };
 
     const lbl = document.createElement('div');
     lbl.className = 'row-label';
-    lbl.innerHTML = `<div style="display:flex;flex-direction:column;gap:1px"><div class="row-label-text">${p.name}</div><div class="row-label-sub">${p.mgr}　${p.s}〜${p.e}</div></div>`;
+    lbl.innerHTML = `<div style="display:flex;flex-direction:column;gap:1px"><div class="row-label-text">${p.name}</div><div class="row-label-sub">担当: ${p.mgr}　工期: ${p.s}〜${p.e}</div></div>`;
     row.appendChild(lbl);
 
     const pS = pd(p.s), pE = pd(p.e);
@@ -492,7 +367,11 @@ function render() {
 
       bar.onmouseenter = (ev) => showTip(ev, p);
       bar.onmouseleave = hideTip;
-      bar.onclick = (ev) => { ev.stopPropagation(); toggleDetail(p.id, row); };
+      // バーのクリックイベントも行と同じ遷移先に
+      bar.onclick = (ev) => { 
+        ev.stopPropagation(); 
+        window.location.href = `kintone_mockup.html?工事番号=${p.id}`; 
+      };
 
       row.appendChild(bar);
     }
@@ -509,92 +388,9 @@ function render() {
   });
 }
 
-function toggleDetail(id, rowEl) {
-  const existing = document.querySelector('.detail-popup');
-  if (existing) {
-    existing.remove();
-    if (openId === id) { openId = null; render(); return; }
-  }
-
-  openId = id;
-  render();
-
-  const rows = document.querySelectorAll('.wb-row');
-  let targetRow = null;
-  const list = fl();
-  list.forEach((p, i) => {
-    if (p.id === id && rows[i]) targetRow = rows[i];
-  });
-
-  const p = P.find(x => x.id === id);
-  if (!p || !targetRow) return;
-
-  const popup = document.createElement('div');
-  popup.className = 'detail-popup';
-
-  const container = document.getElementById('wbRows');
-  const containerRect = container.getBoundingClientRect();
-  const rowRect = targetRow.getBoundingClientRect();
-  const topPos = rowRect.bottom - containerRect.top;
-
-  popup.style.top = topPos + 'px';
-
-  // kintone連携ボタンを右下のエリアに追加
-  popup.innerHTML = `
-    <div class="detail-header">
-      <h3>${p.name}</h3>
-      <button class="detail-close" onclick="event.stopPropagation();closeDetail()">✕</button>
-    </div>
-    <div class="detail-body">
-      <div class="db">
-        <h4>📌 基本情報</h4>
-        <div class="di"><span class="di-l">工事番号</span><span class="di-v">${p.id}</span></div>
-        <div class="di"><span class="di-l">発注者</span><span class="di-v">${p.client}</span></div>
-        <div class="di"><span class="di-l">現場代理人</span><span class="di-v">${p.mgr}</span></div>
-        <div class="di"><span class="di-l">分類</span><span class="di-v">${p.cat}</span></div>
-        <div class="di"><span class="di-l">現場住所</span><span class="di-v">${p.loc}</span></div>
-        <div class="di"><span class="di-l">作業員数</span><span class="di-v">${p.wk}名</span></div>
-        <div class="di"><span class="di-l">ステータス</span><span class="stag stag-${p.status}">${SL[p.status]}</span></div>
-      </div>
-      <div class="db">
-        <h4>📊 工期・進捗</h4>
-        <div class="di"><span class="di-l">工期</span><span class="di-v">${p.s} ～ ${p.e}</span></div>
-        <div class="di"><span class="di-l">進捗率</span><span class="di-v">${p.prog}%</span></div>
-        <div class="pbar"><div class="fill" style="width:${p.prog}%;background:${p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32'}"></div></div>
-        <h4 style="margin-top:16px;">🚩 マイルストーン</h4>
-        ${p.ms.map(m => `<div class="ms-i">${m}</div>`).join('')}
-      </div>
-      <div class="db">
-        <h4>💰 予算</h4>
-        <div class="di"><span class="di-l">請負金額</span><span class="di-v">${yen(p.budget)}</span></div>
-        <div class="di"><span class="di-l">実行額</span><span class="di-v">${yen(p.spent)}</span></div>
-        <div class="di"><span class="di-l">執行率</span><span class="di-v">${p.budget>0?Math.round(p.spent/p.budget*100):0}%</span></div>
-        <div class="pbar"><div class="fill" style="width:${p.budget>0?Math.round(p.spent/p.budget*100):0}%;background:#e65100"></div></div>
-        <h4 style="margin-top:16px;">📝 備考</h4>
-        <div class="nbox">${p.notes}</div>
-        
-        <!-- kintoneモックアップへの遷移ボタン -->
-        <a href="kintone_mockup.html?工事番号=${p.id}" target="_blank" class="kintone-link-btn" onclick="event.stopPropagation();">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          kintoneで詳細を確認
-        </a>
-      </div>
-    </div>
-  `;
-
-  container.appendChild(popup);
-}
-
-function closeDetail() {
-  const existing = document.querySelector('.detail-popup');
-  if (existing) existing.remove();
-  openId = null;
-  render();
-}
-
 function showTip(ev, p) {
   const t = document.getElementById('tip');
-  t.innerHTML = `<div class="tip-n">${p.name}</div><div class="tip-s">${p.mgr}　${p.cat}　進捗${p.prog}%</div><div class="tip-s">${p.s} ～ ${p.e}</div>`;
+  t.innerHTML = `<div class="tip-n">${p.name}</div><div class="tip-s">担当: ${p.mgr} | 進捗: ${p.prog}%</div><div class="tip-s">工期: ${p.s} ～ ${p.e}</div>`;
   t.classList.add('show');
   mvTip(ev);
 }
@@ -613,16 +409,14 @@ document.querySelectorAll('.pill').forEach(b => {
     document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
     b.classList.add('active');
     filt = b.dataset.f;
-    openId = null;
-    closeDetail();
     render();
   });
 });
 
-document.getElementById('prevM').onclick = () => { vM--; if(vM<0){vM=11;vY--;} openId=null; closeDetail(); render(); };
-document.getElementById('nextM').onclick = () => { vM++; if(vM>11){vM=0;vY++;} openId=null; closeDetail(); render(); };
+document.getElementById('prevM').onclick = () => { vM--; if(vM<0){vM=11;vY--;} render(); };
+document.getElementById('nextM').onclick = () => { vM++; if(vM>11){vM=0;vY++;} render(); };
 
-window.addEventListener('resize', () => { closeDetail(); render(); });
+window.addEventListener('resize', () => { render(); });
 
 function tick() {
   const n = new Date();
