@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渡邊組 工事情報ホワイトボード</title>
+  <meta name="description" content="渡邊組 工事予定表・ガントチャート - 情報ホワイトボードシステム">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ========== ヘッダー ========== -->
+  <header id="app-header">
+    <div class="header-left">
+      <div class="logo-mark">W</div>
+      <div class="header-title-group">
+        <h1 id="main-title">渡邊組 工事情報ホワイトボード</h1>
+        <p class="header-subtitle">月行事予定表 ・ 工事一覧管理</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-date" id="header-date"></div>
+      <div class="header-controls">
+        <button id="btn-prev-month" class="btn-icon" title="前月">◀</button>
+        <span id="current-period" class="period-label"></span>
+        <button id="btn-next-month" class="btn-icon" title="翌月">▶</button>
+      </div>
+      <div class="data-source-badges">
+        <span class="badge badge-kintone" title="kintone連携">
+          <span class="badge-dot"></span>kintone
+        </span>
+        <span class="badge badge-xpoint" title="X-point連携">
+          <span class="badge-dot"></span>X-point
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== メインコンテンツ ========== -->
+  <main id="app-main">
+    <!-- 左: ガントチャート -->
+    <section id="gantt-section" class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span class="panel-icon">📅</span>
+          月行事予定表
+        </h2>
+        <div class="panel-actions">
+          <button class="btn-sm btn-outline" id="btn-expand-gantt">全画面</button>
+        </div>
+      </div>
+      <div class="gantt-container" id="gantt-container">
+        <!-- ガントチャートのヘッダー（日付） -->
+        <div class="gantt-header" id="gantt-header">
+          <div class="gantt-label-col">
+            <div class="gantt-label-cell gantt-label-header">工事名</div>
+          </div>
+          <div class="gantt-timeline" id="gantt-timeline-header">
+            <!-- JS で日付を生成 -->
+          </div>
+        </div>
+        <!-- ガントチャートの本体 -->
+        <div class="gantt-body" id="gantt-body">
+          <!-- JS で行を生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 右: 工事一覧テーブル -->
+    <section id="list-section" class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <span class="panel-icon">🏗️</span>
+          工 事 一 覧
+        </h2>
+        <div class="panel-actions">
+          <span class="record-count" id="record-count">0件</span>
+        </div>
+      </div>
+      <div class="table-container" id="table-container">
+        <table id="project-table">
+          <thead>
+            <tr>
+              <th class="th-name">工事名</th>
+              <th class="th-person">担当者</th>
+              <th class="th-period">工期</th>
+              <th class="th-amount">契約金額</th>
+              <th class="th-budget">履行予算</th>
+              <th class="th-progress">進捗</th>
+              <th class="th-risk">リスク</th>
+              <th class="th-profit">粗利</th>
+              <th class="th-photo">施工状況</th>
+            </tr>
+          </thead>
+          <tbody id="project-tbody">
+            <!-- JS で行を生成 -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== ドリルダウンモーダル（kintone詳細） ========== -->
+  <div id="drill-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">工事詳細</h3>
+        <button id="modal-close" class="btn-icon modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- ドリルダウン内容 -->
+        <div class="modal-section">
+          <h4>基本情報 <span class="source-tag">kintone</span></h4>
+          <div class="detail-grid" id="detail-basic">
+            <!-- JS -->
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>ワークフロー <span class="source-tag tag-xpoint">X-point</span></h4>
+          <div class="detail-grid" id="detail-workflow">
+            <!-- JS -->
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>施工状況写真</h4>
+          <div class="photo-gallery" id="detail-photos">
+            <!-- JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== フッター ========== -->
+  <footer id="app-footer">
+    <span>Copyright 2026 渡邊組 × (株) F-ITコンサル</span>
+    <span class="footer-system">情報ホワイトボードシステム v1.0</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
