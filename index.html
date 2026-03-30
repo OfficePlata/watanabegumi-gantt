@@ -25,7 +25,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
+    padding: 12px 16px;
     margin-bottom: 8px;
     background: rgba(255,255,255,0.7);
     border-radius: 8px;
@@ -35,61 +35,64 @@
   .toolbar-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
   }
 
   .month-nav {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
   }
 
   .month-nav button {
-    width: 30px; height: 30px;
+    width: 40px; height: 40px; /* 大きく修正 */
     border-radius: 50%;
-    border: 1.5px solid #bbb;
+    border: 2px solid #bbb;
     background: #fff;
     color: #666;
-    font-size: 13px;
+    font-size: 18px; /* 大きく修正 */
     cursor: pointer;
     transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .month-nav button:hover { border-color: #1565c0; color: #1565c0; }
 
   .month-label {
-    font-size: 16px;
+    font-size: 24px; /* 大きく修正 */
     font-weight: 900;
     color: #333;
-    min-width: 150px;
+    min-width: 180px;
     text-align: center;
   }
 
   .kt-tag {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     background: #fff8e1;
-    border: 1.5px solid #ffb300;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 10px;
+    border: 2px solid #ffb300;
+    padding: 6px 14px; /* 大きく修正 */
+    border-radius: 16px;
+    font-size: 14px; /* 大きく修正 */
     font-weight: 700;
     color: #e65100;
   }
 
   .pills {
     display: flex;
-    gap: 3px;
+    gap: 6px;
   }
 
   .pill {
-    padding: 4px 10px;
-    border-radius: 10px;
-    border: 1.5px solid #ccc;
+    padding: 6px 14px; /* 大きく修正 */
+    border-radius: 12px;
+    border: 2px solid #ccc;
     background: #fff;
     font-family: inherit;
-    font-size: 10px;
+    font-size: 14px; /* 大きく修正 */
     font-weight: 700;
     color: #888;
     cursor: pointer;
@@ -100,7 +103,8 @@
   .pill.active { border-color: #1565c0; background: #1565c0; color: #fff; }
 
   .toolbar-right {
-    font-size: 11px;
+    font-size: 16px; /* 大きく修正 */
+    font-weight: bold;
     color: #888;
   }
 
@@ -109,10 +113,8 @@
     width: 100%;
     max-width: 1400px;
     position: relative;
-    /* Maintain whiteboard aspect ratio as base, but allow vertical growth */
   }
 
-  /* The whiteboard image as background */
   .wb-bg {
     width: 100%;
     display: block;
@@ -120,25 +122,14 @@
     user-select: none;
   }
 
-  /* Overlay grid positioned on top of the image */
   .wb-overlay {
     position: absolute;
-    /* These values map to the whiteboard grid area */
-    /* Left edge of day-1 column to right edge of day-31 column */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
   }
 
-  /* ═══ Row overlays on the whiteboard ═══ */
   .wb-rows {
     position: absolute;
-    /* Calibrated to updated whiteboard_bg.png */
-    top: 13%;       /* below 日/曜 header rows */
-    left: 8.0%;     /* right of 月行事予定表 label */
-    width: 83.5%;   /* to left edge of 備 column */
-    bottom: 3%;
+    top: 13%; left: 8.0%; width: 83.5%; bottom: 3%;
   }
 
   .wb-row {
@@ -148,140 +139,87 @@
     transition: background 0.15s;
   }
 
-  .wb-row:hover {
-    background: rgba(21, 101, 192, 0.04);
-    border-radius: 2px;
-  }
+  .wb-row:hover { background: rgba(21, 101, 192, 0.04); border-radius: 2px; }
+  .wb-row.expanded { background: rgba(21, 101, 192, 0.06); }
 
-  .wb-row.expanded {
-    background: rgba(21, 101, 192, 0.06);
-  }
-
-  /* Project label on the left of the row */
+  /* Project label */
   .row-label {
     position: absolute;
-    left: 0;
-    top: 3px;
-    width: 100%;
-    height: 60%;
-    display: flex;
-    align-items: flex-start;
-    padding-top: 2px;
-    padding-left: 3px;
-    pointer-events: none;
-    z-index: 3;
+    left: 0; top: 3px; width: 100%; height: 60%;
+    display: flex; align-items: flex-start;
+    padding-top: 2px; padding-left: 3px;
+    pointer-events: none; z-index: 3;
   }
 
   .row-label-text {
-    font-size: 13px;
-    font-weight: 800;
-    color: #111;
-    white-space: nowrap;
+    font-size: 16px; /* 大きく修正 */
+    font-weight: 800; color: #111; white-space: nowrap;
     background: rgba(255,255,255,0.85);
-    padding: 1px 6px;
-    border-radius: 3px;
-    line-height: 1.35;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.01em;
+    padding: 2px 8px; border-radius: 4px; line-height: 1.35;
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis;
   }
 
   .row-label-sub {
-    font-size: 10px;
-    font-weight: 500;
-    color: #333;
-    white-space: nowrap;
+    font-size: 13px; /* 大きく修正 */
+    font-weight: 700; color: #333; white-space: nowrap;
     background: rgba(255,255,255,0.78);
-    padding: 1px 5px;
-    border-radius: 2px;
-    line-height: 1.3;
+    padding: 2px 6px; border-radius: 3px; line-height: 1.3;
   }
 
-  /* ═══ Gantt bar (marker-drawn) ═══ */
+  /* Gantt bar */
   .gantt-bar {
     position: absolute;
-    height: 26%;
-    bottom: 8%;
-    border-radius: 3px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    overflow: hidden;
-    cursor: pointer;
+    height: 26%; bottom: 8%;
+    border-radius: 4px; z-index: 2;
+    display: flex; align-items: center; justify-content: flex-end;
+    overflow: hidden; cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     filter: saturate(0.9);
   }
 
   .gantt-bar:hover {
-    transform: scaleY(1.4);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    filter: saturate(1.1);
-    z-index: 4;
+    transform: scaleY(1.4); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    filter: saturate(1.1); z-index: 4;
   }
 
   .gantt-bar .bar-text {
-    font-size: 11px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-    white-space: nowrap;
-    padding: 0 6px;
-    position: relative;
-    z-index: 2;
+    font-size: 14px; /* 大きく修正 */
+    font-weight: 900; color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    white-space: nowrap; padding: 0 8px; position: relative; z-index: 2;
   }
 
   .bar-prog {
-    position: absolute;
-    left: 0; top: 0; height: 100%;
-    background: rgba(255,255,255,0.2);
-    pointer-events: none;
+    position: absolute; left: 0; top: 0; height: 100%;
+    background: rgba(255,255,255,0.25); pointer-events: none;
   }
 
   /* Marker colors */
-  .mc0 { background: #1565c0; }
-  .mc1 { background: #00838f; }
-  .mc2 { background: #c62828; }
-  .mc3 { background: #2e7d32; }
-  .mc4 { background: #6a1b9a; }
-  .mc5 { background: #546e7a; }
-  .mc6 { background: #e65100; }
-  .mc7 { background: #00695c; }
+  .mc0 { background: #1565c0; } .mc1 { background: #00838f; }
+  .mc2 { background: #c62828; } .mc3 { background: #2e7d32; }
+  .mc4 { background: #6a1b9a; } .mc5 { background: #546e7a; }
+  .mc6 { background: #e65100; } .mc7 { background: #00695c; }
 
   .bar-delayed {
     background-image: repeating-linear-gradient(
-      -45deg, transparent, transparent 3px,
-      rgba(255,255,255,0.18) 3px, rgba(255,255,255,0.18) 6px
+      -45deg, transparent, transparent 4px,
+      rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 8px
     ) !important;
   }
 
-  /* Today line */
   .today-line {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: #e65100;
-    opacity: 0.5;
-    z-index: 1;
-    pointer-events: none;
+    position: absolute; top: 0; bottom: 0; width: 2px;
+    background: #e65100; opacity: 0.5; z-index: 1; pointer-events: none;
   }
 
-  /* ═══ Detail popup (slides down from the board) ═══ */
+  /* ═══ Detail popup ═══ */
   .detail-popup {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    background: rgba(255, 255, 252, 0.97);
-    border: 2px solid #b8bab0;
-    border-radius: 6px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
-    z-index: 20;
-    overflow: hidden;
-    transform-origin: top;
-    animation: popIn 0.3s ease forwards;
-    backdrop-filter: blur(4px);
+    position: absolute; left: 0; width: 100%;
+    background: rgba(255, 255, 252, 0.98);
+    border: 3px solid #b8bab0; border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    z-index: 20; overflow: hidden; transform-origin: top;
+    animation: popIn 0.3s ease forwards; backdrop-filter: blur(8px);
   }
 
   @keyframes popIn {
@@ -290,159 +228,131 @@
   }
 
   .detail-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background: linear-gradient(90deg, #1565c0, #0d47a1);
-    color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #1565c0, #0d47a1); color: #fff;
   }
 
-  .detail-header h3 {
-    font-size: 14px;
-    font-weight: 700;
-  }
+  .detail-header h3 { font-size: 20px; font-weight: 700; } /* 大きく修正 */
 
   .detail-close {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 32px; height: 32px; /* 大きく修正 */
+    border-radius: 50%; border: none;
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     transition: background 0.15s;
   }
-
-  .detail-close:hover { background: rgba(255,255,255,0.35); }
+  .detail-close:hover { background: rgba(255,255,255,0.4); }
 
   .detail-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    padding: 14px 16px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 20px;
   }
 
   .db h4 {
-    font-size: 11px;
-    font-weight: 700;
-    color: #1565c0;
-    margin-bottom: 8px;
-    padding-bottom: 4px;
+    font-size: 16px; /* 大きく修正 */
+    font-weight: 700; color: #1565c0;
+    margin-bottom: 10px; padding-bottom: 6px;
     border-bottom: 2px solid rgba(21,101,192,0.12);
   }
 
   .di {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 0;
-    font-size: 11px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; font-size: 15px; /* 大きく修正 */
     border-bottom: 1px dotted #e0e0d8;
   }
-
   .di:last-child { border-bottom: none; }
-  .di-l { color: #888; }
-  .di-v { color: #333; font-weight: 700; }
+  .di-l { color: #666; font-weight: 500;}
+  .di-v { color: #222; font-weight: 700; }
 
   .pbar {
-    width: 100%;
-    height: 7px;
-    background: #e8e8e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 6px;
+    width: 100%; height: 10px; background: #e8e8e0;
+    border-radius: 6px; overflow: hidden; margin-top: 8px;
   }
-
-  .pbar .fill { height: 100%; border-radius: 4px; }
+  .pbar .fill { height: 100%; border-radius: 6px; }
 
   .stag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 8px;
-    font-size: 10px;
-    font-weight: 700;
-    border: 1.5px solid;
+    display: inline-block; padding: 4px 10px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; border: 1.5px solid;
   }
-
   .stag-active { border-color: #2e7d32; color: #2e7d32; background: rgba(46,125,50,0.06); }
   .stag-upcoming { border-color: #1565c0; color: #1565c0; background: rgba(21,101,192,0.06); }
   .stag-delayed { border-color: #c62828; color: #c62828; background: rgba(198,40,40,0.06); }
   .stag-completed { border-color: #888; color: #888; background: rgba(0,0,0,0.03); }
 
   .ms-i {
-    font-size: 10px;
-    color: #666;
-    padding: 2px 0;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    font-size: 14px; /* 大きく修正 */
+    color: #444; font-weight: 500;
+    padding: 4px 0; display: flex; align-items: center; gap: 8px;
   }
-
   .ms-i::before {
-    content: '';
-    width: 5px; height: 5px;
-    background: #e65100;
-    border-radius: 50%;
-    flex-shrink: 0;
+    content: ''; width: 6px; height: 6px; background: #e65100;
+    border-radius: 50%; flex-shrink: 0;
   }
 
   .nbox {
-    font-size: 11px;
-    color: #666;
-    line-height: 1.6;
-    margin-top: 4px;
-    padding: 6px 8px;
-    background: rgba(0,0,0,0.02);
-    border-radius: 3px;
-    border-left: 3px solid #e65100;
+    font-size: 14px; /* 大きく修正 */
+    color: #444; line-height: 1.6; font-weight: 500;
+    margin-top: 8px; padding: 10px 12px;
+    background: rgba(0,0,0,0.03); border-radius: 4px;
+    border-left: 4px solid #e65100;
+  }
+
+  /* 新設: kintone連携ボタン */
+  .kintone-link-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #F7D43F; /* kintoneイエロー */
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #d4b533;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .kintone-link-btn:hover {
+    background-color: #fce268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
   }
 
   /* Hint */
   .hint {
-    width: 100%;
-    max-width: 1400px;
-    text-align: right;
-    padding: 6px 12px 0;
-    font-size: 10px;
-    font-weight: 600;
-    color: #1565c0;
+    width: 100%; max-width: 1400px; text-align: right;
+    padding: 10px 16px 0; font-size: 16px; /* 大きく修正 */
+    font-weight: 700; color: #1565c0;
     animation: hblink 2.5s ease-in-out infinite;
   }
-
-  @keyframes hblink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  @keyframes hblink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
   /* Tooltip */
   .tip {
-    position: fixed;
-    background: #fff;
-    border: 1.5px solid #ccc;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 11px;
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.12s;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    position: fixed; background: #fff; border: 2px solid #ccc;
+    border-radius: 8px; padding: 12px 16px; font-size: 15px; /* 大きく修正 */
+    pointer-events: none; z-index: 1000; opacity: 0;
+    transition: opacity 0.12s; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
-
   .tip.show { opacity: 1; }
-  .tip-n { font-weight: 700; color: #333; }
-  .tip-s { color: #888; font-size: 10px; margin-top: 2px; }
+  .tip-n { font-weight: 800; color: #222; }
+  .tip-s { color: #666; font-size: 13px; margin-top: 4px; font-weight: 500; }
 
   @media (max-width: 900px) {
     .detail-body { grid-template-columns: 1fr; }
     body { padding: 4px; }
-    .toolbar { flex-wrap: wrap; gap: 6px; }
+    .toolbar { flex-wrap: wrap; gap: 8px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Toolbar (outside the board) -->
+<!-- Toolbar -->
 <div class="toolbar">
   <div class="toolbar-left">
     <div class="month-nav">
@@ -451,8 +361,8 @@
       <button id="nextM">▶</button>
     </div>
     <div class="kt-tag">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#e65100"/></svg>
-      kintone
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#e65100"/></svg>
+      kintone連携中
     </div>
     <div class="pills">
       <button class="pill active" data-f="all">全件</button>
@@ -467,7 +377,7 @@
 
 <!-- Whiteboard -->
 <div class="wb-container" id="wbContainer">
-  <img src="whiteboard_bg.png" class="wb-bg" id="wbImg" alt="whiteboard">
+  <img src="whiteboard_bg.png" class="wb-bg" id="wbImg" alt="whiteboard" onerror="this.style.display='none'; document.getElementById('wbContainer').style.background='#fff'; document.getElementById('wbContainer').style.minHeight='600px';">
   <div class="wb-overlay">
     <div class="wb-rows" id="wbRows"></div>
   </div>
@@ -480,23 +390,24 @@
 
 <script>
 // ═══ Data ═══
+// IDをkintoneモックアップで作成した「12731001」等の形式に合わせて一部変更・追加
 const P = [
-  { id:"KJ-2026-001", name:"鹿児島市役所 本庁舎改修工事", client:"鹿児島市", mgr:"田中 太郎",
+  { id:"12731001", name:"鹿児島市役所 本庁舎改修工事", client:"鹿児島市", mgr:"田中 太郎",
     status:"active", s:"2026-02-10", e:"2026-05-30", prog:45,
     budget:158000000, spent:68500000, cat:"公共建築", loc:"鹿児島市山下町11-1", wk:24,
     notes:"2F〜4Fの内装改修。3月末までに2F完了予定。",
     ms:["2F完了 (3/31)","3F完了 (4/30)","検査 (5/25)"] },
-  { id:"KJ-2026-002", name:"天文館通り 道路拡幅工事", client:"鹿児島県", mgr:"山田 花子",
+  { id:"12731002", name:"天文館通り 道路拡幅工事", client:"鹿児島県", mgr:"山田 花子",
     status:"active", s:"2026-01-15", e:"2026-04-15", prog:68,
     budget:92000000, spent:61200000, cat:"土木", loc:"鹿児島市千日町", wk:18,
     notes:"夜間工事区間あり（22:00-5:00）。騒音対策実施中。",
     ms:["路盤完了 (3/15)","舗装 (4/01)","開放 (4/15)"] },
-  { id:"KJ-2026-003", name:"桜島フェリーターミナル 耐震補強", client:"鹿児島市船舶部", mgr:"佐藤 健一",
+  { id:"12731003", name:"桜島フェリーターミナル 耐震補強", client:"鹿児島市船舶部", mgr:"佐藤 健一",
     status:"delayed", s:"2025-11-01", e:"2026-03-31", prog:52,
     budget:245000000, spent:142000000, cat:"港湾", loc:"鹿児島市桜島横山町", wk:32,
     notes:"⚠ 資材調達遅延により2週間の工期遅れ。完了予定4/14に変更。",
     ms:["基礎完了 (1/31)","上部工 (3/15)","完了予定 (4/14)"] },
-  { id:"KJ-2026-004", name:"城山展望台 休憩施設新築", client:"鹿児島市観光課", mgr:"中村 美咲",
+  { id:"12731004", name:"城山展望台 休憩施設新築", client:"鹿児島市観光課", mgr:"中村 美咲",
     status:"upcoming", s:"2026-04-01", e:"2026-08-31", prog:0,
     budget:78000000, spent:0, cat:"建築", loc:"鹿児島市城山町", wk:0,
     notes:"4月着工予定。景観審査は3月に承認済み。",
@@ -536,17 +447,6 @@ function yen(n){
 }
 function fl(){return filt==='all'?P:P.filter(p=>p.status===filt);}
 
-// ═══ Grid calibration ═══
-// These percentages map to the whiteboard image grid
-// Horizontal: day columns span from ~7.5% (day 1 left edge) to ~91.5% (day 31 right edge)
-const GRID_LEFT = 7.8;   // % from left where day-1 starts
-const GRID_RIGHT = 91.0; // % from left where day-31 ends
-const GRID_WIDTH = GRID_RIGHT - GRID_LEFT;
-
-// Vertical: rows area
-// The wb-rows div already handles top/bottom positioning
-// We divide available height evenly among visible projects
-
 function render() {
   const days = dim(vY, vM);
   const mn = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
@@ -556,27 +456,22 @@ function render() {
   const container = document.getElementById('wbRows');
   container.innerHTML = '';
 
-  // Calculate row height - distribute evenly across available space
-  // The whiteboard has ~8 visible row lines
   const maxRows = Math.max(list.length, 1);
   const rowH = 100 / maxRows;
 
   list.forEach((p, idx) => {
     const ci = idx % 8;
 
-    // Row element
     const row = document.createElement('div');
     row.className = `wb-row ${openId===p.id?'expanded':''}`;
     row.style.cssText = `height:${rowH}%;position:relative;`;
     row.onclick = () => toggleDetail(p.id, row);
 
-    // Label text (project name above the bar)
     const lbl = document.createElement('div');
     lbl.className = 'row-label';
     lbl.innerHTML = `<div style="display:flex;flex-direction:column;gap:1px"><div class="row-label-text">${p.name}</div><div class="row-label-sub">${p.mgr}　${p.s}〜${p.e}</div></div>`;
     row.appendChild(lbl);
 
-    // Gantt bar
     const pS = pd(p.s), pE = pd(p.e);
     const mS = new Date(vY, vM, 1), mE = new Date(vY, vM, days);
 
@@ -584,13 +479,6 @@ function render() {
       const sd = pS < mS ? 1 : pS.getDate();
       const ed = pE > mE ? days : pE.getDate();
 
-      // Position as % of the wb-rows area (which already starts at GRID_LEFT)
-      // But wb-rows spans the full grid area, so we need to map day columns within it
-      // Day columns occupy from 0% to ~97% of wb-rows width (since wb-rows left=7.2%, width=85.8%)
-      // Actually, the day columns within the whiteboard start right at the wb-rows left edge
-      // and end before the 備考 column
-
-      // Within wb-rows: day 1 starts at 0%, day 31 ends at ~96%
       const dayWidth = 96.0 / days;
       const barLeft = (sd - 1) * dayWidth;
       const barWidth = (ed - sd + 1) * dayWidth;
@@ -609,7 +497,6 @@ function render() {
       row.appendChild(bar);
     }
 
-    // Today line
     if (vY === today.getFullYear() && vM === today.getMonth()) {
       const dayWidth = 96.0 / days;
       const tl = document.createElement('div');
@@ -622,9 +509,7 @@ function render() {
   });
 }
 
-// ═══ Detail popup ═══
 function toggleDetail(id, rowEl) {
-  // Remove existing popup
   const existing = document.querySelector('.detail-popup');
   if (existing) {
     existing.remove();
@@ -634,7 +519,6 @@ function toggleDetail(id, rowEl) {
   openId = id;
   render();
 
-  // Re-find the row after render
   const rows = document.querySelectorAll('.wb-row');
   let targetRow = null;
   const list = fl();
@@ -648,7 +532,6 @@ function toggleDetail(id, rowEl) {
   const popup = document.createElement('div');
   popup.className = 'detail-popup';
 
-  // Position below the row
   const container = document.getElementById('wbRows');
   const containerRect = container.getBoundingClientRect();
   const rowRect = targetRow.getBoundingClientRect();
@@ -656,6 +539,7 @@ function toggleDetail(id, rowEl) {
 
   popup.style.top = topPos + 'px';
 
+  // kintone連携ボタンを右下のエリアに追加
   popup.innerHTML = `
     <div class="detail-header">
       <h3>${p.name}</h3>
@@ -677,7 +561,7 @@ function toggleDetail(id, rowEl) {
         <div class="di"><span class="di-l">工期</span><span class="di-v">${p.s} ～ ${p.e}</span></div>
         <div class="di"><span class="di-l">進捗率</span><span class="di-v">${p.prog}%</span></div>
         <div class="pbar"><div class="fill" style="width:${p.prog}%;background:${p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32'}"></div></div>
-        <h4 style="margin-top:12px;">🚩 マイルストーン</h4>
+        <h4 style="margin-top:16px;">🚩 マイルストーン</h4>
         ${p.ms.map(m => `<div class="ms-i">${m}</div>`).join('')}
       </div>
       <div class="db">
@@ -686,8 +570,14 @@ function toggleDetail(id, rowEl) {
         <div class="di"><span class="di-l">実行額</span><span class="di-v">${yen(p.spent)}</span></div>
         <div class="di"><span class="di-l">執行率</span><span class="di-v">${p.budget>0?Math.round(p.spent/p.budget*100):0}%</span></div>
         <div class="pbar"><div class="fill" style="width:${p.budget>0?Math.round(p.spent/p.budget*100):0}%;background:#e65100"></div></div>
-        <h4 style="margin-top:12px;">📝 備考</h4>
+        <h4 style="margin-top:16px;">📝 備考</h4>
         <div class="nbox">${p.notes}</div>
+        
+        <!-- kintoneモックアップへの遷移ボタン -->
+        <a href="kintone_mockup.html?工事番号=${p.id}" target="_blank" class="kintone-link-btn" onclick="event.stopPropagation();">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          kintoneで詳細を確認
+        </a>
       </div>
     </div>
   `;
@@ -702,7 +592,6 @@ function closeDetail() {
   render();
 }
 
-// Tooltip
 function showTip(ev, p) {
   const t = document.getElementById('tip');
   t.innerHTML = `<div class="tip-n">${p.name}</div><div class="tip-s">${p.mgr}　${p.cat}　進捗${p.prog}%</div><div class="tip-s">${p.s} ～ ${p.e}</div>`;
@@ -719,7 +608,6 @@ document.addEventListener('mousemove', ev => {
 });
 function hideTip() { document.getElementById('tip').classList.remove('show'); }
 
-// Filters
 document.querySelectorAll('.pill').forEach(b => {
   b.addEventListener('click', () => {
     document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
@@ -731,21 +619,17 @@ document.querySelectorAll('.pill').forEach(b => {
   });
 });
 
-// Month nav
 document.getElementById('prevM').onclick = () => { vM--; if(vM<0){vM=11;vY--;} openId=null; closeDetail(); render(); };
 document.getElementById('nextM').onclick = () => { vM++; if(vM>11){vM=0;vY++;} openId=null; closeDetail(); render(); };
 
-// Resize
 window.addEventListener('resize', () => { closeDetail(); render(); });
 
-// Clock
 function tick() {
   const n = new Date();
   document.getElementById('clock').textContent =
     `${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
 }
 
-// Init
 render(); tick(); setInterval(tick, 30000);
 </script>
 </body>
