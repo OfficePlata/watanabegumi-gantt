@@ -3,428 +3,962 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>月行事予定表｜情報ホワイトボード</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<title>工事行事予定表 ｜ 情報ホワイトボード</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-  body {
-    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-    background: #e8e8e0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px;
-  }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  background: #c0c0b8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 8px;
+}
 
-  /* Top toolbar - subtle, outside the board */
-  .toolbar {
-    width: 100%;
-    max-width: 1400px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    background: rgba(255,255,255,0.7);
-    border-radius: 8px;
-    backdrop-filter: blur(4px);
-  }
+/* ─── Toolbar ─── */
+.toolbar {
+  width: 100%;
+  max-width: 1480px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.88);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  flex-wrap: wrap;
+}
 
-  .toolbar-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+.nav-group { display:flex; align-items:center; gap:6px; }
 
-  .month-nav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.nav-btn {
+  width:32px; height:32px;
+  border-radius:50%;
+  border:2px solid #bbb;
+  background:#fff;
+  font-size:13px;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:#555;
+  transition: all 0.15s;
+}
+.nav-btn:hover { border-color:#1565c0; color:#1565c0; }
 
-  .month-nav button {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    border: 2px solid #bbb;
-    background: #fff;
-    color: #666;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.period-label {
+  font-size:17px; font-weight:900; color:#111;
+  min-width:210px; text-align:center;
+}
 
-  .month-nav button:hover { border-color: #1565c0; color: #1565c0; }
+.view-toggle {
+  display:flex;
+  border:2px solid #1565c0;
+  border-radius:7px;
+  overflow:hidden;
+}
+.vt {
+  padding:5px 14px;
+  border:none; border-right:1px solid #1565c0;
+  background:#fff;
+  font-family:inherit; font-size:12px; font-weight:700;
+  color:#1565c0; cursor:pointer;
+  transition:all 0.12s;
+}
+.vt:last-child { border-right:none; }
+.vt.active { background:#1565c0; color:#fff; }
+.vt:hover:not(.active) { background:#e8f0ff; }
 
-  .month-label {
-    font-size: 28px; /* さらに大きく */
-    font-weight: 900;
-    color: #333;
-    min-width: 180px;
-    text-align: center;
-  }
+.kt-badge {
+  display:flex; align-items:center; gap:4px;
+  background:#fff8e1; border:2px solid #ffb300;
+  padding:4px 11px; border-radius:14px;
+  font-size:11px; font-weight:700; color:#e65100;
+}
 
-  .kt-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #fff8e1;
-    border: 2px solid #ffb300;
-    padding: 6px 14px;
-    border-radius: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    color: #e65100;
-  }
+.legend {
+  display:flex; align-items:center; gap:12px;
+  font-size:10px; color:#555; font-weight:600;
+}
+.leg-item { display:flex; align-items:center; gap:4px; }
+.leg-box {
+  width:24px; height:12px; border-radius:3px;
+  background:#1565c0;
+}
+.leg-rem {
+  width:24px; height:12px; border-radius:3px;
+  background:#1565c0;
+  position:relative; overflow:hidden;
+}
+.leg-rem::after {
+  content:'';
+  position:absolute; inset:0;
+  background:rgba(255,255,255,0.45);
+  background-image:repeating-linear-gradient(
+    -45deg, rgba(255,255,255,0) 0px, rgba(255,255,255,0) 4px,
+    rgba(255,255,255,0.6) 4px, rgba(255,255,255,0.6) 8px
+  );
+}
 
-  .pills {
-    display: flex;
-    gap: 6px;
-  }
+.filter-pills { display:flex; gap:4px; margin-left:auto; }
 
-  .pill {
-    padding: 6px 14px;
-    border-radius: 12px;
-    border: 2px solid #ccc;
-    background: #fff;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 700;
-    color: #888;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+.pill {
+  padding:5px 12px; border-radius:10px;
+  border:2px solid #ccc; background:#fff;
+  font-family:inherit; font-size:11px; font-weight:700;
+  color:#888; cursor:pointer; transition:all 0.15s;
+}
+.pill:hover { border-color:#1565c0; color:#1565c0; }
+.pill.active { border-color:#1565c0; background:#1565c0; color:#fff; }
 
-  .pill:hover { border-color: #1565c0; color: #1565c0; }
-  .pill.active { border-color: #1565c0; background: #1565c0; color: #fff; }
+.clock { font-size:12px; color:#777; font-weight:500; white-space:nowrap; }
 
-  .toolbar-right {
-    font-size: 20px;
-    font-weight: bold;
-    color: #888;
-  }
+/* ─── Whiteboard Outer Frame ─── */
+.wb-outer {
+  width:100%; max-width:1480px;
+  background:linear-gradient(160deg, #dcdee0 0%, #b8babc 40%, #c4c6c8 55%, #d8dadc 100%);
+  border-radius:8px;
+  padding:14px 14px 30px;
+  box-shadow:
+    0 14px 44px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    inset 0 -1px 0 rgba(0,0,0,0.15);
+  position:relative;
+}
 
-  /* ═══ Whiteboard container ═══ */
-  .wb-container {
-    width: 100%;
-    max-width: 1400px;
-    position: relative;
-  }
+/* Mounting clips */
+.wb-clip {
+  position:absolute; top:5px;
+  width:20px; height:24px;
+  background:linear-gradient(180deg, #b8babc 0%, #8a8c8e 100%);
+  border-radius:3px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.38);
+}
+.wb-clip-l { left:22%; }
+.wb-clip-r { right:22%; }
 
-  .wb-bg {
-    width: 100%;
-    display: block;
-    pointer-events: none;
-    user-select: none;
-  }
+/* Pen tray */
+.wb-tray {
+  position:absolute; bottom:8px; left:14px; right:14px;
+  height:18px;
+  background:linear-gradient(180deg, #a8aaac 0%, #888a8c 50%, #9e9ea0 100%);
+  border-radius:3px;
+  display:flex; align-items:center; gap:6px; padding:0 10px;
+}
+.wb-pen { width:34px; height:11px; border-radius:5px; }
+.pen-blue { background:#1565c0; }
+.pen-red  { background:#c62828; }
+.pen-grn  { background:#2e7d32; }
+.pen-blk  { background:#333; }
+.wb-eraser {
+  width:42px; height:11px; border-radius:2px;
+  background:#e8e0c8; margin-left:auto;
+}
 
-  .wb-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-  }
+/* Board surface */
+.wb-board {
+  background:linear-gradient(135deg, #fafaf4 0%, #f6f6f0 50%, #f8f8f2 100%);
+  border-radius:3px;
+  overflow:hidden;
+  box-shadow:inset 0 0 40px rgba(0,0,0,0.03);
+}
 
-  .wb-rows {
-    position: absolute;
-    top: 13%; left: 8.0%; width: 83.5%; bottom: 3%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* 案件多数の場合にスクロール可能に */
-    overflow-x: hidden;
-  }
+/* ─── Board layout ─── */
+.wb-layout { display:flex; }
 
-  /* スクロールバーのカスタマイズ (目立たなくする) */
-  .wb-rows::-webkit-scrollbar {
-    width: 8px;
-  }
-  .wb-rows::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .wb-rows::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.1);
-    border-radius: 4px;
-  }
-  .wb-rows::-webkit-scrollbar-thumb:hover {
-    background: rgba(0,0,0,0.3);
-  }
+.wb-title {
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-size:20px; font-weight:900; color:#111;
+  padding:24px 7px;
+  border-right:2.5px solid #222;
+  letter-spacing:0.22em;
+  display:flex; align-items:center; justify-content:center;
+  min-width:48px; flex-shrink:0;
+  background:rgba(234,232,220,0.7);
+}
 
-  .wb-row {
-    position: relative;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(0,0,0,0.05); /* 行の区切りを少し見やすく */
-    transition: background 0.15s;
-    /* 8行表示をベースの高さとし、縮まないように設定 */
-    height: 12.5%;
-    min-height: 80px; 
-    flex-shrink: 0;
-  }
+.wb-grid-area {
+  flex:1; min-width:0;
+  display:flex; flex-direction:column;
+}
 
-  .wb-row:hover { background: rgba(255, 235, 59, 0.2); border-radius: 2px; }
+/* ─── Grid rows share the same template ─── */
+.wb-header, .wb-subheader, .wb-row {
+  display:grid;
+  /* grid-template-columns set inline by JS */
+}
 
-  /* Project label */
-  .row-label {
-    position: absolute;
-    left: 0; top: 0; width: 100%; height: 70%;
-    display: flex; align-items: flex-start;
-    padding-top: 4px; padding-left: 4px;
-    pointer-events: none; z-index: 3;
-  }
+/* Header styling */
+.wb-header {
+  border-bottom:2.5px solid #111;
+  background:rgba(228,226,214,0.8);
+}
+.wb-subheader {
+  border-bottom:1.5px solid #666;
+  background:rgba(234,232,220,0.6);
+}
 
-  .row-label-text {
-    font-size: 20px; /* 画像のように非常に大きく強調 */
-    font-weight: 900; color: #111; white-space: nowrap;
-    background: rgba(255,255,255,0.9);
-    padding: 2px 10px; border-radius: 4px; line-height: 1.35;
-    max-width: 100%; overflow: hidden; text-overflow: ellipsis;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
+.hc {
+  padding:5px 2px; text-align:center;
+  font-weight:900; font-size:13px; color:#111;
+  border-right:1px solid rgba(150,110,50,0.3);
+  overflow:hidden; white-space:nowrap;
+}
+.hc:last-child { border-right:none; }
 
-  .row-label-sub {
-    font-size: 16px; /* 担当者名なども大きく */
-    font-weight: 700; color: #333; white-space: nowrap;
-    background: rgba(255,255,255,0.85);
-    padding: 2px 8px; border-radius: 3px; line-height: 1.3;
-    margin-top: 2px;
-  }
+.hc.lbl {
+  font-size:14px;
+  border-right:2.5px solid #333;
+  background:rgba(218,216,204,0.9);
+}
+.hc.biko {
+  grid-column:-3/-2;
+  border-left:2.5px solid #333;
+  border-right:1px solid rgba(150,110,50,0.3);
+  font-size:14px;
+}
+.hc.ko {
+  grid-column:-2/-1;
+  font-size:14px;
+}
 
-  /* Gantt bar */
-  .gantt-bar {
-    position: absolute;
-    height: 28%; bottom: 6%;
-    border-radius: 4px; z-index: 2;
-    display: flex; align-items: center; justify-content: flex-end;
-    overflow: hidden; cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    filter: saturate(0.9);
-  }
+.hc.sun { color:#c62828; }
+.hc.sat { color:#1565c0; }
+.hc.today-hc { background:rgba(230,81,0,0.12) !important; color:#e65100 !important; }
 
-  .gantt-bar:hover {
-    transform: scaleY(1.4); box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    filter: saturate(1.2); z-index: 4;
-  }
+/* ─── Data rows ─── */
+.wb-rows { overflow-y:auto; }
+.wb-rows::-webkit-scrollbar { width:5px; }
+.wb-rows::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.18); border-radius:3px; }
 
-  .gantt-bar .bar-text {
-    font-size: 16px; /* 進捗率も大きく */
-    font-weight: 900; color: #fff;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-    white-space: nowrap; padding: 0 8px; position: relative; z-index: 2;
-  }
+.wb-row {
+  border-bottom:1px solid #b8b4a8;
+  min-height:80px; cursor:pointer;
+  transition:background 0.12s;
+  position:relative;
+}
+.wb-row:last-child { border-bottom:none; }
+.wb-row:hover { background:rgba(21,101,192,0.04); }
+.wb-row.exp { background:rgba(21,101,192,0.06); }
 
-  .bar-prog {
-    position: absolute; left: 0; top: 0; height: 100%;
-    background: rgba(255,255,255,0.3); pointer-events: none;
-  }
+.row-lbl {
+  grid-column:1;
+  border-right:2.5px solid #555;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700; color:#444;
+  background:rgba(218,216,204,0.6);
+}
 
-  /* Marker colors */
-  .mc0 { background: #1565c0; } .mc1 { background: #00838f; }
-  .mc2 { background: #c62828; } .mc3 { background: #2e7d32; }
-  .mc4 { background: #6a1b9a; } .mc5 { background: #546e7a; }
-  .mc6 { background: #e65100; } .mc7 { background: #00695c; }
+.row-gantt {
+  grid-column:2 / -3;
+  position:relative; overflow:hidden;
+}
 
-  .bar-delayed {
-    background-image: repeating-linear-gradient(
-      -45deg, transparent, transparent 4px,
-      rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 8px
-    ) !important;
-  }
+.row-biko {
+  grid-column:-3/-2;
+  border-left:2.5px solid #555;
+}
+.row-ko { grid-column:-2/-1; }
 
-  .today-line {
-    position: absolute; top: 0; bottom: 0; width: 2px;
-    background: #e65100; opacity: 0.5; z-index: 1; pointer-events: none;
-  }
+/* Column separator lines inside gantt area */
+.csep {
+  position:absolute; top:0; bottom:0;
+  width:1px; background:rgba(150,110,50,0.28);
+  pointer-events:none; z-index:1;
+}
+.csep.sun { background:rgba(198,40,40,0.22); }
+.csep.sat { background:rgba(21,101,192,0.18); }
+.csep.today {
+  width:2px; z-index:5;
+  background:rgba(230,81,0,0.65);
+}
+.today-tag {
+  position:absolute; top:3px;
+  font-size:9px; font-weight:700; color:#e65100;
+  background:rgba(255,255,255,0.92);
+  padding:1px 4px; border-radius:3px;
+  white-space:nowrap; transform:translateX(-50%);
+  pointer-events:none; z-index:6;
+}
 
-  /* Hint */
-  .hint {
-    width: 100%; max-width: 1400px; text-align: right;
-    padding: 10px 16px 0; font-size: 18px; font-weight: 900; color: #1565c0;
-    animation: hblink 2.5s ease-in-out infinite;
-  }
-  @keyframes hblink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+/* Project label */
+.plbl {
+  position:absolute; top:6px; left:4px; right:4px;
+  z-index:3; pointer-events:none;
+  display:flex; flex-direction:column; gap:2px;
+}
+.pname {
+  font-size:13px; font-weight:800; color:#111;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  background:rgba(248,248,242,0.9);
+  padding:1px 6px; border-radius:3px;
+  display:inline-block; max-width:100%;
+}
+.psub {
+  font-size:10px; color:#444;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  background:rgba(248,248,242,0.82);
+  padding:0 5px; border-radius:2px;
+  display:inline-block; max-width:100%;
+}
+.sbadge {
+  display:inline-block; margin-left:5px;
+  padding:1px 6px; border-radius:4px;
+  font-size:9px; font-weight:700;
+  vertical-align:middle;
+}
+.sb-active    { background:#2e7d32; color:#fff; }
+.sb-upcoming  { background:#1565c0; color:#fff; }
+.sb-delayed   { background:#c62828; color:#fff; }
+.sb-completed { background:#777; color:#fff; }
 
-  /* Tooltip */
-  .tip {
-    position: fixed; background: #fff; border: 2px solid #ccc;
-    border-radius: 8px; padding: 12px 16px; font-size: 16px;
-    pointer-events: none; z-index: 1000; opacity: 0;
-    transition: opacity 0.12s; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  }
-  .tip.show { opacity: 1; }
-  .tip-n { font-weight: 900; color: #222; font-size: 18px; }
-  .tip-s { color: #555; font-size: 15px; margin-top: 4px; font-weight: 700; }
+/* ─── Gantt Bar ─── */
+.gbar {
+  position:absolute; bottom:10px; height:28px;
+  border-radius:4px; z-index:2; overflow:visible;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  transition:height 0.12s, bottom 0.12s, box-shadow 0.12s;
+}
+.gbar:hover {
+  height:34px; bottom:7px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.28);
+  z-index:10;
+}
 
+/* Inner clip for done/rem */
+.gbar-inner {
+  position:absolute; inset:0;
+  border-radius:4px; overflow:hidden;
+}
+
+/* Done portion – brighter shade */
+.gd {
+  position:absolute; left:0; top:0; bottom:0;
+  border-radius:4px 0 0 4px;
+}
+
+/* Remaining portion – hatched overlay */
+.gr {
+  position:absolute; top:0; bottom:0; right:0;
+  background:rgba(255,255,255,0.44);
+  background-image:repeating-linear-gradient(
+    -45deg,
+    rgba(255,255,255,0) 0px, rgba(255,255,255,0) 4px,
+    rgba(255,255,255,0.42) 4px, rgba(255,255,255,0.42) 8px
+  );
+  border-radius:0 4px 4px 0;
+}
+
+/* Divider line at progress point */
+.gdiv {
+  position:absolute; top:0; bottom:0;
+  width:2.5px; background:rgba(255,255,255,0.95);
+  z-index:2;
+}
+
+/* Progress % label */
+.gpct {
+  position:absolute; right:6px; top:50%;
+  transform:translateY(-50%);
+  font-size:12px; font-weight:900; color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,0.65);
+  z-index:3; pointer-events:none; white-space:nowrap;
+}
+/* % outside bar when bar is too narrow */
+.gpct-out {
+  position:absolute; top:50%; left:calc(100% + 4px);
+  transform:translateY(-50%);
+  font-size:11px; font-weight:900; color:#333;
+  white-space:nowrap; z-index:10; pointer-events:none;
+  background:rgba(248,248,242,0.9); padding:0 3px; border-radius:3px;
+}
+
+/* Delayed: red border highlight */
+.gbar.delayed { box-shadow:0 0 0 2px #c62828, 0 2px 6px rgba(0,0,0,0.2); }
+
+/* Completed: checkmark overlay */
+.gbar.completed .gpct::before { content:'✓ '; }
+
+/* Bar colors (base = remaining area color) */
+.bc0 { background-color:#1565c0; } .bc0 .gd { background:#2979d0; }
+.bc1 { background-color:#00838f; } .bc1 .gd { background:#00acc1; }
+.bc2 { background-color:#c62828; } .bc2 .gd { background:#e53935; }
+.bc3 { background-color:#2e7d32; } .bc3 .gd { background:#43a047; }
+.bc4 { background-color:#6a1b9a; } .bc4 .gd { background:#8e24aa; }
+.bc5 { background-color:#546e7a; } .bc5 .gd { background:#6d8a96; }
+.bc6 { background-color:#e65100; } .bc6 .gd { background:#f4511e; }
+.bc7 { background-color:#00695c; } .bc7 .gd { background:#00897b; }
+
+/* ─── Detail Popup ─── */
+.dp {
+  position:relative;
+  background:rgba(255,255,253,0.98);
+  border:2px solid #b4b6bc;
+  border-radius:8px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.18);
+  z-index:30; overflow:hidden;
+  transform-origin:top;
+  animation:dpIn 0.22s ease;
+  margin:0 0 2px;
+}
+@keyframes dpIn { from{opacity:0;transform:scaleY(0.88)} to{opacity:1;transform:scaleY(1)} }
+
+.dp-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px;
+  background:linear-gradient(90deg, #1565c0, #0d47a1); color:#fff;
+}
+.dp-head h3 { font-size:14px; font-weight:700; }
+.dp-close {
+  width:28px; height:28px; border-radius:50%;
+  border:none; background:rgba(255,255,255,0.22); color:#fff;
+  font-size:15px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s;
+}
+.dp-close:hover { background:rgba(255,255,255,0.38); }
+
+.dp-body {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:14px; padding:12px 16px;
+}
+.dp-sec h4 {
+  font-size:11px; font-weight:700; color:#1565c0;
+  margin-bottom:7px; padding-bottom:4px;
+  border-bottom:2px solid rgba(21,101,192,0.12);
+}
+.dpr {
+  display:flex; justify-content:space-between;
+  padding:4px 0; font-size:12px;
+  border-bottom:1px dotted #e0e0d8;
+}
+.dpr:last-child { border-bottom:none; }
+.dpl { color:#888; }
+.dpv { color:#222; font-weight:700; }
+
+.dp-pbar {
+  width:100%; height:8px;
+  background:#e4e4dc; border-radius:4px;
+  overflow:hidden; margin-top:5px;
+}
+.dp-pbar .fill { height:100%; border-radius:4px; }
+
+.dptag {
+  display:inline-block; padding:2px 8px;
+  border-radius:6px; font-size:10px; font-weight:700; border:2px solid;
+}
+.dt-active   { border-color:#2e7d32; color:#2e7d32; background:rgba(46,125,50,0.07); }
+.dt-upcoming { border-color:#1565c0; color:#1565c0; background:rgba(21,101,192,0.07); }
+.dt-delayed  { border-color:#c62828; color:#c62828; background:rgba(198,40,40,0.07); }
+.dt-completed{ border-color:#888;    color:#888;    background:rgba(0,0,0,0.04); }
+
+.dpms {
+  font-size:11px; color:#555;
+  padding:3px 0; display:flex; align-items:center; gap:6px;
+}
+.dpms::before { content:'●'; font-size:8px; color:#e65100; flex-shrink:0; }
+
+.dp-note {
+  font-size:11px; color:#555; line-height:1.65;
+  padding:6px 8px;
+  background:rgba(0,0,0,0.025); border-radius:4px;
+  border-left:3px solid #e65100; margin-top:4px;
+}
+
+/* ─── Hint ─── */
+.hint {
+  width:100%; max-width:1480px;
+  text-align:right; padding:4px 12px 0;
+  font-size:11px; font-weight:600; color:#1565c0;
+  animation:blink 2.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ─── Tooltip ─── */
+.tooltip {
+  position:fixed; background:#fff;
+  border:1.5px solid #ccc; border-radius:6px;
+  padding:8px 12px; font-size:11px;
+  pointer-events:none; z-index:9999;
+  opacity:0; transition:opacity 0.12s;
+  box-shadow:0 3px 12px rgba(0,0,0,0.12);
+}
+.tooltip.show { opacity:1; }
+.tt-n { font-weight:700; color:#111; }
+.tt-s { font-size:10px; color:#888; margin-top:2px; }
+
+@media (max-width:900px) {
+  .dp-body { grid-template-columns:1fr; }
+  .filter-pills { margin-left:0; }
+  body { padding:5px; }
+}
 </style>
 </head>
 <body>
 
 <!-- Toolbar -->
 <div class="toolbar">
-  <div class="toolbar-left">
-    <div class="month-nav">
-      <button id="prevM">◀</button>
-      <span class="month-label" id="mLabel"></span>
-      <button id="nextM">▶</button>
-    </div>
-    <div class="kt-tag">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="#e65100"/></svg>
-      kintone連携中
-    </div>
-    <div class="pills">
-      <button class="pill active" data-f="all">全件</button>
-      <button class="pill" data-f="active">施工中</button>
-      <button class="pill" data-f="upcoming">予定</button>
-      <button class="pill" data-f="delayed">遅延</button>
-      <button class="pill" data-f="completed">完了</button>
-    </div>
+  <div class="nav-group">
+    <button class="nav-btn" id="prevBtn">◀</button>
+    <span class="period-label" id="periodLabel">---</span>
+    <button class="nav-btn" id="nextBtn">▶</button>
   </div>
-  <div class="toolbar-right" id="clock"></div>
+  <div class="view-toggle">
+    <button class="vt" data-v="week">週間</button>
+    <button class="vt active" data-v="month">月間</button>
+    <button class="vt" data-v="year">年間</button>
+  </div>
+  <div class="kt-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8" stroke="#e65100" stroke-width="2.5"/>
+      <circle cx="12" cy="12" r="3" fill="#e65100"/>
+    </svg>
+    kintone連携中
+  </div>
+  <div class="legend">
+    <span class="leg-item"><span class="leg-box"></span>完了済</span>
+    <span class="leg-item"><span class="leg-rem"></span>未施工</span>
+  </div>
+  <div class="filter-pills">
+    <button class="pill active" data-f="all">全件</button>
+    <button class="pill" data-f="active">施工中</button>
+    <button class="pill" data-f="upcoming">予定</button>
+    <button class="pill" data-f="delayed">遅延</button>
+    <button class="pill" data-f="completed">完了</button>
+  </div>
+  <span class="clock" id="clock"></span>
 </div>
 
 <!-- Whiteboard -->
-<div class="wb-container" id="wbContainer">
-  <img src="whiteboard_bg.png" class="wb-bg" id="wbImg" alt="whiteboard" onerror="this.style.display='none'; document.getElementById('wbContainer').style.background='#fff'; document.getElementById('wbContainer').style.minHeight='600px';">
-  <div class="wb-overlay">
-    <div class="wb-rows" id="wbRows"></div>
+<div class="wb-outer">
+  <div class="wb-clip wb-clip-l"></div>
+  <div class="wb-clip wb-clip-r"></div>
+  <div class="wb-board">
+    <div class="wb-layout">
+      <div class="wb-title">月行事予定表</div>
+      <div class="wb-grid-area" id="wbGrid">
+        <div class="wb-header"    id="wbHeader"></div>
+        <div class="wb-subheader" id="wbSubHeader"></div>
+        <div class="wb-rows"      id="wbRows"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wb-tray">
+    <div class="wb-pen pen-blue"></div>
+    <div class="wb-pen pen-red"></div>
+    <div class="wb-pen pen-grn"></div>
+    <div class="wb-pen pen-blk"></div>
+    <div class="wb-eraser"></div>
   </div>
 </div>
 
-<div class="hint">👆 行またはバーを押下すると即座にkintoneへ遷移します (スクロール可能)</div>
-
-<!-- Tooltip -->
-<div class="tip" id="tip"></div>
+<div class="hint">👆 行またはバーを押下すると工事詳細が展開されます（スクロール可）</div>
+<div class="tooltip" id="tooltip"></div>
 
 <script>
-// ═══ Data ═══
-// 画像から読み取ったデータと、スクロール確認用の追加ダミーデータ
+// ═══ Project Data ═══
 const P = [
-  { id:"12731001", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"田中 一郎 (一土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:10 },
-  { id:"12731002", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"鈴木 二郎 (一土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:12 },
-  { id:"12731003", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"佐藤 三郎 (一土)", status:"upcoming", s:"2026-04-10", e:"2027-03-31", prog:0 },
-  { id:"12731004", name:"〇〇工事 (株)〇〇", client:"〇〇発注者", mgr:"鈴木 四郎 (二土)", status:"active", s:"2026-01-10", e:"2027-03-31", prog:5 },
-  // 案件多数・スクロール動作確認用のダミーデータ
-  { id:"12731005", name:"△△ビル 新築工事", client:"(株)△△", mgr:"高橋 健太", status:"active", s:"2026-02-01", e:"2026-08-31", prog:25 },
-  { id:"12731006", name:"国道〇号線 舗装補修", client:"国土交通省", mgr:"渡辺 裕子", status:"delayed", s:"2026-01-15", e:"2026-03-20", prog:85 },
-  { id:"12731007", name:"〇〇市民体育館 耐震補強", client:"〇〇市", mgr:"伊藤 大輔", status:"active", s:"2026-03-05", e:"2026-10-31", prog:5 },
-  { id:"12731008", name:"(仮称)〇〇商業施設 新築", client:"〇〇不動産", mgr:"山本 誠", status:"upcoming", s:"2026-04-15", e:"2027-02-28", prog:0 },
-  { id:"12731009", name:"〇〇川 護岸工事", client:"〇〇県", mgr:"中村 美咲", status:"active", s:"2025-11-01", e:"2026-05-31", prog:60 },
-  { id:"12731010", name:"〇〇小学校 空調設備改修", client:"〇〇市教育委員会", mgr:"小林 剛", status:"completed", s:"2025-12-01", e:"2026-02-28", prog:100 },
-  { id:"12731011", name:"△△地区 下水道管渠布設", client:"〇〇市水道局", mgr:"加藤 修", status:"active", s:"2026-01-20", e:"2026-06-30", prog:40 },
-  { id:"12731012", name:"〇〇公園 遊具更新工事", client:"〇〇市緑地課", mgr:"吉田 恵", status:"upcoming", s:"2026-03-25", e:"2026-04-30", prog:0 }
+  { id:"KJ-2026-001", name:"鹿児島市役所 本庁舎改修工事",    client:"鹿児島市",       mgr:"田中 太郎",
+    status:"active",    s:"2026-02-10", e:"2026-05-30", prog:45,
+    budget:158000000, spent:68500000,  cat:"公共建築", loc:"鹿児島市山下町11-1",    wk:24,
+    notes:"2F〜4Fの内装改修。3月末までに2F完了予定。",
+    ms:["2F完了 (3/31)","3F完了 (4/30)","検査 (5/25)"] },
+  { id:"KJ-2026-002", name:"天文館通り 道路拡幅工事",         client:"鹿児島県",       mgr:"山田 花子",
+    status:"active",    s:"2026-01-15", e:"2026-04-15", prog:68,
+    budget:92000000,  spent:61200000,  cat:"土木",     loc:"鹿児島市千日町",        wk:18,
+    notes:"夜間工事区間あり（22:00-5:00）。騒音対策実施中。",
+    ms:["路盤完了 (3/15)","舗装 (4/01)","開放 (4/15)"] },
+  { id:"KJ-2026-003", name:"桜島フェリーターミナル 耐震補強", client:"鹿児島市船舶部", mgr:"佐藤 健一",
+    status:"delayed",   s:"2025-11-01", e:"2026-04-14", prog:52,
+    budget:245000000, spent:142000000, cat:"港湾",     loc:"鹿児島市桜島横山町",    wk:32,
+    notes:"⚠ 資材調達遅延により2週間の工期遅れ。完了予定4/14に変更。",
+    ms:["基礎完了 (1/31)","上部工 (3/15)","完了予定 (4/14)"] },
+  { id:"KJ-2026-004", name:"城山展望台 休憩施設新築",         client:"鹿児島市観光課", mgr:"中村 美咲",
+    status:"upcoming",  s:"2026-04-01", e:"2026-08-31", prog:0,
+    budget:78000000,  spent:0,         cat:"建築",     loc:"鹿児島市城山町",        wk:0,
+    notes:"4月着工予定。景観審査は3月に承認済み。",
+    ms:["着工 (4/01)","上棟 (6/15)","竣工 (8/31)"] },
+  { id:"KJ-2026-005", name:"甲突川 護岸修繕工事",             client:"鹿児島県土木部", mgr:"鈴木 一郎",
+    status:"active",    s:"2026-03-01", e:"2026-06-30", prog:18,
+    budget:64000000,  spent:9800000,   cat:"河川",     loc:"鹿児島市甲突町",        wk:12,
+    notes:"渇水期に合わせた施工。梅雨前の完了を目指す。",
+    ms:["仮締切 (3/10)","本体工 (5/01)","撤去 (6/25)"] },
+  { id:"KJ-2026-006", name:"鴨池運動公園 照明LED化",          client:"鹿児島市",       mgr:"高橋 誠",
+    status:"completed", s:"2025-12-01", e:"2026-02-28", prog:100,
+    budget:35000000,  spent:33200000,  cat:"電気設備", loc:"鹿児島市与次郎2丁目",  wk:0,
+    notes:"全灯具のLED化完了。検査合格済み。",
+    ms:["野球場完了 (1/15)","陸上競技場 (2/10)","検査 (2/25)"] },
+  { id:"KJ-2026-007", name:"谷山駅前 再開発ビル基礎工事",     client:"谷山駅前再開発組合", mgr:"伊藤 大輔",
+    status:"active",    s:"2026-01-20", e:"2026-07-31", prog:30,
+    budget:420000000, spent:118000000, cat:"建築",     loc:"鹿児島市谷山中央1丁目", wk:45,
+    notes:"杭打ち完了。地下躯体工事に移行中。",
+    ms:["杭完了 (3/01)","地下躯体 (5/15)","1F床 (7/31)"] },
+  { id:"KJ-2026-008", name:"指宿スカイライン 法面補修",        client:"NEXCO西日本",    mgr:"渡辺 裕子",
+    status:"upcoming",  s:"2026-04-15", e:"2026-06-15", prog:0,
+    budget:52000000,  spent:0,         cat:"道路",     loc:"鹿児島市田上8丁目",    wk:0,
+    notes:"片側交互通行規制あり。夜間作業主体。",
+    ms:["着手 (4/15)","モルタル吹付 (5/20)","完了 (6/15)"] },
 ];
 
-const SL={active:'施工中',upcoming:'予定',delayed:'遅延',completed:'完了'};
-const today=new Date(2026,2,23);
-let vY=2026, vM=2, filt='all';
+const SL  = { active:'施工中', upcoming:'着工予定', delayed:'遅延', completed:'完了' };
+const DOW = ['日','月','火','水','木','金','土'];
+const MON = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const TODAY = new Date(2026, 2, 23);
 
-function dim(y,m){return new Date(y,m+1,0).getDate();}
-function pd(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
-function fl(){return filt==='all'?P:P.filter(p=>p.status===filt);}
+let view = 'month', vDate = new Date(2026, 2, 1), filt = 'all', openId = null;
 
+// ─── Helpers ───
+const pd = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+const yen = n => n>=1e8?(n/1e8).toFixed(1)+'億円': n>=1e4?Math.round(n/1e4).toLocaleString()+'万円': n.toLocaleString()+'円';
+const proj = () => filt==='all' ? P : P.filter(p=>p.status===filt);
+
+// ─── View Config ───
+function cfg() {
+  if (view === 'week') {
+    const d = new Date(vDate), dow = d.getDay();
+    const mon = new Date(d); mon.setDate(d.getDate()-(dow===0?6:dow-1));
+    const cols = Array.from({length:7},(_,i)=>{ const dd=new Date(mon); dd.setDate(mon.getDate()+i); return dd; });
+    const last = cols[6];
+    return {
+      type:'week', cols,
+      label:`${cols[0].getFullYear()}年 ${cols[0].getMonth()+1}/${cols[0].getDate()}〜${last.getMonth()+1}/${last.getDate()}（週間）`,
+      sub: false,
+    };
+  } else if (view === 'month') {
+    const y=vDate.getFullYear(), m=vDate.getMonth();
+    const days = new Date(y,m+1,0).getDate();
+    const cols = Array.from({length:days},(_,i)=>new Date(y,m,i+1));
+    return { type:'month', cols, label:`${y}年 ${MON[m]}`, sub:true };
+  } else {
+    const y = vDate.getFullYear();
+    const cols = Array.from({length:12},(_,i)=>new Date(y,i,1));
+    return { type:'year', cols, label:`${y}年（年間）`, sub:false };
+  }
+}
+
+// ─── Bar Position (% within gantt area) ───
+function barPos(p, c) {
+  const pS=pd(p.s), pE=pd(p.e);
+  const first=c.cols[0];
+  const last=c.cols[c.cols.length-1];
+  const end = new Date(last.getFullYear(), last.getMonth(), last.getDate()+1);
+  if (pS>=end || pE<first) return null;
+  const total = end-first;
+  const bS = Math.max(pS.getTime(), first.getTime());
+  const bE = Math.min(pE.getTime()+86400000, end.getTime());
+  return { left:(bS-first)/total*100, width:(bE-bS)/total*100 };
+}
+
+// ─── Today Position (%) ───
+function todayPct(c) {
+  const first=c.cols[0];
+  const last=c.cols[c.cols.length-1];
+  const end = new Date(last.getFullYear(), last.getMonth(), last.getDate()+1);
+  if (TODAY<first || TODAY>=end) return null;
+  return (TODAY.getTime()-first.getTime()+43200000)/(end-first)*100;
+}
+
+// ─── Column separator positions ───
+function sepPcts(c) {
+  const n=c.cols.length, first=c.cols[0];
+  const last=c.cols[n-1];
+  const end = new Date(last.getFullYear(), last.getMonth(), last.getDate()+1);
+  const total = end-first;
+  return c.cols.slice(0,-1).map((col,i)=>{
+    const next=c.cols[i+1];
+    return { pct:(next-first)/total*100, dow:next.getDay() };
+  });
+}
+
+// ─── Render ───
 function render() {
-  const days = dim(vY, vM);
-  const mn = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('mLabel').textContent = `${vY}年 ${mn[vM]}`;
+  const c = cfg();
+  document.getElementById('periodLabel').textContent = c.label;
+  const tpl = `44px repeat(${c.cols.length},1fr) 56px 44px`;
 
-  const list = fl();
-  const container = document.getElementById('wbRows');
-  container.innerHTML = '';
+  renderHeader(c, tpl);
+  renderRows(c, tpl);
+}
+
+function setTpl(el, tpl) { el.style.gridTemplateColumns = tpl; }
+
+function renderHeader(c, tpl) {
+  const hdr = document.getElementById('wbHeader');
+  const sub = document.getElementById('wbSubHeader');
+  hdr.innerHTML = ''; sub.innerHTML = '';
+  setTpl(hdr, tpl);
+
+  // First cell label
+  const mk = (txt, cls) => { const d=document.createElement('div'); d.className='hc '+cls; d.innerHTML=txt; return d; };
+
+  hdr.appendChild(mk(c.type==='month'?'日':c.type==='week'?'曜日':'月','lbl'));
+
+  c.cols.forEach(col => {
+    const dow=col.getDay(), isToday=col.toDateString()===TODAY.toDateString();
+    let cls='', txt='';
+    if (c.type==='month') {
+      txt = col.getDate();
+      cls = dow===0?'sun':dow===6?'sat':'';
+    } else if (c.type==='week') {
+      txt = `${DOW[dow]}<br><span style="font-size:10px;font-weight:500">${col.getMonth()+1}/${col.getDate()}</span>`;
+      cls = dow===0?'sun':dow===6?'sat':'';
+    } else {
+      txt = MON[col.getMonth()];
+    }
+    if (isToday) cls += ' today-hc';
+    hdr.appendChild(mk(txt, cls.trim()));
+  });
+
+  hdr.appendChild(mk('備','biko'));
+  hdr.appendChild(mk('考','ko'));
+
+  // Sub header (曜 row – month view only)
+  if (c.sub) {
+    sub.style.display = '';
+    setTpl(sub, tpl);
+    sub.appendChild(mk('曜','lbl'));
+    c.cols.forEach(col => {
+      const dow=col.getDay();
+      const el = mk(DOW[dow], dow===0?'sun':dow===6?'sat':'');
+      el.style.fontSize='11px';
+      sub.appendChild(el);
+    });
+    sub.appendChild(mk('','biko'));
+    sub.appendChild(mk('','ko'));
+  } else {
+    sub.style.display = 'none';
+  }
+}
+
+function renderRows(c, tpl) {
+  const ct = document.getElementById('wbRows');
+  ct.innerHTML = '';
+  const list = proj();
+  const seps = sepPcts(c);
+  const tdp  = todayPct(c);
+
+  if (!list.length) {
+    const e = document.createElement('div');
+    e.style.cssText='padding:36px;text-align:center;color:#999;font-size:14px;';
+    e.textContent='該当する工事がありません';
+    ct.appendChild(e); return;
+  }
 
   list.forEach((p, idx) => {
-    const ci = idx % 8;
-
+    const ci = P.indexOf(p) % 8;
     const row = document.createElement('div');
-    row.className = 'wb-row';
-    
-    // クリックで即座にkintoneモックアップへ遷移
-    row.onclick = () => {
-      window.location.href = `kintone_mockup.html?工事番号=${p.id}`;
-    };
+    row.className = 'wb-row' + (openId===p.id?' exp':'');
+    setTpl(row, tpl);
+    row.onclick = () => toggle(p.id);
 
-    const lbl = document.createElement('div');
-    lbl.className = 'row-label';
-    lbl.innerHTML = `<div style="display:flex;flex-direction:column;gap:1px"><div class="row-label-text">${p.name}</div><div class="row-label-sub">担当: ${p.mgr}　工期: ${p.s}〜${p.e}</div></div>`;
-    row.appendChild(lbl);
+    // Row label (記/事 alternating)
+    const rlbl = document.createElement('div');
+    rlbl.className = 'row-lbl';
+    rlbl.textContent = idx%2===0 ? '記' : '事';
+    row.appendChild(rlbl);
 
-    const pS = pd(p.s), pE = pd(p.e);
-    const mS = new Date(vY, vM, 1), mE = new Date(vY, vM, days);
+    // Gantt area
+    const ga = document.createElement('div');
+    ga.className = 'row-gantt';
 
-    if (pS <= mE && pE >= mS) {
-      const sd = pS < mS ? 1 : pS.getDate();
-      const ed = pE > mE ? days : pE.getDate();
+    // Column separator lines
+    seps.forEach(s => {
+      const l=document.createElement('div');
+      l.className='csep'+(s.dow===0?' sun':s.dow===6?' sat':'');
+      l.style.left=s.pct+'%'; ga.appendChild(l);
+    });
 
-      const dayWidth = 96.0 / days;
-      const barLeft = (sd - 1) * dayWidth;
-      const barWidth = (ed - sd + 1) * dayWidth;
+    // Today line
+    if (tdp !== null) {
+      const tl=document.createElement('div');
+      tl.className='csep today'; tl.style.left=tdp+'%'; ga.appendChild(tl);
+      const tt=document.createElement('div');
+      tt.className='today-tag'; tt.style.left=tdp+'%'; tt.textContent='今日'; ga.appendChild(tt);
+    }
 
-      const bar = document.createElement('div');
-      bar.className = `gantt-bar mc${ci} ${p.status === 'delayed' ? 'bar-delayed' : ''}`;
-      bar.style.cssText = `left:${barLeft}%;width:${barWidth}%;`;
+    // Project label
+    const pl=document.createElement('div');
+    pl.className='plbl';
+    pl.innerHTML=`<div>
+      <span class="pname">${p.name}</span>
+      <span class="sbadge sb-${p.status}">${SL[p.status]}</span>
+    </div>
+    <span class="psub">担当: ${p.mgr}　工期: ${p.s}〜${p.e}</span>`;
+    ga.appendChild(pl);
 
-      bar.innerHTML = `<div class="bar-prog" style="width:${p.prog}%"></div>
-        <span class="bar-text">${p.prog > 0 ? p.prog + '%' : ''}</span>`;
+    // Gantt bar
+    const bp = barPos(p, c);
+    if (bp) {
+      const bar=document.createElement('div');
+      bar.className=`gbar bc${ci}${p.status==='delayed'?' delayed':p.status==='completed'?' completed':''}`;
+      bar.style.left=bp.left+'%';
+      bar.style.width=Math.max(bp.width,0.4)+'%';
 
-      bar.onmouseenter = (ev) => showTip(ev, p);
+      const inner=document.createElement('div');
+      inner.className='gbar-inner';
+
+      if (p.prog > 0) {
+        const gd=document.createElement('div'); gd.className='gd';
+        gd.style.width=p.prog+'%'; inner.appendChild(gd);
+      }
+
+      if (p.prog < 100) {
+        const gr=document.createElement('div'); gr.className='gr';
+        gr.style.left=p.prog+'%'; inner.appendChild(gr);
+      }
+
+      if (p.prog > 0 && p.prog < 100) {
+        const dv=document.createElement('div'); dv.className='gdiv';
+        dv.style.left=p.prog+'%'; inner.appendChild(dv);
+      }
+
+      bar.appendChild(inner);
+
+      const pctEl=document.createElement('span');
+      // show outside if bar too narrow
+      if (bp.width < 8) {
+        pctEl.className='gpct-out'; pctEl.textContent=p.prog+'%';
+      } else {
+        pctEl.className='gpct'; pctEl.textContent=p.prog+'%';
+      }
+      bar.appendChild(pctEl);
+
+      bar.onmouseenter = ev => showTip(ev,p);
       bar.onmouseleave = hideTip;
-      // バーのクリックイベントも行と同じ遷移先に
-      bar.onclick = (ev) => { 
-        ev.stopPropagation(); 
-        window.location.href = `kintone_mockup.html?工事番号=${p.id}`; 
-      };
-
-      row.appendChild(bar);
+      bar.onclick = ev => { ev.stopPropagation(); toggle(p.id); };
+      ga.appendChild(bar);
     }
 
-    if (vY === today.getFullYear() && vM === today.getMonth()) {
-      const dayWidth = 96.0 / days;
-      const tl = document.createElement('div');
-      tl.className = 'today-line';
-      tl.style.left = `${(today.getDate() - 0.5) * dayWidth}%`;
-      row.appendChild(tl);
-    }
+    row.appendChild(ga);
 
-    container.appendChild(row);
+    // 備 / 考 cells
+    const bc=document.createElement('div'); bc.className='row-biko'; row.appendChild(bc);
+    const kc=document.createElement('div'); kc.className='row-ko';   row.appendChild(kc);
+
+    ct.appendChild(row);
+
+    // Detail popup (appended after row)
+    if (openId === p.id) ct.appendChild(buildPopup(p));
   });
 }
 
+// ─── Detail Popup ───
+function toggle(id) {
+  openId = openId===id ? null : id;
+  render();
+  if (openId) {
+    // Scroll popup into view
+    setTimeout(()=>{
+      const dp=document.querySelector('.dp');
+      if(dp) dp.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }, 50);
+  }
+}
+
+function buildPopup(p) {
+  const execRate = p.budget>0 ? Math.round(p.spent/p.budget*100) : 0;
+  const pc = p.status==='delayed'?'#c62828': p.status==='completed'?'#888':'#2e7d32';
+  const dp = document.createElement('div');
+  dp.className='dp';
+  dp.innerHTML=`
+    <div class="dp-head">
+      <h3>${p.name}</h3>
+      <button class="dp-close" onclick="event.stopPropagation();openId=null;render()">✕</button>
+    </div>
+    <div class="dp-body">
+      <div class="dp-sec">
+        <h4>📌 基本情報</h4>
+        <div class="dpr"><span class="dpl">工事番号</span><span class="dpv">${p.id}</span></div>
+        <div class="dpr"><span class="dpl">発注者</span><span class="dpv">${p.client}</span></div>
+        <div class="dpr"><span class="dpl">現場代理人</span><span class="dpv">${p.mgr}</span></div>
+        <div class="dpr"><span class="dpl">分類</span><span class="dpv">${p.cat}</span></div>
+        <div class="dpr"><span class="dpl">現場住所</span><span class="dpv">${p.loc}</span></div>
+        <div class="dpr"><span class="dpl">作業員数</span><span class="dpv">${p.wk}名</span></div>
+        <div class="dpr"><span class="dpl">ステータス</span><span class="dptag dt-${p.status}">${SL[p.status]}</span></div>
+      </div>
+      <div class="dp-sec">
+        <h4>📊 工期・進捗</h4>
+        <div class="dpr"><span class="dpl">工期</span><span class="dpv">${p.s} 〜 ${p.e}</span></div>
+        <div class="dpr"><span class="dpl">進捗率</span>
+          <span class="dpv" style="font-size:15px;color:${pc}">${p.prog}%</span></div>
+        <div class="dp-pbar"><div class="fill" style="width:${p.prog}%;background:${pc}"></div></div>
+        <h4 style="margin-top:12px">🚩 マイルストーン</h4>
+        ${p.ms.map(m=>`<div class="dpms">${m}</div>`).join('')}
+      </div>
+      <div class="dp-sec">
+        <h4>💰 予算</h4>
+        <div class="dpr"><span class="dpl">請負金額</span><span class="dpv">${yen(p.budget)}</span></div>
+        <div class="dpr"><span class="dpl">実行額</span><span class="dpv">${yen(p.spent)}</span></div>
+        <div class="dpr"><span class="dpl">執行率</span><span class="dpv">${execRate}%</span></div>
+        <div class="dp-pbar"><div class="fill" style="width:${execRate}%;background:#e65100"></div></div>
+        <h4 style="margin-top:12px">📝 備考</h4>
+        <div class="dp-note">${p.notes}</div>
+      </div>
+    </div>`;
+  return dp;
+}
+
+// ─── Tooltip ───
 function showTip(ev, p) {
-  const t = document.getElementById('tip');
-  t.innerHTML = `<div class="tip-n">${p.name}</div><div class="tip-s">担当: ${p.mgr} | 進捗: ${p.prog}%</div><div class="tip-s">工期: ${p.s} ～ ${p.e}</div>`;
-  t.classList.add('show');
-  mvTip(ev);
+  const t=document.getElementById('tooltip');
+  const pc = p.status==='delayed'?'#c62828': p.status==='completed'?'#888':'#2e7d32';
+  t.innerHTML=`<div class="tt-n">${p.name}</div>
+    <div class="tt-s">${p.mgr} ｜ <span style="color:${pc};font-weight:700">${SL[p.status]}</span> ｜ 進捗 <b>${p.prog}%</b></div>
+    <div class="tt-s">${p.s} 〜 ${p.e}</div>`;
+  t.classList.add('show'); mvTip(ev);
 }
 function mvTip(ev) {
-  const t = document.getElementById('tip');
-  t.style.left = (ev.clientX + 14) + 'px';
-  t.style.top = (ev.clientY - 8) + 'px';
+  const t=document.getElementById('tooltip');
+  t.style.left=(ev.clientX+14)+'px'; t.style.top=(ev.clientY-8)+'px';
 }
-document.addEventListener('mousemove', ev => {
-  if (document.getElementById('tip').classList.contains('show')) mvTip(ev);
+function hideTip() { document.getElementById('tooltip').classList.remove('show'); }
+document.addEventListener('mousemove', ev=>{ if(document.getElementById('tooltip').classList.contains('show'))mvTip(ev); });
+
+// ─── Navigation ───
+document.getElementById('prevBtn').onclick = () => {
+  if(view==='week')       vDate.setDate(vDate.getDate()-7);
+  else if(view==='month') vDate.setMonth(vDate.getMonth()-1);
+  else                    vDate.setFullYear(vDate.getFullYear()-1);
+  openId=null; render();
+};
+document.getElementById('nextBtn').onclick = () => {
+  if(view==='week')       vDate.setDate(vDate.getDate()+7);
+  else if(view==='month') vDate.setMonth(vDate.getMonth()+1);
+  else                    vDate.setFullYear(vDate.getFullYear()+1);
+  openId=null; render();
+};
+
+// ─── View toggle ───
+document.querySelectorAll('.vt').forEach(b=>{
+  b.onclick = () => {
+    document.querySelectorAll('.vt').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); view=b.dataset.v; openId=null; render();
+  };
 });
-function hideTip() { document.getElementById('tip').classList.remove('show'); }
 
-document.querySelectorAll('.pill').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    filt = b.dataset.f;
-    render();
-  });
+// ─── Filter pills ───
+document.querySelectorAll('.pill').forEach(b=>{
+  b.onclick = () => {
+    document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); filt=b.dataset.f; openId=null; render();
+  };
 });
 
-document.getElementById('prevM').onclick = () => { vM--; if(vM<0){vM=11;vY--;} render(); };
-document.getElementById('nextM').onclick = () => { vM++; if(vM>11){vM=0;vY++;} render(); };
-
-window.addEventListener('resize', () => { render(); });
-
+// ─── Clock ───
 function tick() {
-  const n = new Date();
-  document.getElementById('clock').textContent =
-    `${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+  const n=new Date();
+  document.getElementById('clock').textContent=
+    `${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} `+
+    `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
 }
 
-render(); tick(); setInterval(tick, 30000);
+// ─── Init ───
+window.addEventListener('resize', ()=>{ openId=null; render(); });
+render(); tick(); setInterval(tick,30000);
 </script>
 </body>
 </html>
