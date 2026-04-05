@@ -3,21 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>工事管理 - kintone</title>
+<title>渡辺組 工事管理 - kintone</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Noto Sans JP',sans-serif;background:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;}
 
-/* ─── kintone Header ─── */
-.kt-header{
-  background:linear-gradient(90deg,#1a237e 0%,#1565c0 100%);
-  height:50px;display:flex;align-items:center;padding:0 16px;gap:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.25);flex-shrink:0;position:sticky;top:0;z-index:100;
-}
+/* ─── Header ─── */
+.kt-header{background:linear-gradient(90deg,#1a237e 0%,#1565c0 100%);height:50px;display:flex;align-items:center;padding:0 16px;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.25);flex-shrink:0;position:sticky;top:0;z-index:100;}
 .kt-logo{display:flex;align-items:center;gap:8px;color:#fff;font-size:18px;font-weight:900;letter-spacing:-0.02em;}
 .kt-logo-icon{width:30px;height:30px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#1565c0;font-weight:900;font-size:14px;}
-.kt-app-name{color:rgba(255,255,255,0.85);font-size:13px;font-weight:500;border-left:1px solid rgba(255,255,255,0.3);padding-left:14px;margin-left:2px;}
+.kt-app-name{color:rgba(255,255,255,0.85);font-size:13px;font-weight:500;border-left:1px solid rgba(255,255,255,0.3);padding-left:14px;}
 .kt-spacer{flex:1;}
 .kt-user{display:flex;align-items:center;gap:8px;color:#fff;font-size:12px;}
 .kt-avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
@@ -26,206 +22,193 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f2f5;min-height:100vh;d
 .kt-layout{display:flex;flex:1;min-height:0;}
 
 /* Sidebar */
-.kt-sidebar{
-  width:220px;flex-shrink:0;
-  background:#1e2a3a;
-  display:flex;flex-direction:column;
-  padding:12px 0;
-  box-shadow:2px 0 8px rgba(0,0,0,0.15);
-}
-.sidebar-section{padding:8px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;}
-.sidebar-app{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 16px;cursor:pointer;
-  color:rgba(255,255,255,0.75);font-size:13px;font-weight:500;
-  transition:all 0.15s;border-left:3px solid transparent;
-}
+.kt-sidebar{width:220px;flex-shrink:0;background:#1e2a3a;display:flex;flex-direction:column;padding:12px 0;box-shadow:2px 0 8px rgba(0,0,0,0.15);}
+.sidebar-section{padding:8px 16px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:0.08em;}
+.sidebar-app{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;color:rgba(255,255,255,0.75);font-size:13px;font-weight:500;transition:all 0.15s;border-left:3px solid transparent;}
 .sidebar-app:hover{background:rgba(255,255,255,0.08);color:#fff;}
 .sidebar-app.active{background:rgba(21,101,192,0.3);color:#fff;border-left-color:#4fc3f7;font-weight:700;}
 .sidebar-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.si-blue{background:rgba(21,101,192,0.6);}
-.si-orange{background:rgba(230,81,0,0.6);}
-.si-green{background:rgba(46,125,50,0.6);}
-.si-purple{background:rgba(106,27,154,0.6);}
-.si-teal{background:rgba(0,131,143,0.6);}
+.si-blue{background:rgba(21,101,192,0.7);}
+.si-orange{background:rgba(198,93,11,0.7);}
+.si-green{background:rgba(46,125,50,0.7);}
+.si-purple{background:rgba(106,27,154,0.7);}
+.si-teal{background:rgba(0,105,92,0.7);}
 .sidebar-count{margin-left:auto;background:rgba(255,255,255,0.15);padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;}
-.sidebar-count.red{background:#c62828;}
+.sidebar-count.red{background:#c62828;color:#fff;}
+.sidebar-count.orange{background:#e65100;color:#fff;}
+.sidebar-divider{border-top:1px solid rgba(255,255,255,0.08);margin:8px 0;}
+.sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;}
 
-/* Main content */
+/* Main */
 .kt-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-y:auto;}
 
 /* Breadcrumb */
-.kt-breadcrumb{
-  background:#fff;border-bottom:1px solid #e0e4e8;
-  padding:10px 20px;display:flex;align-items:center;gap:6px;
-  font-size:12px;color:#666;
-}
+.kt-breadcrumb{background:#fff;border-bottom:1px solid #e0e4e8;padding:10px 20px;display:flex;align-items:center;gap:6px;font-size:12px;color:#666;flex-wrap:wrap;}
 .bc-item{cursor:pointer;color:#1565c0;font-weight:500;}
 .bc-item:hover{text-decoration:underline;}
 .bc-sep{color:#bbb;}
 .bc-current{color:#333;font-weight:700;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:4px;border:1px solid #1565c0;background:#fff;color:#1565c0;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.12s;}
+.back-btn:hover{background:#e3f2fd;}
 
-/* View toolbar */
-.kt-viewbar{
-  background:#fff;border-bottom:1px solid #e0e4e8;
-  padding:8px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-}
-.kt-btn{padding:6px 14px;border-radius:4px;border:1px solid #ccc;background:#fff;font-family:inherit;font-size:12px;font-weight:600;color:#333;cursor:pointer;transition:all 0.12s;display:flex;align-items:center;gap:5px;}
+/* Viewbar */
+.kt-viewbar{background:#fff;border-bottom:1px solid #e0e4e8;padding:8px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.kt-btn{padding:6px 14px;border-radius:4px;border:1px solid #ccc;background:#fff;font-family:inherit;font-size:12px;font-weight:600;color:#333;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:5px;}
 .kt-btn:hover{background:#f5f5f5;border-color:#aaa;}
 .kt-btn.primary{background:#1565c0;color:#fff;border-color:#1565c0;}
 .kt-btn.primary:hover{background:#1976d2;}
-.kt-btn.danger{background:#c62828;color:#fff;border-color:#c62828;}
 .kt-search{padding:6px 12px;border:1px solid #ccc;border-radius:4px;font-family:inherit;font-size:12px;width:220px;outline:none;}
 .kt-search:focus{border-color:#1565c0;}
 .kt-spacer-sm{flex:1;}
 .rec-count{font-size:12px;color:#888;}
+.kt-filter-select{padding:5px 10px;border:1px solid #ccc;border-radius:4px;font-family:inherit;font-size:12px;background:#fff;cursor:pointer;outline:none;}
+.kt-filter-select:focus{border-color:#1565c0;}
 
-/* ─── List View ─── */
+/* ─── Table ─── */
 .kt-list-area{padding:16px 20px;}
 .kt-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
-.kt-table thead th{
-  background:#f8f9fb;border-bottom:2px solid #e0e4e8;
-  padding:10px 14px;text-align:left;font-size:12px;font-weight:700;color:#555;
-  white-space:nowrap;cursor:pointer;user-select:none;
-}
+.kt-table thead th{background:#f8f9fb;border-bottom:2px solid #e0e4e8;padding:10px 14px;text-align:left;font-size:12px;font-weight:700;color:#555;white-space:nowrap;cursor:pointer;}
 .kt-table thead th:hover{background:#eff1f5;}
 .kt-table tbody tr{border-bottom:1px solid #f0f2f5;cursor:pointer;transition:background 0.1s;}
 .kt-table tbody tr:last-child{border-bottom:none;}
 .kt-table tbody tr:hover{background:#f0f6ff;}
 .kt-table td{padding:11px 14px;font-size:13px;color:#333;vertical-align:middle;}
 .kt-table td.nm{font-weight:700;color:#1565c0;}
-.kt-table td.nm:hover{text-decoration:underline;}
 
-.status-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;}
+/* Status chips */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;}
 .chip-active   {background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
 .chip-upcoming {background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;}
 .chip-delayed  {background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
 .chip-completed{background:#f5f5f5;color:#757575;border:1px solid #e0e0e0;}
+.chip-ok       {background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
+.chip-low      {background:#fff3e0;color:#e65100;border:1px solid #ffcc80;}
+.chip-critical {background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
+.chip-ordered  {background:#e3f2fd;color:#1565c0;border:1px solid #90caf9;}
 
-.prog-cell{min-width:100px;}
-.prog-bar-wrap{background:#e8e8e8;border-radius:4px;height:8px;overflow:hidden;width:80px;display:inline-block;vertical-align:middle;margin-right:6px;}
-.prog-bar-fill{height:100%;border-radius:4px;}
+/* Progress */
+.prog-wrap{background:#e8e8e8;border-radius:4px;height:8px;overflow:hidden;width:80px;display:inline-block;vertical-align:middle;margin-right:6px;}
+.prog-fill{height:100%;border-radius:4px;}
 .prog-num{font-size:12px;font-weight:700;vertical-align:middle;}
+
+/* Stock level bar */
+.stock-wrap{display:flex;align-items:center;gap:8px;}
+.stock-bar-bg{flex:1;min-width:60px;max-width:100px;background:#e8e8e8;border-radius:4px;height:10px;overflow:hidden;}
+.stock-bar-fill{height:100%;border-radius:4px;transition:width 0.3s;}
+
+/* Alert box */
+.alert-box{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fff3e0;border:1px solid #ffb74d;border-radius:6px;font-size:12px;color:#e65100;margin-bottom:12px;}
+.alert-box.red{background:#ffebee;border-color:#ef9a9a;color:#c62828;}
 
 /* ─── Record Detail ─── */
 .kt-record{padding:20px;}
-.rec-header{
-  background:#fff;border-radius:8px;
-  border:1px solid #e0e4e8;
-  margin-bottom:16px;overflow:hidden;
-  box-shadow:0 1px 4px rgba(0,0,0,0.06);
-}
-.rec-header-top{
-  background:linear-gradient(90deg,#1565c0,#0d47a1);
-  padding:16px 20px;color:#fff;
-  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-}
+.rec-header{background:#fff;border-radius:8px;border:1px solid #e0e4e8;margin-bottom:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.rec-header-top{padding:16px 20px;color:#fff;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
 .rec-title{font-size:18px;font-weight:900;line-height:1.4;}
 .rec-id{font-size:11px;opacity:0.75;margin-top:3px;}
 .rec-header-meta{display:flex;gap:24px;padding:12px 20px;background:#fafbfc;flex-wrap:wrap;}
 .rec-meta-item{font-size:12px;color:#555;}
-.rec-meta-label{font-weight:700;color:#888;margin-bottom:2px;}
+.rec-meta-label{font-weight:700;color:#888;margin-bottom:2px;font-size:11px;}
 
-/* Sections */
+/* Section */
 .kt-section{background:#fff;border-radius:8px;border:1px solid #e0e4e8;margin-bottom:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
-.section-head{
-  padding:12px 20px;background:#f8f9fb;border-bottom:1px solid #e8ecf0;
-  font-size:13px;font-weight:700;color:#333;
-  display:flex;align-items:center;gap:8px;cursor:pointer;
-  user-select:none;
-}
+.section-head{padding:12px 20px;background:#f8f9fb;border-bottom:1px solid #e8ecf0;font-size:13px;font-weight:700;color:#333;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
 .section-head:hover{background:#eff1f5;}
-.section-toggle{font-size:10px;margin-left:auto;color:#888;}
+.section-tog{font-size:10px;margin-left:auto;color:#888;}
 .section-body{padding:16px 20px;}
 
+/* Field grid */
 .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-.field-row{display:contents;}
 .field-label{padding:10px 12px;background:#f8f9fb;border:1px solid #ebeef2;font-size:12px;font-weight:700;color:#666;display:flex;align-items:center;}
-.field-value{padding:10px 14px;border:1px solid #ebeef2;border-left:none;font-size:13px;color:#222;display:flex;align-items:center;}
-.field-value.highlight{color:#1565c0;font-weight:700;}
+.field-value{padding:10px 14px;border:1px solid #ebeef2;border-left:none;font-size:13px;color:#222;display:flex;align-items:center;flex-wrap:wrap;gap:6px;}
+.field-value.hi{color:#1565c0;font-weight:700;}
+.field-value.warn{color:#e65100;font-weight:700;}
 .field-value.danger{color:#c62828;font-weight:700;}
 
-/* Progress in detail */
+/* Progress detail */
 .prog-detail{display:flex;align-items:center;gap:10px;width:100%;}
 .prog-detail-bar{flex:1;background:#e8e8e8;border-radius:6px;height:12px;overflow:hidden;}
-.prog-detail-fill{height:100%;border-radius:6px;transition:width 0.5s ease;}
+.prog-detail-fill{height:100%;border-radius:6px;}
 .prog-detail-num{font-size:16px;font-weight:900;white-space:nowrap;min-width:42px;}
 
-/* Budget bar */
-.budget-bar-wrap{width:100%;background:#e8e8e8;border-radius:6px;height:10px;overflow:hidden;margin-top:6px;}
-.budget-bar-fill{height:100%;background:#e65100;border-radius:6px;}
-
-/* ─── Related Records ─── */
-.related-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 20px;background:#f0f6ff;border-bottom:1px solid #dbe8f5;
-  cursor:pointer;
-}
+/* Related records */
+.related-head{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#f0f6ff;border-bottom:1px solid #dbe8f5;cursor:pointer;}
 .related-title{font-size:13px;font-weight:700;color:#1565c0;display:flex;align-items:center;gap:7px;}
 .related-count{background:#1565c0;color:#fff;font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px;}
-.related-toggle{font-size:10px;color:#888;}
 .related-table{width:100%;border-collapse:collapse;}
 .related-table th{background:#f8f9fb;padding:8px 14px;text-align:left;font-size:11px;font-weight:700;color:#666;border-bottom:1px solid #e8ecf0;white-space:nowrap;}
 .related-table td{padding:10px 14px;font-size:12px;color:#333;border-bottom:1px solid #f0f2f5;vertical-align:middle;}
 .related-table tr:last-child td{border-bottom:none;}
 .related-table tbody tr{cursor:pointer;transition:background 0.1s;}
 .related-table tbody tr:hover{background:#f0f6ff;}
-.related-table td.link{color:#1565c0;font-weight:600;}
-.related-table td.link:hover{text-decoration:underline;}
+.related-table td.lk{color:#1565c0;font-weight:600;}
 
-/* Sub-record detail */
-.sub-detail{padding:20px;}
-.sub-rec-card{background:#fff;border-radius:8px;border:1px solid #e0e4e8;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
-.sub-rec-head{background:linear-gradient(90deg,#37474f,#546e7a);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
-.sub-rec-title{font-size:15px;font-weight:700;}
-.sub-rec-body{padding:16px 20px;}
+/* Worker avatar */
+.w-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.w-avatar-sm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;}
+
+/* Cert badge */
+.cert-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;border:1px solid;}
+.cert-ok{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7;}
+.cert-exp{background:#fff3e0;color:#e65100;border-color:#ffcc80;}
+.cert-expired{background:#ffebee;color:#c62828;border-color:#ef9a9a;}
+
+/* Photo grid */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.photo-item{border-radius:6px;overflow:hidden;border:1px solid #e8ecf0;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;}
+.photo-item:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.photo-thumb{height:90px;display:flex;align-items:center;justify-content:center;font-size:32px;}
+.photo-label{padding:6px 8px;font-size:11px;color:#555;background:#fafbfc;border-top:1px solid #eee;}
+.photo-date{font-size:10px;color:#aaa;}
+.photo-cat{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:700;background:#e3f2fd;color:#1565c0;margin-bottom:2px;}
+
+/* Comment */
 .comment-box{margin-top:16px;padding-top:16px;border-top:1px solid #f0f2f5;}
 .comment-head{font-size:12px;font-weight:700;color:#666;margin-bottom:10px;}
 .comment-item{display:flex;gap:10px;margin-bottom:12px;}
 .comment-avatar{width:32px;height:32px;border-radius:50%;background:#e3f2fd;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1565c0;flex-shrink:0;}
-.comment-body{background:#f8f9fb;border-radius:6px;padding:8px 12px;font-size:12px;color:#333;flex:1;}
+.comment-body-wrap{flex:1;}
+.comment-body{background:#f8f9fb;border-radius:6px;padding:8px 12px;font-size:12px;color:#333;}
 .comment-meta{font-size:10px;color:#aaa;margin-top:4px;}
 
-/* Photo grid */
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;}
-.photo-item{
-  border-radius:6px;overflow:hidden;border:1px solid #e8ecf0;
-  cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;
-}
-.photo-item:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
-.photo-thumb{height:80px;display:flex;align-items:center;justify-content:center;font-size:28px;}
-.photo-label{padding:5px 8px;font-size:11px;color:#555;background:#fafbfc;border-top:1px solid #eee;}
-.photo-date{font-size:10px;color:#aaa;}
+/* Sub detail */
+.sub-detail{padding:20px;}
+.sub-rec-card{background:#fff;border-radius:8px;border:1px solid #e0e4e8;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.sub-rec-head{color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.sub-rec-title{font-size:15px;font-weight:700;}
+.sub-rec-body{padding:16px 20px;}
 
-/* Issue badge */
-.issue-none{color:#2e7d32;font-weight:600;}
-.issue-warn{color:#e65100;font-weight:600;}
-
-/* ─── Empty state ─── */
+/* Empty state */
 .empty-state{padding:60px 20px;text-align:center;color:#aaa;}
 .empty-icon{font-size:48px;margin-bottom:12px;}
-.empty-text{font-size:14px;}
 
-/* ─── Footer ─── */
-.kt-footer{background:#fff;border-top:1px solid #e0e4e8;padding:8px 20px;font-size:11px;color:#aaa;flex-shrink:0;}
-
-/* Misc */
-.back-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:6px 14px;border-radius:4px;border:1px solid #1565c0;
-  background:#fff;color:#1565c0;font-size:12px;font-weight:600;
-  cursor:pointer;transition:all 0.12s;
-}
-.back-btn:hover{background:#e3f2fd;}
-.alert-box{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#fff3e0;border:1px solid #ffb74d;border-radius:6px;font-size:12px;color:#e65100;margin-bottom:12px;}
+/* Processing badge */
 .processing-badge{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;font-size:11px;color:#2e7d32;font-weight:600;}
 
-@media(max-width:768px){.kt-sidebar{display:none;}.field-grid{grid-template-columns:1fr;}.dp-body{grid-template-columns:1fr;}}
+/* Order status */
+.order-timeline{display:flex;flex-direction:column;gap:10px;}
+.order-item{display:flex;gap:12px;align-items:flex-start;}
+.order-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.order-dot.done{background:#2e7d32;}
+.order-dot.pending{background:#1565c0;}
+.order-dot.warn{background:#e65100;}
+.order-line{flex:1;}
+.order-label{font-size:12px;font-weight:600;color:#333;}
+.order-sub{font-size:11px;color:#888;margin-top:2px;}
+
+/* Misc */
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.tag-blue{background:#e3f2fd;color:#1565c0;}
+.tag-green{background:#e8f5e9;color:#2e7d32;}
+.tag-orange{background:#fff3e0;color:#e65100;}
+.tag-red{background:#ffebee;color:#c62828;}
+.tag-gray{background:#f5f5f5;color:#757575;}
+
+@media(max-width:768px){.kt-sidebar{display:none;}.field-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- kintone Header -->
 <div class="kt-header">
   <div class="kt-logo">
     <div class="kt-logo-icon">k</div>
@@ -240,286 +223,348 @@ body{font-family:'Noto Sans JP',sans-serif;background:#f0f2f5;min-height:100vh;d
 </div>
 
 <div class="kt-layout">
-  <!-- Sidebar -->
-  <div class="kt-sidebar">
+  <div class="kt-sidebar" id="sidebar">
     <div class="sidebar-section">アプリ一覧</div>
-    <div class="sidebar-app active" onclick="goList()">
+    <div class="sidebar-app" id="nav-koji" onclick="goApp('koji')">
       <div class="sidebar-icon si-blue">🏗</div>
       工事管理
-      <span class="sidebar-count red" id="delayedCount">1</span>
+      <span class="sidebar-count red" id="cnt-koji">1</span>
     </div>
-    <div class="sidebar-app" onclick="alert('デモ：日報管理アプリ')">
+    <div class="sidebar-app" id="nav-nippo" onclick="goApp('nippo')">
       <div class="sidebar-icon si-orange">📝</div>
       日報管理
-      <span class="sidebar-count">24</span>
+      <span class="sidebar-count" id="cnt-nippo">24</span>
     </div>
-    <div class="sidebar-app" onclick="alert('デモ：写真管理アプリ')">
+    <div class="sidebar-app" id="nav-shashin" onclick="goApp('shashin')">
       <div class="sidebar-icon si-green">📷</div>
       写真管理
-      <span class="sidebar-count">87</span>
+      <span class="sidebar-count" id="cnt-shashin">87</span>
     </div>
-    <div class="sidebar-app" onclick="alert('デモ：作業員管理アプリ')">
+    <div class="sidebar-app" id="nav-sakuinsha" onclick="goApp('sakuinsha')">
       <div class="sidebar-icon si-purple">👷</div>
       作業員管理
-      <span class="sidebar-count">32</span>
+      <span class="sidebar-count" id="cnt-sakuinsha">32</span>
     </div>
-    <div class="sidebar-app" onclick="alert('デモ：資材管理アプリ')">
+    <div class="sidebar-app" id="nav-shizai" onclick="goApp('shizai')">
       <div class="sidebar-icon si-teal">📦</div>
       資材管理
+      <span class="sidebar-count orange" id="cnt-shizai">!</span>
     </div>
-    <div style="margin-top:auto;padding:12px 16px;border-top:1px solid rgba(255,255,255,0.1);">
-      <div class="sidebar-app" onclick="location.href='index.html'" style="padding:8px 0;">
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-app" onclick="location.href='index.html'">
         <div class="sidebar-icon" style="background:rgba(255,255,255,0.1)">📋</div>
         ← ホワイトボードへ
       </div>
     </div>
   </div>
 
-  <!-- Main -->
-  <div class="kt-main" id="ktMain">
-    <!-- Rendered by JS -->
-  </div>
+  <div class="kt-main" id="ktMain"></div>
 </div>
 
 <script>
-// ─── Data ───
+// ════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════
+
 const PROJECTS=[
-  {id:"KJ-2026-001",name:"鹿児島市役所 本庁舎改修工事",   client:"鹿児島市",          mgr:"田中 太郎",status:"active",   s:"2026-02-10",e:"2026-05-30",prog:45, budget:158000000,spent:68500000, cat:"公共建築",loc:"鹿児島市山下町11-1",   wk:24, notes:"2F〜4Fの内装改修。3月末までに2F完了予定。天井材・壁材はSDGs対応品を採用。"},
-  {id:"KJ-2026-002",name:"天文館通り 道路拡幅工事",        client:"鹿児島県",          mgr:"山田 花子",status:"active",   s:"2026-01-15",e:"2026-04-15",prog:68, budget:92000000, spent:61200000, cat:"土木",    loc:"鹿児島市千日町",      wk:18, notes:"夜間工事区間あり（22:00-5:00）。騒音対策として防音シート設置実施中。沿道住民への事前説明済み。"},
-  {id:"KJ-2026-003",name:"桜島フェリーターミナル 耐震補強",client:"鹿児島市船舶部",    mgr:"佐藤 健一",status:"delayed",  s:"2025-11-01",e:"2026-04-14",prog:52, budget:245000000,spent:142000000,cat:"港湾",    loc:"鹿児島市桜島横山町",  wk:32, notes:"⚠ 資材調達遅延により2週間の工期遅れ。完了予定を4/14に変更。発注者への報告済み。"},
-  {id:"KJ-2026-004",name:"城山展望台 休憩施設新築",        client:"鹿児島市観光課",    mgr:"中村 美咲",status:"upcoming", s:"2026-04-01",e:"2026-08-31",prog:0,  budget:78000000, spent:0,        cat:"建築",    loc:"鹿児島市城山町",      wk:0,  notes:"4月着工予定。景観審査は3月に承認済み。木造平屋建て、延床面積120㎡。"},
-  {id:"KJ-2026-005",name:"甲突川 護岸修繕工事",            client:"鹿児島県土木部",    mgr:"鈴木 一郎",status:"active",   s:"2026-03-01",e:"2026-06-30",prog:18, budget:64000000, spent:9800000,  cat:"河川",    loc:"鹿児島市甲突町",      wk:12, notes:"渇水期に合わせた施工。梅雨前の完了を目指す。コンクリートブロック積工法。"},
-  {id:"KJ-2026-006",name:"鴨池運動公園 照明LED化",         client:"鹿児島市",          mgr:"高橋 誠",  status:"completed",s:"2025-12-01",e:"2026-02-28",prog:100,budget:35000000, spent:33200000, cat:"電気設備",loc:"鹿児島市与次郎2丁目", wk:0,  notes:"全灯具のLED化完了。検査合格済み。年間消費電力約65%削減見込み。"},
-  {id:"KJ-2026-007",name:"谷山駅前 再開発ビル基礎工事",    client:"谷山駅前再開発組合",mgr:"伊藤 大輔",status:"active",   s:"2026-01-20",e:"2026-07-31",prog:30, budget:420000000,spent:118000000,cat:"建築",    loc:"鹿児島市谷山中央1丁目",wk:45, notes:"杭打ち完了。地下躯体工事に移行中。RC造地下1階地上10階建て。"},
-  {id:"KJ-2026-008",name:"指宿スカイライン 法面補修",       client:"NEXCO西日本",       mgr:"渡辺 裕子",status:"upcoming", s:"2026-04-15",e:"2026-06-15",prog:0,  budget:52000000, spent:0,        cat:"道路",    loc:"鹿児島市田上8丁目",   wk:0,  notes:"片側交互通行規制あり。夜間作業主体（21:00-翌6:00）。モルタル吹付工法。"},
+  {id:"KJ-2026-001",name:"鹿児島市役所 本庁舎改修工事",   client:"鹿児島市",          mgr:"田中 太郎",  status:"active",   s:"2026-02-10",e:"2026-05-30",prog:45, budget:158000000,spent:68500000, cat:"公共建築",loc:"鹿児島市山下町11-1",    wk:24, notes:"2F〜4Fの内装改修。3月末までに2F完了予定。天井材・壁材はSDGs対応品を採用。"},
+  {id:"KJ-2026-002",name:"天文館通り 道路拡幅工事",        client:"鹿児島県",          mgr:"山田 花子",  status:"active",   s:"2026-01-15",e:"2026-04-15",prog:68, budget:92000000, spent:61200000, cat:"土木",    loc:"鹿児島市千日町",       wk:18, notes:"夜間工事区間あり（22:00-5:00）。騒音対策として防音シート設置実施中。"},
+  {id:"KJ-2026-003",name:"桜島フェリーターミナル 耐震補強",client:"鹿児島市船舶部",    mgr:"佐藤 健一",  status:"delayed",  s:"2025-11-01",e:"2026-04-14",prog:52, budget:245000000,spent:142000000,cat:"港湾",    loc:"鹿児島市桜島横山町",   wk:32, notes:"⚠ 資材調達遅延により2週間の工期遅れ。H形鋼の入荷遅れが主因。完了予定を4/14に変更。"},
+  {id:"KJ-2026-004",name:"城山展望台 休憩施設新築",        client:"鹿児島市観光課",    mgr:"中村 美咲",  status:"upcoming", s:"2026-04-01",e:"2026-08-31",prog:0,  budget:78000000, spent:0,        cat:"建築",    loc:"鹿児島市城山町",       wk:0,  notes:"4月着工予定。景観審査は3月に承認済み。木造平屋建て、延床面積120㎡。"},
+  {id:"KJ-2026-005",name:"甲突川 護岸修繕工事",            client:"鹿児島県土木部",    mgr:"鈴木 一郎",  status:"active",   s:"2026-03-01",e:"2026-06-30",prog:18, budget:64000000, spent:9800000,  cat:"河川",    loc:"鹿児島市甲突町",       wk:12, notes:"渇水期に合わせた施工。梅雨前の完了を目指す。"},
+  {id:"KJ-2026-006",name:"鴨池運動公園 照明LED化",         client:"鹿児島市",          mgr:"高橋 誠",    status:"completed",s:"2025-12-01",e:"2026-02-28",prog:100,budget:35000000, spent:33200000, cat:"電気設備",loc:"鹿児島市与次郎2丁目",  wk:0,  notes:"全灯具のLED化完了。検査合格済み。年間消費電力約65%削減見込み。"},
+  {id:"KJ-2026-007",name:"谷山駅前 再開発ビル基礎工事",    client:"谷山駅前再開発組合",mgr:"伊藤 大輔",  status:"active",   s:"2026-01-20",e:"2026-07-31",prog:30, budget:420000000,spent:118000000,cat:"建築",    loc:"鹿児島市谷山中央1丁目", wk:45, notes:"杭打ち完了。地下躯体工事に移行中。RC造地下1階地上10階建て。"},
+  {id:"KJ-2026-008",name:"指宿スカイライン 法面補修",       client:"NEXCO西日本",       mgr:"渡辺 裕子",  status:"upcoming", s:"2026-04-15",e:"2026-06-15",prog:0,  budget:52000000, spent:0,        cat:"道路",    loc:"鹿児島市田上8丁目",    wk:0,  notes:"片側交互通行規制あり。夜間作業主体（21:00-翌6:00）。"},
 ];
 
-// 工程表データ (per project)
+const WORKERS=[
+  {id:"W001",name:"田中 太郎",  kana:"タナカ タロウ",   age:45,role:"現場代理人",dept:"建築部",   join:"2010-04-01",phone:"090-1234-5678",color:"#1565c0",
+   certs:[{name:"1級建築施工管理技士",exp:"2028-03-15",ok:true},{name:"玉掛け技能講習",exp:"永続",ok:true},{name:"足場組立等作業主任者",exp:"2026-09-10",ok:true}],
+   assigned:"KJ-2026-001",skills:["内装工事","大工工事","仮設工事"],blood:"A",
+   emergency:"田中 花子（妻）090-1234-0001",history:["KJ-2025-003","KJ-2025-007","KJ-2026-001"]},
+  {id:"W002",name:"山田 花子",  kana:"ヤマダ ハナコ",   age:38,role:"現場代理人",dept:"土木部",   join:"2013-04-01",phone:"090-2345-6789",color:"#00838f",
+   certs:[{name:"1級土木施工管理技士",exp:"2027-05-20",ok:true},{name:"測量士補",exp:"永続",ok:true},{name:"交通誘導警備業務2級",exp:"2025-12-01",ok:false}],
+   assigned:"KJ-2026-002",skills:["道路工事","測量","舗装工事"],blood:"B",
+   emergency:"山田 次郎（夫）090-2345-0002",history:["KJ-2025-002","KJ-2025-005","KJ-2026-002"]},
+  {id:"W003",name:"佐藤 健一",  kana:"サトウ ケンイチ", age:52,role:"現場代理人",dept:"港湾部",   join:"2005-04-01",phone:"090-3456-7890",color:"#c62828",
+   certs:[{name:"1級建築施工管理技士",exp:"2030-03-01",ok:true},{name:"潜水士",exp:"2027-08-15",ok:true},{name:"玉掛け技能講習",exp:"永続",ok:true}],
+   assigned:"KJ-2026-003",skills:["港湾工事","耐震補強","潜水作業"],blood:"O",
+   emergency:"佐藤 裕子（妻）090-3456-0003",history:["KJ-2024-004","KJ-2025-001","KJ-2026-003"]},
+  {id:"W004",name:"中村 美咲",  kana:"ナカムラ ミサキ",  age:34,role:"現場代理人",dept:"建築部",   join:"2015-04-01",phone:"090-4567-8901",color:"#6a1b9a",
+   certs:[{name:"2級建築施工管理技士",exp:"2029-01-20",ok:true},{name:"宅地建物取引士",exp:"永続",ok:true}],
+   assigned:"KJ-2026-004",skills:["建築工事","施工計画","品質管理"],blood:"AB",
+   emergency:"中村 健（父）090-4567-0004",history:["KJ-2025-004","KJ-2025-008","KJ-2026-004"]},
+  {id:"W005",name:"鈴木 一郎",  kana:"スズキ イチロウ",  age:48,role:"現場代理人",dept:"土木部",   join:"2008-04-01",phone:"090-5678-9012",color:"#2e7d32",
+   certs:[{name:"1級土木施工管理技士",exp:"2028-07-30",ok:true},{name:"コンクリート診断士",exp:"2027-04-15",ok:true},{name:"玉掛け技能講習",exp:"永続",ok:true}],
+   assigned:"KJ-2026-005",skills:["河川工事","護岸工事","コンクリート工"],blood:"A",
+   emergency:"鈴木 和子（妻）090-5678-0005",history:["KJ-2024-002","KJ-2025-006","KJ-2026-005"]},
+  {id:"W006",name:"高橋 誠",    kana:"タカハシ マコト",  age:41,role:"現場代理人",dept:"設備部",   join:"2011-04-01",phone:"090-6789-0123",color:"#546e7a",
+   certs:[{name:"1級電気工事施工管理技士",exp:"2029-09-10",ok:true},{name:"第一種電気工事士",exp:"2027-03-25",ok:true}],
+   assigned:"KJ-2026-006",skills:["電気設備工事","照明工事","太陽光設備"],blood:"B",
+   emergency:"高橋 節子（母）090-6789-0006",history:["KJ-2024-006","KJ-2025-003","KJ-2026-006"]},
+  {id:"W007",name:"伊藤 大輔",  kana:"イトウ ダイスケ",  age:44,role:"現場代理人",dept:"建築部",   join:"2009-04-01",phone:"090-7890-1234",color:"#e65100",
+   certs:[{name:"1級建築施工管理技士",exp:"2031-02-14",ok:true},{name:"建築士（二級）",exp:"永続",ok:true},{name:"クレーン運転特別教育",exp:"2026-11-30",ok:true}],
+   assigned:"KJ-2026-007",skills:["大規模建築","杭工事","RC躯体工事"],blood:"O",
+   emergency:"伊藤 恵（妻）090-7890-0007",history:["KJ-2023-002","KJ-2024-003","KJ-2026-007"]},
+  {id:"W008",name:"渡辺 裕子",  kana:"ワタナベ ユウコ",  age:36,role:"現場代理人",dept:"土木部",   join:"2014-04-01",phone:"090-8901-2345",color:"#00695c",
+   certs:[{name:"1級土木施工管理技士",exp:"2030-05-18",ok:true},{name:"コンクリート主任技士",exp:"2028-10-22",ok:true}],
+   assigned:"KJ-2026-008",skills:["法面工事","吹付工事","道路工事"],blood:"A",
+   emergency:"渡辺 隆（父）090-8901-0008",history:["KJ-2024-005","KJ-2025-007","KJ-2026-008"]},
+  {id:"W009",name:"木村 浩二",  kana:"キムラ コウジ",    age:39,role:"職長",         dept:"建築部",  join:"2012-04-01",phone:"090-1111-2222",color:"#37474f",
+   certs:[{name:"足場組立等作業主任者",exp:"2027-06-01",ok:true},{name:"玉掛け技能講習",exp:"永続",ok:true}],
+   assigned:"KJ-2026-001",skills:["大工工事","仮設工事","内装仕上"],blood:"B",
+   emergency:"木村 幸子（妻）090-1111-0009",history:["KJ-2025-003","KJ-2026-001"]},
+  {id:"W010",name:"小林 明",    kana:"コバヤシ アキラ",  age:43,role:"職長",         dept:"建築部",  join:"2010-09-01",phone:"090-2222-3333",color:"#455a64",
+   certs:[{name:"クレーン運転特別教育",exp:"2027-03-01",ok:true},{name:"玉掛け技能講習",exp:"永続",ok:true}],
+   assigned:"KJ-2026-007",skills:["鉄筋工事","型枠工事","躯体工事"],blood:"A",
+   emergency:"小林 令子（妻）090-2222-0010",history:["KJ-2025-001","KJ-2026-007"]},
+  {id:"W011",name:"加藤 健",    kana:"カトウ タケシ",    age:55,role:"溶接工",       dept:"港湾部",  join:"2003-04-01",phone:"090-3333-4444",color:"#4e342e",
+   certs:[{name:"溶接技能者（TIG）",exp:"2027-11-30",ok:true},{name:"高所作業車運転技能",exp:"2026-04-15",ok:false}],
+   assigned:"KJ-2026-003",skills:["溶接工事","鉄骨工事","耐震補強"],blood:"O",
+   emergency:"加藤 幸枝（妻）090-3333-0011",history:["KJ-2024-001","KJ-2025-002","KJ-2026-003"]},
+  {id:"W012",name:"吉田 真一",  kana:"ヨシダ シンイチ",  age:47,role:"重機オペレーター",dept:"土木部",join:"2007-04-01",phone:"090-4444-5555",color:"#1b5e20",
+   certs:[{name:"大型特殊自動車免許",exp:"永続",ok:true},{name:"ショベル系掘削機運転技能",exp:"2028-08-20",ok:true}],
+   assigned:"KJ-2026-002",skills:["重機操作","掘削工事","整地"],blood:"AB",
+   emergency:"吉田 真子（妻）090-4444-0012",history:["KJ-2024-003","KJ-2025-004","KJ-2026-002"]},
+];
+
+const MATERIALS=[
+  {id:"M001",name:"鉄筋 D13",         cat:"鉄筋・鉄骨",unit:"本",  stock:450,min:100,ordered:0,  project:"KJ-2026-007",supplier:"鹿児島鉄鋼(株)",   price:850,    lastOrder:"2026-03-10",status:"ok",     note:"B1F柱筋用。在庫十分。"},
+  {id:"M002",name:"鉄筋 D22",         cat:"鉄筋・鉄骨",unit:"本",  stock:180,min:50, ordered:0,  project:"KJ-2026-007",supplier:"鹿児島鉄鋼(株)",   price:2100,   lastOrder:"2026-03-10",status:"ok",     note:"梁主筋用。"},
+  {id:"M003",name:"H形鋼 H-200×200", cat:"鉄筋・鉄骨",unit:"本",  stock:8,  min:15, ordered:5,  project:"KJ-2026-003",supplier:"新日本製鉄(株)",   price:45000,  lastOrder:"2026-02-28",status:"low",    note:"⚠ 在庫不足（遅延原因）。4/5入荷予定。追加5本発注中。"},
+  {id:"M004",name:"耐震補強材（ブレース）",cat:"鉄筋・鉄骨",unit:"組",stock:0, min:8,  ordered:8,  project:"KJ-2026-003",supplier:"構造技研(株)",     price:120000, lastOrder:"2026-03-01",status:"ordered",note:"⚠ 全量発注中。4/3入荷予定。KJ-003工期遅延の主因。"},
+  {id:"M005",name:"型枠合板 12mm",    cat:"型枠・仮設",unit:"枚",  stock:220,min:50, ordered:0,  project:"KJ-2026-007",supplier:"九州建材(株)",     price:1800,   lastOrder:"2026-02-15",status:"ok",     note:"型枠転用込み。在庫良好。"},
+  {id:"M006",name:"アスファルト混合物",cat:"舗装材",    unit:"t",   stock:22, min:8,  ordered:0,  project:"KJ-2026-002",supplier:"鹿児島アスコン(株)",price:18000,  lastOrder:"2026-03-20",status:"ok",     note:"密粒度アスコン13mm。在庫十分。"},
+  {id:"M007",name:"護岸ブロック",     cat:"コンクリート",unit:"個", stock:85, min:30, ordered:0,  project:"KJ-2026-005",supplier:"南九州建材(株)",   price:3500,   lastOrder:"2026-03-05",status:"ok",     note:"4号ブロック（重量220kg）。"},
+  {id:"M008",name:"LED照明 400W",     cat:"電気設備",  unit:"台",  stock:0,  min:0,  ordered:0,  project:"KJ-2026-006",supplier:"東芝ライテック(株)",price:65000,  lastOrder:"2025-12-10",status:"ok",     note:"全数使用済み（工事完了）。"},
+  {id:"M009",name:"内装クロス材",     cat:"内装材",    unit:"m",   stock:380,min:100,ordered:200,project:"KJ-2026-001",supplier:"サンゲツ(株)",     price:420,    lastOrder:"2026-03-18",status:"ordered",note:"3F用追加200m発注中。3/28入荷予定。"},
+  {id:"M010",name:"モルタル吹付材",   cat:"法面材",    unit:"袋",  stock:0,  min:0,  ordered:0,  project:"KJ-2026-008",supplier:"日本化学産業(株)", price:1200,   lastOrder:"—",        status:"ok",     note:"4月着工後に発注予定（未着工）。"},
+  {id:"M011",name:"養生ブルーシート", cat:"仮設材",    unit:"枚",  stock:12, min:20, ordered:10, project:"共通",       supplier:"ホームセンター",   price:800,    lastOrder:"2026-03-22",status:"low",    note:"⚠ 在庫20枚以下。10枚追加発注中。"},
+  {id:"M012",name:"コンクリート（生）",cat:"コンクリート",unit:"m³",stock:0,  min:0,  ordered:30, project:"KJ-2026-007",supplier:"鹿児島レミコン(株)",price:14500,  lastOrder:"2026-03-20",status:"ordered",note:"4/2打設予定。30m³発注済み。"},
+];
+
+// 工程表（工事詳細で使用）
 const KOTEL={
   "KJ-2026-001":[
-    {id:1,name:"仮設工事",      start:"2026-02-10",end:"2026-02-20",prog:100,status:"completed",worker:"田中班(4名)",  note:"完了"},
-    {id:2,name:"解体撤去工事",  start:"2026-02-21",end:"2026-03-05",prog:100,status:"completed",worker:"佐藤班(6名)",  note:"廃材搬出完了"},
-    {id:3,name:"2F内装工事",    start:"2026-03-06",end:"2026-03-31",prog:75, status:"active",   worker:"田中班(8名)",  note:"東側壁面仕上げ中"},
-    {id:4,name:"3F内装工事",    start:"2026-04-01",end:"2026-04-30",prog:0,  status:"upcoming", worker:"田中班(8名)",  note:""},
-    {id:5,name:"4F内装工事",    start:"2026-04-15",end:"2026-05-20",prog:0,  status:"upcoming", worker:"佐藤班(6名)",  note:""},
-    {id:6,name:"竣工検査・引渡",start:"2026-05-25",end:"2026-05-30",prog:0,  status:"upcoming", worker:"全員",          note:""},
+    {id:1,name:"仮設工事",      start:"2026-02-10",end:"2026-02-20",prog:100,status:"completed",worker:"木村班(4名)",note:"完了"},
+    {id:2,name:"解体撤去工事",  start:"2026-02-21",end:"2026-03-05",prog:100,status:"completed",worker:"外注(6名)",  note:"廃材搬出完了"},
+    {id:3,name:"2F内装工事",    start:"2026-03-06",end:"2026-03-31",prog:75, status:"active",   worker:"田中班(8名)",note:"東側壁面仕上げ中"},
+    {id:4,name:"3F内装工事",    start:"2026-04-01",end:"2026-04-30",prog:0,  status:"upcoming", worker:"田中班(8名)",note:""},
+    {id:5,name:"4F内装工事",    start:"2026-04-15",end:"2026-05-20",prog:0,  status:"upcoming", worker:"外注(6名)",  note:""},
+    {id:6,name:"竣工検査・引渡",start:"2026-05-25",end:"2026-05-30",prog:0,  status:"upcoming", worker:"全員",       note:""},
   ],
   "KJ-2026-002":[
-    {id:1,name:"測量・準備",    start:"2026-01-15",end:"2026-01-25",prog:100,status:"completed",worker:"山田班(3名)",  note:"完了"},
-    {id:2,name:"既設舗装撤去",  start:"2026-01-26",end:"2026-02-15",prog:100,status:"completed",worker:"外注(10名)",  note:"完了"},
-    {id:3,name:"路盤工事",      start:"2026-02-16",end:"2026-03-15",prog:100,status:"completed",worker:"山田班(12名)", note:"完了"},
-    {id:4,name:"舗装工事",      start:"2026-03-16",end:"2026-04-01",prog:60, status:"active",   worker:"山田班(10名)", note:"西行き車線完了"},
-    {id:5,name:"区画線・開放",  start:"2026-04-02",end:"2026-04-15",prog:0,  status:"upcoming", worker:"外注(5名)",    note:""},
+    {id:1,name:"測量・準備",   start:"2026-01-15",end:"2026-01-25",prog:100,status:"completed",worker:"山田班(3名)", note:"完了"},
+    {id:2,name:"既設舗装撤去", start:"2026-01-26",end:"2026-02-15",prog:100,status:"completed",worker:"外注(10名)",  note:"完了"},
+    {id:3,name:"路盤工事",     start:"2026-02-16",end:"2026-03-15",prog:100,status:"completed",worker:"山田班(12名)",note:"完了"},
+    {id:4,name:"舗装工事",     start:"2026-03-16",end:"2026-04-01",prog:60, status:"active",   worker:"山田班(10名)",note:"西行き車線完了"},
+    {id:5,name:"区画線・開放", start:"2026-04-02",end:"2026-04-15",prog:0,  status:"upcoming", worker:"外注(5名)",   note:""},
   ],
   "KJ-2026-003":[
     {id:1,name:"仮設・足場設置",start:"2025-11-01",end:"2025-11-20",prog:100,status:"completed",worker:"佐藤班(8名)",  note:"完了"},
-    {id:2,name:"基礎補強工事",  start:"2025-11-21",end:"2026-01-31",prog:100,status:"completed",worker:"佐藤班(15名)", note:"完了"},
-    {id:3,name:"上部構造補強",  start:"2026-02-01",end:"2026-03-15",prog:80, status:"active",   worker:"外注(20名)",  note:"⚠ 資材遅延中"},
-    {id:4,name:"仕上げ・検査",  start:"2026-03-16",end:"2026-04-14",prog:10, status:"active",   worker:"佐藤班(6名)",  note:"部分完了"},
+    {id:2,name:"基礎補強工事",  start:"2025-11-21",end:"2026-01-31",prog:100,status:"completed",worker:"外注(15名)",   note:"完了"},
+    {id:3,name:"上部構造補強",  start:"2026-02-01",end:"2026-03-15",prog:80, status:"active",   worker:"外注(20名)",   note:"⚠ H鋼・ブレース待ち"},
+    {id:4,name:"仕上げ・検査",  start:"2026-03-16",end:"2026-04-14",prog:10, status:"active",   worker:"佐藤班(6名)",  note:"部分完了。資材入荷待ち"},
   ],
   "KJ-2026-005":[
-    {id:1,name:"仮締切工事",    start:"2026-03-01",end:"2026-03-10",prog:100,status:"completed",worker:"鈴木班(6名)",  note:"完了"},
-    {id:2,name:"根固めブロック",start:"2026-03-11",end:"2026-04-30",prog:20, status:"active",   worker:"鈴木班(8名)",  note:"施工中"},
-    {id:3,name:"法面成形",      start:"2026-05-01",end:"2026-05-31",prog:0,  status:"upcoming", worker:"鈴木班(6名)",  note:""},
-    {id:4,name:"撤去・検査",    start:"2026-06-01",end:"2026-06-30",prog:0,  status:"upcoming", worker:"全員",          note:""},
+    {id:1,name:"仮締切工事",   start:"2026-03-01",end:"2026-03-10",prog:100,status:"completed",worker:"鈴木班(6名)",note:"完了"},
+    {id:2,name:"根固めブロック",start:"2026-03-11",end:"2026-04-30",prog:20, status:"active",   worker:"鈴木班(8名)",note:"施工中"},
+    {id:3,name:"法面成形",     start:"2026-05-01",end:"2026-05-31",prog:0,  status:"upcoming", worker:"鈴木班(6名)",note:""},
+    {id:4,name:"撤去・検査",   start:"2026-06-01",end:"2026-06-30",prog:0,  status:"upcoming", worker:"全員",       note:""},
   ],
   "KJ-2026-007":[
-    {id:1,name:"仮設工事",      start:"2026-01-20",end:"2026-02-05",prog:100,status:"completed",worker:"伊藤班(5名)",  note:"完了"},
-    {id:2,name:"土工事・杭打ち",start:"2026-02-06",end:"2026-03-01",prog:100,status:"completed",worker:"外注(25名)",  note:"完了"},
-    {id:3,name:"地下躯体工事",  start:"2026-03-02",end:"2026-05-15",prog:25, status:"active",   worker:"外注(30名)",  note:"B1F型枠施工中"},
-    {id:4,name:"地上躯体工事",  start:"2026-05-16",end:"2026-07-15",prog:0,  status:"upcoming", worker:"外注(40名)",  note:""},
+    {id:1,name:"仮設工事",      start:"2026-01-20",end:"2026-02-05",prog:100,status:"completed",worker:"小林班(5名)",  note:"完了"},
+    {id:2,name:"土工事・杭打ち",start:"2026-02-06",end:"2026-03-01",prog:100,status:"completed",worker:"外注(25名)",   note:"完了"},
+    {id:3,name:"地下躯体工事",  start:"2026-03-02",end:"2026-05-15",prog:25, status:"active",   worker:"外注(30名)",   note:"B1F型枠施工中"},
+    {id:4,name:"地上躯体工事",  start:"2026-05-16",end:"2026-07-15",prog:0,  status:"upcoming", worker:"外注(40名)",   note:""},
     {id:5,name:"仕上げ・引渡",  start:"2026-07-16",end:"2026-07-31",prog:0,  status:"upcoming", worker:"伊藤班(10名)", note:""},
   ],
 };
 
-// 日報データ
-const NIPPO={
-  "KJ-2026-001":[
-    {id:1,date:"2026-03-23",worker:"田中 太郎",work:"2F東側壁面クロス張り（40㎡完了）。明日は西側を開始予定。",weather:"☀️晴",count:8, issue:"なし"},
-    {id:2,date:"2026-03-22",worker:"田中 太郎",work:"2F床材フローリング張り完了（全面）。養生テープ施工。",         weather:"⛅曇",count:10,issue:"なし"},
-    {id:3,date:"2026-03-20",worker:"佐藤 健一",work:"資材搬入・確認。クロス材の一部不足を確認→即日発注済み。",       weather:"☀️晴",count:6, issue:"クロス材不足（対応済）"},
-    {id:4,date:"2026-03-19",worker:"田中 太郎",work:"2F天井ボード貼り完了。電気工事業者との工程調整実施。",           weather:"🌧雨",count:7, issue:"なし"},
-  ],
-  "KJ-2026-002":[
-    {id:1,date:"2026-03-23",worker:"山田 花子",work:"東行き車線アスファルト舗装。延長80m完了。転圧確認済み。",         weather:"☀️晴",count:12,issue:"なし"},
-    {id:2,date:"2026-03-22",worker:"山田 花子",work:"夜間作業：路盤補修・転圧。騒音測定値基準内。",                   weather:"⛅曇",count:10,issue:"なし"},
-    {id:3,date:"2026-03-20",worker:"山田 花子",work:"路床整形作業。一部軟弱地盤確認→置換処理実施。",                   weather:"☀️晴",count:8, issue:"軟弱地盤（置換処理済）"},
-  ],
-  "KJ-2026-003":[
-    {id:1,date:"2026-03-23",worker:"佐藤 健一",work:"2次補強材取付工事。資材不足のため一部工程遅延中。",               weather:"☀️晴",count:15,issue:"⚠️ 資材不足継続中"},
-    {id:2,date:"2026-03-22",worker:"佐藤 健一",work:"溶接検査実施。合格率100%。上部梁補強完了。",                     weather:"⛅曇",count:18,issue:"なし"},
-    {id:3,date:"2026-03-21",worker:"佐藤 健一",work:"代替資材手配先と協議。4/5入荷予定で確定。",                       weather:"☀️晴",count:10,issue:"対応中"},
-  ],
-  "KJ-2026-005":[
-    {id:1,date:"2026-03-23",worker:"鈴木 一郎",work:"根固めブロック設置（20ブロック）。水位確認、良好。",               weather:"☀️晴",count:8, issue:"なし"},
-    {id:2,date:"2026-03-22",worker:"鈴木 一郎",work:"ブロック製作・搬入。品質検査合格。",                               weather:"⛅曇",count:6, issue:"なし"},
-  ],
-  "KJ-2026-007":[
-    {id:1,date:"2026-03-23",worker:"伊藤 大輔",work:"B1F柱型枠組立（6本完了）。コンクリート打設準備中。",               weather:"☀️晴",count:28,issue:"なし"},
-    {id:2,date:"2026-03-22",worker:"伊藤 大輔",work:"鉄筋組立工事継続。第三者検査実施、合格。",                         weather:"☀️晴",count:30,issue:"なし"},
-    {id:3,date:"2026-03-20",worker:"伊藤 大輔",work:"コンクリート圧縮強度試験（7日）結果OK。",                         weather:"⛅曇",count:25,issue:"なし"},
-  ],
-};
+// 全日報
+const ALL_NIPPO=[
+  {id:1, project:"KJ-2026-001",date:"2026-03-23",worker:"田中 太郎",work:"2F東側壁面クロス張り（40㎡完了）。明日は西側を開始予定。",          weather:"☀️晴",count:8, issue:"なし"},
+  {id:2, project:"KJ-2026-002",date:"2026-03-23",worker:"山田 花子",work:"東行き車線アスファルト舗装。延長80m完了。転圧確認済み。",            weather:"☀️晴",count:12,issue:"なし"},
+  {id:3, project:"KJ-2026-003",date:"2026-03-23",worker:"佐藤 健一",work:"上部構造補強材取付工事。資材不足のため一部工程遅延中。",              weather:"☀️晴",count:15,issue:"⚠️ H鋼・補強材不足"},
+  {id:4, project:"KJ-2026-005",date:"2026-03-23",worker:"鈴木 一郎",work:"根固めブロック設置（20ブロック）。水位確認、良好。",                  weather:"☀️晴",count:8, issue:"なし"},
+  {id:5, project:"KJ-2026-007",date:"2026-03-23",worker:"伊藤 大輔",work:"B1F柱型枠組立（6本完了）。コンクリート打設準備中。",                  weather:"☀️晴",count:28,issue:"なし"},
+  {id:6, project:"KJ-2026-001",date:"2026-03-22",worker:"田中 太郎",work:"2F床材フローリング張り完了（全面）。養生テープ施工。",                weather:"⛅曇",count:10,issue:"なし"},
+  {id:7, project:"KJ-2026-002",date:"2026-03-22",worker:"山田 花子",work:"夜間作業：路盤補修・転圧。騒音測定値基準内。",                        weather:"⛅曇",count:10,issue:"なし"},
+  {id:8, project:"KJ-2026-003",date:"2026-03-22",worker:"佐藤 健一",work:"溶接検査実施。合格率100%。上部梁補強完了。",                          weather:"⛅曇",count:18,issue:"なし"},
+  {id:9, project:"KJ-2026-007",date:"2026-03-22",worker:"伊藤 大輔",work:"鉄筋組立工事継続。第三者検査実施、合格。",                            weather:"☀️晴",count:30,issue:"なし"},
+  {id:10,project:"KJ-2026-001",date:"2026-03-20",worker:"木村 浩二",work:"資材搬入・確認。クロス材の一部不足を確認→即日発注済み。",              weather:"☀️晴",count:6, issue:"クロス材不足（対応済）"},
+  {id:11,project:"KJ-2026-002",date:"2026-03-20",worker:"吉田 真一",work:"路床整形作業。一部軟弱地盤確認→置換処理実施。",                      weather:"☀️晴",count:8, issue:"軟弱地盤（置換処理済）"},
+  {id:12,project:"KJ-2026-003",date:"2026-03-21",worker:"佐藤 健一",work:"代替資材手配先と協議。4/5入荷予定で確定。",                          weather:"☀️晴",count:10,issue:"対応中"},
+  {id:13,project:"KJ-2026-003",date:"2026-03-19",worker:"加藤 健",  work:"上部梁溶接作業。D22鉄筋組立補助。品質検査合格。",                    weather:"⛅曇",count:12,issue:"なし"},
+  {id:14,project:"KJ-2026-005",date:"2026-03-22",worker:"鈴木 一郎",work:"ブロック製作・搬入。品質検査合格。",                                   weather:"⛅曇",count:6, issue:"なし"},
+  {id:15,project:"KJ-2026-007",date:"2026-03-20",worker:"小林 明",  work:"コンクリート圧縮強度試験（7日）結果OK。B1F床配筋開始。",              weather:"⛅曇",count:25,issue:"なし"},
+  {id:16,project:"KJ-2026-001",date:"2026-03-19",worker:"田中 太郎",work:"2F天井ボード貼り完了。電気工事業者との工程調整実施。",                weather:"🌧雨",count:7, issue:"なし"},
+  {id:17,project:"KJ-2026-002",date:"2026-03-18",worker:"山田 花子",work:"舗装試験区間品質確認。密度測定値基準クリア。",                         weather:"☀️晴",count:9, issue:"なし"},
+  {id:18,project:"KJ-2026-006",date:"2026-02-25",worker:"高橋 誠",  work:"最終検査実施。全灯具点灯確認、合格。工事完了報告書提出。",            weather:"☀️晴",count:4, issue:"なし"},
+];
 
-// 写真データ
-const PHOTOS={
-  "KJ-2026-001":[
-    {id:1,label:"着工前全景",date:"2026-02-10",emoji:"🏢",color:"#e3f2fd"},
-    {id:2,label:"解体工事状況",date:"2026-02-25",emoji:"⚒️",color:"#fff3e0"},
-    {id:3,label:"2F床材張り",date:"2026-03-19",emoji:"🔨",color:"#e8f5e9"},
-    {id:4,label:"2F天井ボード",date:"2026-03-21",emoji:"🏗️",color:"#fce4ec"},
-    {id:5,label:"2F壁面仕上げ",date:"2026-03-23",emoji:"🖌️",color:"#f3e5f5"},
-    {id:6,label:"進捗全景",date:"2026-03-23",emoji:"📸",color:"#e0f2f1"},
-  ],
-  "KJ-2026-007":[
-    {id:1,label:"杭打ち状況",date:"2026-02-15",emoji:"⚓",color:"#e3f2fd"},
-    {id:2,label:"杭頭処理完了",date:"2026-03-01",emoji:"🔧",color:"#fff3e0"},
-    {id:3,label:"根伐り工事",date:"2026-03-10",emoji:"⚒️",color:"#e8f5e9"},
-    {id:4,label:"B1F型枠組立",date:"2026-03-23",emoji:"🏗️",color:"#fce4ec"},
-  ],
-};
+// 全写真
+const ALL_PHOTOS=[
+  {id:1, project:"KJ-2026-001",label:"着工前全景",      date:"2026-02-10",taker:"田中 太郎",cat:"着工前",  emoji:"🏢",color:"#e3f2fd"},
+  {id:2, project:"KJ-2026-001",label:"解体工事状況",    date:"2026-02-25",taker:"木村 浩二",cat:"工事中",  emoji:"⚒️",color:"#fff3e0"},
+  {id:3, project:"KJ-2026-001",label:"2F床材張り",      date:"2026-03-19",taker:"田中 太郎",cat:"工事中",  emoji:"🔨",color:"#e8f5e9"},
+  {id:4, project:"KJ-2026-001",label:"2F天井ボード",    date:"2026-03-21",taker:"木村 浩二",cat:"工事中",  emoji:"🏗️",color:"#fce4ec"},
+  {id:5, project:"KJ-2026-001",label:"2F壁面仕上げ",    date:"2026-03-23",taker:"田中 太郎",cat:"工事中",  emoji:"🖌️",color:"#f3e5f5"},
+  {id:6, project:"KJ-2026-002",label:"路面測量",         date:"2026-01-16",taker:"山田 花子",cat:"着工前",  emoji:"📐",color:"#e8f5e9"},
+  {id:7, project:"KJ-2026-002",label:"既設舗装撤去",     date:"2026-02-05",taker:"吉田 真一",cat:"工事中",  emoji:"🚜",color:"#fff3e0"},
+  {id:8, project:"KJ-2026-002",label:"路盤完成状況",     date:"2026-03-15",taker:"山田 花子",cat:"工事中",  emoji:"🛣️",color:"#e3f2fd"},
+  {id:9, project:"KJ-2026-002",label:"アスファルト舗装", date:"2026-03-23",taker:"山田 花子",cat:"工事中",  emoji:"🏗️",color:"#fce4ec"},
+  {id:10,project:"KJ-2026-003",label:"着工前フェリー桟橋",date:"2025-11-01",taker:"佐藤 健一",cat:"着工前",  emoji:"⛴️",color:"#e0f2f1"},
+  {id:11,project:"KJ-2026-003",label:"基礎補強完了",     date:"2026-01-31",taker:"佐藤 健一",cat:"工事中",  emoji:"🔩",color:"#e8eaf6"},
+  {id:12,project:"KJ-2026-003",label:"溶接検査",         date:"2026-03-22",taker:"加藤 健",  cat:"品質管理",emoji:"🔍",color:"#fff3e0"},
+  {id:13,project:"KJ-2026-005",label:"仮締切工事",       date:"2026-03-05",taker:"鈴木 一郎",cat:"工事中",  emoji:"💧",color:"#e3f2fd"},
+  {id:14,project:"KJ-2026-005",label:"ブロック設置状況", date:"2026-03-23",taker:"鈴木 一郎",cat:"工事中",  emoji:"🧱",color:"#e8f5e9"},
+  {id:15,project:"KJ-2026-006",label:"LED設置前",        date:"2025-12-10",taker:"高橋 誠",  cat:"着工前",  emoji:"💡",color:"#fffde7"},
+  {id:16,project:"KJ-2026-006",label:"LED設置完了",      date:"2026-02-10",taker:"高橋 誠",  cat:"完了",    emoji:"✨",color:"#fffde7"},
+  {id:17,project:"KJ-2026-006",label:"最終点灯検査",     date:"2026-02-25",taker:"高橋 誠",  cat:"品質管理",emoji:"🔦",color:"#f5f5f5"},
+  {id:18,project:"KJ-2026-007",label:"杭打ち作業",       date:"2026-02-15",taker:"伊藤 大輔",cat:"工事中",  emoji:"⚓",color:"#e3f2fd"},
+  {id:19,project:"KJ-2026-007",label:"杭頭処理完了",     date:"2026-03-01",taker:"小林 明",  cat:"工事中",  emoji:"🔧",color:"#fff3e0"},
+  {id:20,project:"KJ-2026-007",label:"根伐り工事",       date:"2026-03-10",taker:"伊藤 大輔",cat:"工事中",  emoji:"⚒️",color:"#e8f5e9"},
+  {id:21,project:"KJ-2026-007",label:"B1F型枠組立",      date:"2026-03-23",taker:"小林 明",  cat:"工事中",  emoji:"🏗️",color:"#fce4ec"},
+  {id:22,project:"KJ-2026-001",label:"安全朝礼",         date:"2026-03-18",taker:"田中 太郎",cat:"安全管理",emoji:"⛑️",color:"#ffebee"},
+  {id:23,project:"KJ-2026-003",label:"安全パトロール",    date:"2026-03-20",taker:"佐藤 健一",cat:"安全管理",emoji:"🦺",color:"#ffebee"},
+  {id:24,project:"KJ-2026-007",label:"安全朝礼(谷山)",   date:"2026-03-23",taker:"伊藤 大輔",cat:"安全管理",emoji:"⛑️",color:"#ffebee"},
+];
 
+// ════════════════════════════════════════
+//  STATE & NAVIGATION
+// ════════════════════════════════════════
 const SL={active:'施工中',upcoming:'着工予定',delayed:'遅延',completed:'完了'};
 const CHIP={active:'chip-active',upcoming:'chip-upcoming',delayed:'chip-delayed',completed:'chip-completed'};
+const STOCKLABEL={ok:'在庫あり',low:'在庫不足',critical:'在庫切れ',ordered:'発注中'};
 const yen=n=>n>=1e8?(n/1e8).toFixed(1)+'億円':n>=1e4?Math.round(n/1e4).toLocaleString()+'万円':n.toLocaleString()+'円';
-const execRate=p=>p.budget>0?Math.round(p.spent/p.budget*100):0;
+const pname=id=>{const p=PROJECTS.find(x=>x.id===id);return p?p.name:'—';};
 
-// ─── Navigation State ───
-let state={view:'list',projectId:null,subApp:null,subId:null};
+let state={app:'koji',view:'list',id:null,subApp:null,subId:null};
 
-// Parse URL params on load
 const params=new URLSearchParams(location.search);
-if(params.get('id')){
-  state.view='detail';
-  state.projectId=params.get('id');
+if(params.get('id')){state.app='koji';state.view='detail';state.id=params.get('id');}
+if(params.get('app')){state.app=params.get('app');state.view='list';}
+
+function goApp(app){
+  state={app,view:'list',id:null,subApp:null,subId:null};
+  history.replaceState({},'',`kintone.html?app=${app}`);
+  updateSidebar(); renderMain();
+}
+function goList(){state.view='list';state.id=null;state.subApp=null;state.subId=null;renderMain();}
+function goDetail(id){if(id)state.id=id;state.view='detail';state.subApp=null;state.subId=null;renderMain();}
+function goKojiDetail(id){state.app='koji';state.view='detail';state.id=id;state.subApp=null;state.subId=null;history.replaceState({},'',`kintone.html?id=${id}`);updateSidebar();renderMain();}
+function goSub(app,id){state.view='sub';state.subApp=app;state.subId=String(id);renderMain();}
+
+function updateSidebar(){
+  ['koji','nippo','shashin','sakuinsha','shizai'].forEach(a=>{
+    document.getElementById('nav-'+a)?.classList.toggle('active',state.app===a);
+  });
 }
 
-// Breadcrumb builder
-function breadcrumb(){
-  const items=[{label:'ホーム',action:'goList'},{label:'工事管理',action:'goList'}];
-  if(state.view==='detail'||state.view==='sub'){
-    const p=PROJECTS.find(x=>x.id===state.projectId);
-    if(p){items.push({label:p.name.length>20?p.name.slice(0,20)+'…':p.name,action:'goDetail'});}
-  }
-  if(state.view==='sub'){
-    items.push({label:subAppName(state.subApp)+'詳細',action:null});
-  }
-  return items;
-}
-
-function subAppName(app){
-  return {kotel:'工程表',nippo:'日報',photo:'写真管理'}[app]||app;
-}
+// ════════════════════════════════════════
+//  BREADCRUMB
+// ════════════════════════════════════════
+const APP_NAMES={koji:'工事管理',nippo:'日報管理',shashin:'写真管理',sakuinsha:'作業員管理',shizai:'資材管理'};
 
 function renderBreadcrumb(){
-  const items=breadcrumb();
-  return `<div class="kt-breadcrumb">
-    <button class="back-btn" onclick="history.back()">← 戻る</button>
-    &nbsp;
-    ${items.map((it,i)=>i<items.length-1
-      ?`<span class="bc-item" onclick="${it.action}()">${it.label}</span><span class="bc-sep">›</span>`
-      :`<span class="bc-current">${it.label}</span>`
-    ).join('')}
-  </div>`;
+  let html=`<button class="back-btn" onclick="goList()">← 一覧</button> `;
+  html+=`<span class="bc-item" onclick="goApp('${state.app}')">${APP_NAMES[state.app]}</span>`;
+  if(state.view==='detail'||state.view==='sub'){
+    let label='詳細';
+    if(state.app==='koji'){const p=PROJECTS.find(x=>x.id===state.id);if(p)label=p.name.slice(0,18)+(p.name.length>18?'…':'');}
+    if(state.app==='nippo'){const n=ALL_NIPPO.find(x=>x.id===Number(state.id));if(n)label=`${n.date} - ${n.worker}`;}
+    if(state.app==='shashin'){const ph=ALL_PHOTOS.find(x=>x.id===Number(state.id));if(ph)label=ph.label;}
+    if(state.app==='sakuinsha'){const w=WORKERS.find(x=>x.id===state.id);if(w)label=w.name;}
+    if(state.app==='shizai'){const m=MATERIALS.find(x=>x.id===state.id);if(m)label=m.name;}
+    html+=`<span class="bc-sep">›</span>`;
+    if(state.view==='sub'){
+      html+=`<span class="bc-item" onclick="goDetail()">${label}</span><span class="bc-sep">›</span><span class="bc-current">関連詳細</span>`;
+    }else{html+=`<span class="bc-current">${label}</span>`;}
+  }
+  return `<div class="kt-breadcrumb">${html}</div>`;
 }
 
-// ─── Views ───
-function goList(){
-  state={view:'list',projectId:null,subApp:null,subId:null};
-  history.replaceState({},'','kintone.html');
-  renderMain();
-}
-function goDetail(id){
-  if(id) state.projectId=id;
-  state.view='detail'; state.subApp=null; state.subId=null;
-  history.replaceState({},'',`kintone.html?id=${state.projectId}`);
-  renderMain();
-}
-function goSub(app,id){
-  state.view='sub'; state.subApp=app; state.subId=id;
-  renderMain();
-}
-
+// ════════════════════════════════════════
+//  MAIN RENDER
+// ════════════════════════════════════════
 function renderMain(){
+  updateSidebar();
   const m=document.getElementById('ktMain');
-  if(state.view==='list')       m.innerHTML=renderList();
-  else if(state.view==='detail')m.innerHTML=renderDetail();
-  else if(state.view==='sub')   m.innerHTML=renderSub();
+  const views={
+    koji:    {list:renderKojiList,   detail:renderKojiDetail,   sub:renderKojiSub},
+    nippo:   {list:renderNippoList,  detail:renderNippoDetail,  sub:null},
+    shashin: {list:renderShashinList,detail:renderShashinDetail,sub:null},
+    sakuinsha:{list:renderWorkerList,detail:renderWorkerDetail, sub:null},
+    shizai:  {list:renderShizaiList, detail:renderShizaiDetail, sub:null},
+  };
+  const fn=views[state.app]?.[state.view];
+  m.innerHTML=fn?fn():`<div class="empty-state"><div class="empty-icon">🔍</div><div>ページが見つかりません</div></div>`;
 }
 
-// ─── List View ───
-function renderList(){
-  const list=PROJECTS;
-  const delayed=list.filter(p=>p.status==='delayed').length;
-  document.getElementById('delayedCount').textContent=delayed;
-
+// ════════════════════════════════════════
+//  工事管理
+// ════════════════════════════════════════
+function renderKojiList(){
+  const delayed=PROJECTS.filter(p=>p.status==='delayed').length;
   return `
   ${renderBreadcrumb()}
   <div class="kt-viewbar">
     <button class="kt-btn primary">＋ 新規工事登録</button>
     <button class="kt-btn">📥 CSV出力</button>
-    <button class="kt-btn">🖨 印刷</button>
-    <input class="kt-search" type="text" placeholder="工事名・担当者で検索..." oninput="filterList(this.value)">
+    <select class="kt-filter-select" onchange="filterKoji(this.value)">
+      <option value="all">全ステータス</option>
+      <option value="active">施工中</option>
+      <option value="delayed">遅延</option>
+      <option value="upcoming">着工予定</option>
+      <option value="completed">完了</option>
+    </select>
+    <input class="kt-search" type="text" placeholder="工事名・担当者で検索..." oninput="searchTable(this.value,'kojiBody')">
     <span class="kt-spacer-sm"></span>
-    <span class="rec-count">全 ${list.length} 件 ${delayed>0?`<span style="color:#c62828;font-weight:700">（遅延 ${delayed}件）</span>`:''}
+    <span class="rec-count">全 ${PROJECTS.length} 件 ${delayed>0?`<span style="color:#c62828;font-weight:700">（遅延 ${delayed}件）</span>`:''}
     </span>
   </div>
   <div class="kt-list-area">
-    ${delayed>0?`<div class="alert-box">⚠️ 遅延工事が ${delayed}件 あります。確認してください。</div>`:''}
-    <table class="kt-table" id="projectTable">
-      <thead>
-        <tr>
-          <th>工事番号</th>
-          <th>工事名</th>
-          <th>発注者</th>
-          <th>担当者</th>
-          <th>ステータス</th>
-          <th>進捗</th>
-          <th>工期終了</th>
-          <th>請負金額</th>
-        </tr>
-      </thead>
-      <tbody id="listBody">
-        ${list.map(p=>`
+    ${delayed>0?`<div class="alert-box">⚠️ 遅延工事が ${delayed}件 あります。資材管理アプリも確認してください。</div>`:''}
+    <table class="kt-table">
+      <thead><tr><th>工事番号</th><th>工事名</th><th>発注者</th><th>担当者</th><th>ステータス</th><th>進捗</th><th>工期終了</th><th>請負金額</th></tr></thead>
+      <tbody id="kojiBody">
+        ${PROJECTS.map(p=>`
           <tr onclick="goDetail('${p.id}')">
             <td style="font-size:11px;color:#888">${p.id}</td>
             <td class="nm">${p.name}</td>
             <td>${p.client}</td>
             <td>${p.mgr}</td>
-            <td><span class="status-chip ${CHIP[p.status]}">${SL[p.status]}</span></td>
-            <td class="prog-cell">
-              <div class="prog-bar-wrap">
-                <div class="prog-bar-fill" style="width:${p.prog}%;background:${p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32'}"></div>
-              </div>
+            <td><span class="chip ${CHIP[p.status]}">${SL[p.status]}</span></td>
+            <td>
+              <div class="prog-wrap"><div class="prog-fill" style="width:${p.prog}%;background:${p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32'}"></div></div>
               <span class="prog-num" style="color:${p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32'}">${p.prog}%</span>
             </td>
             <td style="color:${p.status==='delayed'?'#c62828':'#333'};font-weight:${p.status==='delayed'?700:400}">${p.e}</td>
             <td style="text-align:right">${yen(p.budget)}</td>
-          </tr>
-        `).join('')}
+          </tr>`).join('')}
       </tbody>
     </table>
   </div>`;
 }
 
-function filterList(q){
-  const rows=document.querySelectorAll('#listBody tr');
-  rows.forEach(r=>{
-    r.style.display=r.textContent.includes(q)?'':'none';
+function filterKoji(v){
+  document.querySelectorAll('#kojiBody tr').forEach(r=>{
+    r.style.display=(v==='all'||r.querySelector('.chip').textContent===SL[v])?'':'none';
   });
 }
 
-// ─── Record Detail View ───
-function renderDetail(){
-  const p=PROJECTS.find(x=>x.id===state.projectId);
-  if(!p) return '<div class="empty-state"><div class="empty-icon">🔍</div><div>レコードが見つかりません</div></div>';
-
-  const er=execRate(p);
+function renderKojiDetail(){
+  const p=PROJECTS.find(x=>x.id===state.id);
+  if(!p)return '<div class="empty-state"><div>レコードが見つかりません</div></div>';
+  const er=p.budget>0?Math.round(p.spent/p.budget*100):0;
   const pc=p.status==='delayed'?'#c62828':p.status==='completed'?'#888':'#2e7d32';
   const kotel=KOTEL[p.id]||[];
-  const nippo=NIPPO[p.id]||[];
-  const photos=PHOTOS[p.id]||[];
-
+  const nippo=ALL_NIPPO.filter(n=>n.project===p.id).slice(0,4);
+  const photos=ALL_PHOTOS.filter(ph=>ph.project===p.id);
+  const worker=WORKERS.find(w=>w.name===p.mgr);
+  const shizai=MATERIALS.filter(m=>m.project===p.id||m.project==='共通');
   return `
   ${renderBreadcrumb()}
   <div class="kt-viewbar">
@@ -530,15 +575,10 @@ function renderDetail(){
     <span class="processing-badge">✓ kintone連携中</span>
   </div>
   <div class="kt-record">
-
-    <!-- Record Header -->
     <div class="rec-header">
-      <div class="rec-header-top">
-        <div>
-          <div class="rec-title">${p.name}</div>
-          <div class="rec-id">${p.id}</div>
-        </div>
-        <span class="status-chip ${CHIP[p.status]}" style="font-size:13px;padding:5px 14px">${SL[p.status]}</span>
+      <div class="rec-header-top" style="background:linear-gradient(90deg,#1565c0,#0d47a1)">
+        <div><div class="rec-title">${p.name}</div><div class="rec-id">${p.id}</div></div>
+        <span class="chip ${CHIP[p.status]}" style="font-size:13px;padding:5px 14px">${SL[p.status]}</span>
       </div>
       <div class="rec-header-meta">
         <div class="rec-meta-item"><div class="rec-meta-label">発注者</div>${p.client}</div>
@@ -548,293 +588,636 @@ function renderDetail(){
         <div class="rec-meta-item"><div class="rec-meta-label">工期</div>${p.s} 〜 ${p.e}</div>
       </div>
     </div>
-
-    ${p.status==='delayed'?`<div class="alert-box">⚠️ <strong>遅延警告：</strong> ${p.notes}</div>`:''}
-
-    <!-- 基本情報 -->
+    ${p.status==='delayed'?`<div class="alert-box red">⚠️ <strong>遅延中：</strong>${p.notes}</div>`:''}
     <div class="kt-section">
-      <div class="section-head" onclick="toggleSection(this)">
-        📌 基本情報
-        <span class="section-toggle">▼</span>
-      </div>
+      <div class="section-head" onclick="toggleSec(this)">📌 基本情報 <span class="section-tog">▼</span></div>
       <div class="section-body">
         <div class="field-grid">
-          <div class="field-row"><div class="field-label">工事番号</div><div class="field-value">${p.id}</div></div>
-          <div class="field-row"><div class="field-label">工事名称</div><div class="field-value highlight">${p.name}</div></div>
-          <div class="field-row"><div class="field-label">発注者</div><div class="field-value">${p.client}</div></div>
-          <div class="field-row"><div class="field-label">現場代理人</div><div class="field-value">${p.mgr}</div></div>
-          <div class="field-row"><div class="field-label">工事分類</div><div class="field-value">${p.cat}</div></div>
-          <div class="field-row"><div class="field-label">現場住所</div><div class="field-value">${p.loc}</div></div>
-          <div class="field-row"><div class="field-label">作業員数</div><div class="field-value">${p.wk}名</div></div>
-          <div class="field-row"><div class="field-label">備考・特記</div><div class="field-value">${p.notes}</div></div>
+          <div class="field-label">工事番号</div><div class="field-value">${p.id}</div>
+          <div class="field-label">工事名称</div><div class="field-value hi">${p.name}</div>
+          <div class="field-label">発注者</div><div class="field-value">${p.client}</div>
+          <div class="field-label">現場代理人</div>
+          <div class="field-value">${p.mgr} ${worker?`<span class="tag tag-blue" style="cursor:pointer" onclick="state.app='sakuinsha';goDetail('${worker.id}')">👷 プロフィール</span>`:''}</div>
+          <div class="field-label">分類</div><div class="field-value">${p.cat}</div>
+          <div class="field-label">現場住所</div><div class="field-value">${p.loc}</div>
+          <div class="field-label">作業員数</div><div class="field-value">${p.wk}名</div>
+          <div class="field-label">備考</div><div class="field-value">${p.notes}</div>
         </div>
       </div>
     </div>
-
-    <!-- 工期・進捗 -->
     <div class="kt-section">
-      <div class="section-head" onclick="toggleSection(this)">
-        📊 工期・進捗状況
-        <span class="section-toggle">▼</span>
-      </div>
+      <div class="section-head" onclick="toggleSec(this)">📊 工期・進捗 <span class="section-tog">▼</span></div>
       <div class="section-body">
         <div class="field-grid">
-          <div class="field-row"><div class="field-label">工期開始</div><div class="field-value">${p.s}</div></div>
-          <div class="field-row"><div class="field-label">工期終了</div><div class="field-value ${p.status==='delayed'?'danger':''}">${p.e}</div></div>
-          <div class="field-row">
-            <div class="field-label">進捗率</div>
-            <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:6px;">
-              <div class="prog-detail">
-                <div class="prog-detail-bar"><div class="prog-detail-fill" style="width:${p.prog}%;background:${pc}"></div></div>
-                <span class="prog-detail-num" style="color:${pc}">${p.prog}%</span>
-              </div>
-              <span style="font-size:11px;color:#888">完了: ${p.prog}% ／ 未施工: ${100-p.prog}%</span>
+          <div class="field-label">工期開始</div><div class="field-value">${p.s}</div>
+          <div class="field-label">工期終了</div><div class="field-value ${p.status==='delayed'?'danger':''}">${p.e}</div>
+          <div class="field-label">進捗率</div>
+          <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:6px;">
+            <div class="prog-detail">
+              <div class="prog-detail-bar"><div class="prog-detail-fill" style="width:${p.prog}%;background:${pc}"></div></div>
+              <span class="prog-detail-num" style="color:${pc}">${p.prog}%</span>
             </div>
           </div>
-          <div class="field-row"><div class="field-label">ステータス</div><div class="field-value"><span class="status-chip ${CHIP[p.status]}">${SL[p.status]}</span></div></div>
+          <div class="field-label">ステータス</div><div class="field-value"><span class="chip ${CHIP[p.status]}">${SL[p.status]}</span></div>
         </div>
       </div>
     </div>
-
-    <!-- 予算 -->
     <div class="kt-section">
-      <div class="section-head" onclick="toggleSection(this)">
-        💰 予算・費用
-        <span class="section-toggle">▼</span>
-      </div>
+      <div class="section-head" onclick="toggleSec(this)">💰 予算 <span class="section-tog">▼</span></div>
       <div class="section-body">
         <div class="field-grid">
-          <div class="field-row"><div class="field-label">請負金額</div><div class="field-value highlight">${yen(p.budget)}</div></div>
-          <div class="field-row"><div class="field-label">実行額</div><div class="field-value">${yen(p.spent)}</div></div>
-          <div class="field-row">
-            <div class="field-label">執行率</div>
-            <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:4px;">
-              <div style="font-weight:700;color:#e65100;font-size:15px">${er}%</div>
-              <div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${er}%"></div></div>
-            </div>
+          <div class="field-label">請負金額</div><div class="field-value hi">${yen(p.budget)}</div>
+          <div class="field-label">実行額</div><div class="field-value">${yen(p.spent)}</div>
+          <div class="field-label">執行率</div>
+          <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:4px;">
+            <span style="font-weight:700;color:#e65100;font-size:15px">${er}%</span>
+            <div style="width:100%;background:#e8e8e8;border-radius:6px;height:10px;overflow:hidden;max-width:200px"><div style="width:${er}%;height:100%;background:#e65100;border-radius:6px"></div></div>
           </div>
-          <div class="field-row"><div class="field-label">残額</div><div class="field-value">${yen(p.budget-p.spent)}</div></div>
+          <div class="field-label">残額</div><div class="field-value">${yen(p.budget-p.spent)}</div>
         </div>
       </div>
     </div>
-
-    <!-- 関連: 工程表 -->
     ${kotel.length?`
     <div class="kt-section">
-      <div class="related-head" onclick="toggleSection(this)">
-        <div class="related-title">🔗 関連レコード：工程表 <span class="related-count">${kotel.length}</span></div>
-        <span class="related-toggle">▼</span>
+      <div class="related-head" onclick="toggleSec(this)">
+        <div class="related-title">🔗 工程表 <span class="related-count">${kotel.length}</span></div><span style="font-size:10px;color:#888">▼</span>
       </div>
-      <div>
-        <table class="related-table">
-          <thead><tr><th>工程名</th><th>開始日</th><th>終了日</th><th>進捗</th><th>担当</th><th>状況</th></tr></thead>
-          <tbody>
-            ${kotel.map(k=>`
-              <tr onclick="goSub('kotel','${k.id}')">
-                <td class="link">${k.name}</td>
-                <td>${k.start}</td>
-                <td>${k.end}</td>
-                <td>
-                  <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${k.prog}%;background:${k.status==='completed'?'#888':k.status==='active'?'#2e7d32':'#bbb'}"></div></div>
-                  <span class="prog-num" style="color:${k.status==='completed'?'#888':k.status==='active'?'#2e7d32':'#bbb'}">${k.prog}%</span>
-                </td>
-                <td>${k.worker}</td>
-                <td><span class="status-chip ${CHIP[k.status]}" style="font-size:10px">${SL[k.status]}</span></td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
+      <div><table class="related-table">
+        <thead><tr><th>工程名</th><th>開始日</th><th>終了日</th><th>進捗</th><th>担当</th><th>状況</th></tr></thead>
+        <tbody>${kotel.map(k=>`
+          <tr onclick="goSub('kotel','${k.id}')">
+            <td class="lk">${k.name}</td><td>${k.start}</td><td>${k.end}</td>
+            <td><div class="prog-wrap"><div class="prog-fill" style="width:${k.prog}%;background:${k.status==='completed'?'#888':k.status==='active'?'#2e7d32':'#bbb'}"></div></div><span class="prog-num">${k.prog}%</span></td>
+            <td>${k.worker}</td><td><span class="chip ${CHIP[k.status]}" style="font-size:10px">${SL[k.status]}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
     </div>`:''}
-
-    <!-- 関連: 日報 -->
     ${nippo.length?`
     <div class="kt-section">
-      <div class="related-head" onclick="toggleSection(this)">
-        <div class="related-title">🔗 関連レコード：日報 <span class="related-count">${nippo.length}</span></div>
-        <span class="related-toggle">▼</span>
+      <div class="related-head" onclick="toggleSec(this)">
+        <div class="related-title">🔗 日報 <span class="related-count">${ALL_NIPPO.filter(n=>n.project===p.id).length}</span></div><span style="font-size:10px;color:#888">▼</span>
       </div>
-      <div>
-        <table class="related-table">
-          <thead><tr><th>日付</th><th>担当者</th><th>作業内容</th><th>天候</th><th>人数</th><th>特記</th></tr></thead>
-          <tbody>
-            ${nippo.map(n=>`
-              <tr onclick="goSub('nippo','${n.id}')">
-                <td>${n.date}</td>
-                <td>${n.worker}</td>
-                <td class="link" style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.work}</td>
-                <td>${n.weather}</td>
-                <td>${n.count}名</td>
-                <td class="${n.issue==='なし'?'issue-none':'issue-warn'}">${n.issue}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
+      <div><table class="related-table">
+        <thead><tr><th>日付</th><th>報告者</th><th>作業内容</th><th>天候</th><th>人数</th><th>特記</th></tr></thead>
+        <tbody>${nippo.map(n=>`
+          <tr onclick="state.app='nippo';goDetail('${n.id}')">
+            <td>${n.date}</td><td>${n.worker}</td>
+            <td class="lk" style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.work}</td>
+            <td>${n.weather}</td><td>${n.count}名</td>
+            <td style="color:${n.issue==='なし'?'#2e7d32':'#c62828'};font-weight:${n.issue==='なし'?400:700}">${n.issue}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
     </div>`:''}
-
-    <!-- 関連: 写真 -->
     ${photos.length?`
     <div class="kt-section">
-      <div class="related-head" onclick="toggleSection(this)">
-        <div class="related-title">🔗 関連レコード：現場写真 <span class="related-count">${photos.length}</span></div>
-        <span class="related-toggle">▼</span>
+      <div class="related-head" onclick="toggleSec(this)">
+        <div class="related-title">🔗 現場写真 <span class="related-count">${photos.length}</span></div><span style="font-size:10px;color:#888">▼</span>
       </div>
       <div style="padding:14px 20px">
         <div class="photo-grid">
           ${photos.map(ph=>`
-            <div class="photo-item" onclick="goSub('photo','${ph.id}')">
+            <div class="photo-item" onclick="state.app='shashin';goDetail('${ph.id}')">
               <div class="photo-thumb" style="background:${ph.color}">${ph.emoji}</div>
-              <div class="photo-label">
-                <div style="font-weight:600">${ph.label}</div>
-                <div class="photo-date">${ph.date}</div>
-              </div>
-            </div>
-          `).join('')}
+              <div class="photo-label"><div class="photo-cat">${ph.cat}</div><div style="font-weight:600">${ph.label}</div><div class="photo-date">${ph.date}</div></div>
+            </div>`).join('')}
         </div>
       </div>
     </div>`:''}
-
+    ${shizai.length?`
+    <div class="kt-section">
+      <div class="related-head" onclick="toggleSec(this)">
+        <div class="related-title">🔗 使用資材 <span class="related-count">${shizai.length}</span></div><span style="font-size:10px;color:#888">▼</span>
+      </div>
+      <div><table class="related-table">
+        <thead><tr><th>資材名</th><th>分類</th><th>在庫</th><th>単位</th><th>ステータス</th></tr></thead>
+        <tbody>${shizai.map(m=>`
+          <tr onclick="state.app='shizai';goDetail('${m.id}')">
+            <td class="lk">${m.name}</td><td>${m.cat}</td>
+            <td style="font-weight:700;color:${m.status==='low'||m.status==='critical'?'#c62828':'#333'}">${m.stock}</td>
+            <td>${m.unit}</td>
+            <td><span class="chip chip-${m.status==='ok'?'ok':m.status==='low'||m.status==='critical'?'delayed':'ordered'}">${STOCKLABEL[m.status]||m.status}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>`:''}
   </div>`;
 }
 
-// ─── Sub Record Detail ───
-function renderSub(){
-  const p=PROJECTS.find(x=>x.id===state.projectId);
-  const app=state.subApp, sid=Number(state.subId);
-
-  if(app==='kotel'){
-    const kotel=KOTEL[state.projectId]||[];
-    const k=kotel.find(x=>x.id===sid);
-    if(!k) return '<div class="empty-state"><div>データが見つかりません</div></div>';
-    const pc=k.status==='completed'?'#888':k.status==='active'?'#2e7d32':'#bbb';
-    return `
-    ${renderBreadcrumb()}
-    <div class="kt-viewbar">
-      <button class="kt-btn primary">✏️ 編集</button>
-      <button class="kt-btn" onclick="goDetail()">← 工事詳細に戻る</button>
-    </div>
-    <div class="sub-detail">
-      <div class="sub-rec-card">
-        <div class="sub-rec-head">
-          <div><div class="sub-rec-title">📋 工程詳細：${k.name}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p.name}</div></div>
-          <span class="status-chip ${CHIP[k.status]}">${SL[k.status]}</span>
-        </div>
-        <div class="sub-rec-body">
-          <div class="field-grid">
-            <div class="field-row"><div class="field-label">工程名</div><div class="field-value highlight">${k.name}</div></div>
-            <div class="field-row"><div class="field-label">担当チーム</div><div class="field-value">${k.worker}</div></div>
-            <div class="field-row"><div class="field-label">開始日</div><div class="field-value">${k.start}</div></div>
-            <div class="field-row"><div class="field-label">完了予定</div><div class="field-value">${k.end}</div></div>
-            <div class="field-row">
-              <div class="field-label">進捗率</div>
-              <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:6px;">
-                <div class="prog-detail">
-                  <div class="prog-detail-bar"><div class="prog-detail-fill" style="width:${k.prog}%;background:${pc}"></div></div>
-                  <span class="prog-detail-num" style="color:${pc}">${k.prog}%</span>
-                </div>
-              </div>
-            </div>
-            <div class="field-row"><div class="field-label">備考</div><div class="field-value">${k.note||'—'}</div></div>
+function renderKojiSub(){
+  const p=PROJECTS.find(x=>x.id===state.id);
+  const kotel=KOTEL[state.id]||[];
+  const k=kotel.find(x=>x.id===Number(state.subId));
+  if(!k)return '<div class="empty-state"><div>データが見つかりません</div></div>';
+  const pc=k.status==='completed'?'#888':k.status==='active'?'#2e7d32':'#bbb';
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar"><button class="kt-btn primary">✏️ 編集</button><button class="kt-btn" onclick="goDetail()">← 工事詳細に戻る</button></div>
+  <div class="sub-detail">
+    <div class="sub-rec-card">
+      <div class="sub-rec-head" style="background:linear-gradient(90deg,#37474f,#546e7a)">
+        <div><div class="sub-rec-title">📋 工程詳細：${k.name}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p?.name}</div></div>
+        <span class="chip ${CHIP[k.status]}">${SL[k.status]}</span>
+      </div>
+      <div class="sub-rec-body">
+        <div class="field-grid">
+          <div class="field-label">工程名</div><div class="field-value hi">${k.name}</div>
+          <div class="field-label">担当チーム</div><div class="field-value">${k.worker}</div>
+          <div class="field-label">開始日</div><div class="field-value">${k.start}</div>
+          <div class="field-label">完了予定</div><div class="field-value">${k.end}</div>
+          <div class="field-label">進捗率</div>
+          <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:6px;">
+            <div class="prog-detail"><div class="prog-detail-bar"><div class="prog-detail-fill" style="width:${k.prog}%;background:${pc}"></div></div><span class="prog-detail-num" style="color:${pc}">${k.prog}%</span></div>
           </div>
-          <div class="comment-box">
-            <div class="comment-head">💬 コメント（${k.status==='active'?2:1}件）</div>
-            ${k.status==='active'?`
-            <div class="comment-item">
-              <div class="comment-avatar">田</div>
-              <div><div class="comment-body">本日の作業状況を更新しました。予定通り進捗しています。</div><div class="comment-meta">田中 太郎 · 2026/03/23 17:30</div></div>
-            </div>
-            <div class="comment-item">
-              <div class="comment-avatar">管</div>
-              <div><div class="comment-body">確認しました。引き続きよろしくお願いします。</div><div class="comment-meta">管理者 · 2026/03/23 18:05</div></div>
-            </div>`:`
-            <div class="comment-item">
-              <div class="comment-avatar">田</div>
-              <div><div class="comment-body">工程完了しました。次工程の準備を進めます。</div><div class="comment-meta">田中 太郎 · ${k.end} 16:00</div></div>
-            </div>`}
+          <div class="field-label">備考・状況</div><div class="field-value ${k.note.includes('⚠')?'danger':''}">${k.note||'—'}</div>
+        </div>
+        <div class="comment-box">
+          <div class="comment-head">💬 コメント</div>
+          <div class="comment-item"><div class="comment-avatar">田</div>
+            <div class="comment-body-wrap"><div class="comment-body">${k.status==='active'?'本日の作業状況を更新しました。'+k.note:'工程完了しました。次工程の準備を進めます。'}</div><div class="comment-meta">${k.worker.split('(')[0]} · ${k.status==='active'?'2026/03/23 17:30':k.end+' 16:00'}</div></div>
           </div>
         </div>
       </div>
-    </div>`;
-  }
-
-  if(app==='nippo'){
-    const nippo=NIPPO[state.projectId]||[];
-    const n=nippo.find(x=>x.id===sid);
-    if(!n) return '<div class="empty-state"><div>データが見つかりません</div></div>';
-    return `
-    ${renderBreadcrumb()}
-    <div class="kt-viewbar">
-      <button class="kt-btn primary">✏️ 編集</button>
-      <button class="kt-btn" onclick="goDetail()">← 工事詳細に戻る</button>
     </div>
-    <div class="sub-detail">
-      <div class="sub-rec-card">
-        <div class="sub-rec-head">
-          <div><div class="sub-rec-title">📝 日報詳細：${n.date}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p.name}</div></div>
-          ${n.issue!=='なし'?`<span style="background:#c62828;color:#fff;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700">⚠️ 要対応</span>`:'<span style="background:rgba(255,255,255,0.2);color:#fff;padding:3px 10px;border-radius:10px;font-size:11px">異常なし</span>'}
-        </div>
-        <div class="sub-rec-body">
-          <div class="field-grid">
-            <div class="field-row"><div class="field-label">日付</div><div class="field-value highlight">${n.date}</div></div>
-            <div class="field-row"><div class="field-label">報告者</div><div class="field-value">${n.worker}</div></div>
-            <div class="field-row"><div class="field-label">天候</div><div class="field-value">${n.weather}</div></div>
-            <div class="field-row"><div class="field-label">作業員数</div><div class="field-value">${n.count}名</div></div>
-            <div class="field-row"><div class="field-label">作業内容</div><div class="field-value" style="grid-column:span 1">${n.work}</div></div>
-            <div class="field-row"><div class="field-label">特記事項</div><div class="field-value ${n.issue!=='なし'?'danger':''}">${n.issue}</div></div>
-          </div>
-          <div class="comment-box">
-            <div class="comment-head">💬 上長確認</div>
-            <div class="comment-item">
-              <div class="comment-avatar">管</div>
-              <div><div class="comment-body">確認しました。${n.issue!=='なし'?'対応状況を引き続き報告してください。':'お疲れ様でした。'}</div><div class="comment-meta">管理者 · ${n.date} 19:00</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  if(app==='photo'){
-    const photos=PHOTOS[state.projectId]||[];
-    const ph=photos.find(x=>x.id===sid);
-    if(!ph) return '<div class="empty-state"><div>データが見つかりません</div></div>';
-    return `
-    ${renderBreadcrumb()}
-    <div class="kt-viewbar">
-      <button class="kt-btn">📥 ダウンロード</button>
-      <button class="kt-btn" onclick="goDetail()">← 工事詳細に戻る</button>
-    </div>
-    <div class="sub-detail">
-      <div class="sub-rec-card">
-        <div class="sub-rec-head">
-          <div><div class="sub-rec-title">📷 写真詳細：${ph.label}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p.name}</div></div>
-        </div>
-        <div class="sub-rec-body">
-          <div style="background:${ph.color};border-radius:8px;height:220px;display:flex;align-items:center;justify-content:center;font-size:72px;margin-bottom:16px;">${ph.emoji}</div>
-          <div class="field-grid">
-            <div class="field-row"><div class="field-label">タイトル</div><div class="field-value highlight">${ph.label}</div></div>
-            <div class="field-row"><div class="field-label">撮影日</div><div class="field-value">${ph.date}</div></div>
-            <div class="field-row"><div class="field-label">工事名</div><div class="field-value">${p.name}</div></div>
-            <div class="field-row"><div class="field-label">撮影者</div><div class="field-value">${p.mgr}</div></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  return '<div class="empty-state"><div>表示できません</div></div>';
+  </div>`;
 }
 
-// Section toggle
-function toggleSection(head){
+// ════════════════════════════════════════
+//  日報管理
+// ════════════════════════════════════════
+function renderNippoList(){
+  const issues=ALL_NIPPO.filter(n=>n.issue!=='なし').length;
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">＋ 日報を書く</button>
+    <button class="kt-btn">📥 CSV出力</button>
+    <select class="kt-filter-select" onchange="filterByProject(this.value,'nippoBody')">
+      <option value="">全工事</option>
+      ${PROJECTS.filter(p=>ALL_NIPPO.some(n=>n.project===p.id)).map(p=>`<option value="${p.id}">${p.name.slice(0,15)}…</option>`).join('')}
+    </select>
+    <input class="kt-search" type="text" placeholder="担当者・作業内容で検索..." oninput="searchTable(this.value,'nippoBody')">
+    <span class="kt-spacer-sm"></span>
+    <span class="rec-count">全 ${ALL_NIPPO.length} 件 ${issues>0?`<span style="color:#e65100;font-weight:700">（要確認 ${issues}件）</span>`:''}
+    </span>
+  </div>
+  <div class="kt-list-area">
+    ${issues>0?`<div class="alert-box">⚠️ 特記事項あり の日報が ${issues}件 あります。</div>`:''}
+    <table class="kt-table">
+      <thead><tr><th>日付</th><th>工事名</th><th>報告者</th><th>作業内容</th><th>天候</th><th>人数</th><th>特記事項</th></tr></thead>
+      <tbody id="nippoBody">
+        ${ALL_NIPPO.map(n=>`
+          <tr onclick="goDetail('${n.id}')">
+            <td style="white-space:nowrap">${n.date}</td>
+            <td><span class="tag tag-blue" style="cursor:pointer;font-size:11px" onclick="event.stopPropagation();goKojiDetail('${n.project}')">${pname(n.project).slice(0,14)}…</span></td>
+            <td>${n.worker}</td>
+            <td class="nm" style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n.work}</td>
+            <td>${n.weather}</td>
+            <td>${n.count}名</td>
+            <td style="color:${n.issue==='なし'?'#2e7d32':'#c62828'};font-weight:${n.issue==='なし'?400:700}">${n.issue}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function renderNippoDetail(){
+  const n=ALL_NIPPO.find(x=>x.id===Number(state.id));
+  if(!n)return '<div class="empty-state"><div>レコードが見つかりません</div></div>';
+  const p=PROJECTS.find(x=>x.id===n.project);
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">✏️ 編集</button>
+    <button class="kt-btn" onclick="goKojiDetail('${n.project}')">🏗 工事詳細を見る</button>
+  </div>
+  <div class="sub-detail">
+    <div class="sub-rec-card">
+      <div class="sub-rec-head" style="background:linear-gradient(90deg,#b94e00,#e65100)">
+        <div><div class="sub-rec-title">📝 日報：${n.date}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p?.name}</div></div>
+        ${n.issue!=='なし'?`<span style="background:#c62828;color:#fff;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700">⚠️ 要対応</span>`:'<span style="background:rgba(255,255,255,0.2);color:#fff;padding:3px 10px;border-radius:10px;font-size:11px">異常なし</span>'}
+      </div>
+      <div class="sub-rec-body">
+        <div class="field-grid">
+          <div class="field-label">日付</div><div class="field-value hi">${n.date}</div>
+          <div class="field-label">報告者</div><div class="field-value">${n.worker}</div>
+          <div class="field-label">天候</div><div class="field-value">${n.weather}</div>
+          <div class="field-label">作業員数</div><div class="field-value">${n.count}名</div>
+          <div class="field-label">作業内容</div><div class="field-value" style="grid-column:span 1">${n.work}</div>
+          <div class="field-label">特記事項</div><div class="field-value ${n.issue!=='なし'?'danger':''}">${n.issue}</div>
+          <div class="field-label">関連工事</div>
+          <div class="field-value"><span class="tag tag-blue" style="cursor:pointer" onclick="goKojiDetail('${n.project}')">${pname(n.project)}</span></div>
+        </div>
+        <div class="comment-box">
+          <div class="comment-head">💬 上長確認コメント</div>
+          <div class="comment-item"><div class="comment-avatar">管</div>
+            <div class="comment-body-wrap"><div class="comment-body">確認しました。${n.issue!=='なし'?'対応状況を引き続き報告してください。':'お疲れ様でした。'}</div><div class="comment-meta">管理者 · ${n.date} 19:00</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  写真管理
+// ════════════════════════════════════════
+function renderShashinList(){
+  const cats=[...new Set(ALL_PHOTOS.map(p=>p.cat))];
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">📷 写真をアップロード</button>
+    <button class="kt-btn">📥 一括ダウンロード</button>
+    <select class="kt-filter-select" onchange="filterPhotoByProject(this.value)">
+      <option value="">全工事</option>
+      ${PROJECTS.filter(p=>ALL_PHOTOS.some(ph=>ph.project===p.id)).map(p=>`<option value="${p.id}">${p.name.slice(0,15)}…</option>`).join('')}
+    </select>
+    <select class="kt-filter-select" onchange="filterPhotoByCat(this.value)">
+      <option value="">全カテゴリ</option>
+      ${cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
+    </select>
+    <span class="kt-spacer-sm"></span>
+    <span class="rec-count">全 ${ALL_PHOTOS.length} 件</span>
+  </div>
+  <div class="kt-list-area">
+    <div class="photo-grid" id="photoGrid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+      ${ALL_PHOTOS.map(ph=>`
+        <div class="photo-item" data-project="${ph.project}" data-cat="${ph.cat}" onclick="goDetail('${ph.id}')">
+          <div class="photo-thumb" style="background:${ph.color};height:100px">${ph.emoji}</div>
+          <div class="photo-label">
+            <div class="photo-cat">${ph.cat}</div>
+            <div style="font-weight:600;font-size:12px">${ph.label}</div>
+            <div class="photo-date">${pname(ph.project).slice(0,12)}… · ${ph.date}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function filterPhotoByProject(v){
+  document.querySelectorAll('#photoGrid .photo-item').forEach(el=>{
+    el.style.display=(!v||el.dataset.project===v)?'':'none';
+  });
+}
+function filterPhotoByCat(v){
+  document.querySelectorAll('#photoGrid .photo-item').forEach(el=>{
+    el.style.display=(!v||el.dataset.cat===v)?'':'none';
+  });
+}
+
+function renderShashinDetail(){
+  const ph=ALL_PHOTOS.find(x=>x.id===Number(state.id));
+  if(!ph)return '<div class="empty-state"><div>データが見つかりません</div></div>';
+  const p=PROJECTS.find(x=>x.id===ph.project);
+  const nearby=ALL_PHOTOS.filter(x=>x.project===ph.project&&x.id!==ph.id).slice(0,4);
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn">📥 ダウンロード</button>
+    <button class="kt-btn" onclick="goKojiDetail('${ph.project}')">🏗 工事詳細を見る</button>
+  </div>
+  <div class="sub-detail">
+    <div class="sub-rec-card">
+      <div class="sub-rec-head" style="background:linear-gradient(90deg,#1b5e20,#2e7d32)">
+        <div><div class="sub-rec-title">📷 ${ph.label}</div><div style="font-size:11px;opacity:0.75;margin-top:3px">${p?.name}</div></div>
+        <span class="photo-cat" style="background:rgba(255,255,255,0.25);color:#fff;font-size:12px;padding:4px 10px">${ph.cat}</span>
+      </div>
+      <div class="sub-rec-body">
+        <div style="background:${ph.color};border-radius:8px;height:240px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:16px">${ph.emoji}</div>
+        <div class="field-grid">
+          <div class="field-label">タイトル</div><div class="field-value hi">${ph.label}</div>
+          <div class="field-label">撮影日</div><div class="field-value">${ph.date}</div>
+          <div class="field-label">カテゴリ</div><div class="field-value"><span class="tag tag-blue">${ph.cat}</span></div>
+          <div class="field-label">撮影者</div><div class="field-value">${ph.taker}</div>
+          <div class="field-label">関連工事</div>
+          <div class="field-value"><span class="tag tag-blue" style="cursor:pointer" onclick="goKojiDetail('${ph.project}')">${pname(ph.project)}</span></div>
+        </div>
+        ${nearby.length?`
+        <div class="comment-box">
+          <div class="comment-head">📷 同工事の他の写真（${nearby.length}件）</div>
+          <div class="photo-grid" style="grid-template-columns:repeat(4,1fr)">
+            ${nearby.map(x=>`<div class="photo-item" onclick="goDetail('${x.id}')">
+              <div class="photo-thumb" style="background:${x.color};height:60px;font-size:22px">${x.emoji}</div>
+              <div class="photo-label"><div style="font-size:11px;font-weight:600">${x.label}</div></div>
+            </div>`).join('')}
+          </div>
+        </div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  作業員管理
+// ════════════════════════════════════════
+function renderWorkerList(){
+  const expiring=WORKERS.filter(w=>w.certs.some(c=>!c.ok)).length;
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">＋ 作業員登録</button>
+    <button class="kt-btn">📥 CSV出力</button>
+    <select class="kt-filter-select" onchange="filterWorkerByRole(this.value)">
+      <option value="">全役職</option>
+      <option value="現場代理人">現場代理人</option>
+      <option value="職長">職長</option>
+      <option value="溶接工">溶接工</option>
+      <option value="重機オペレーター">重機オペレーター</option>
+    </select>
+    <input class="kt-search" type="text" placeholder="氏名・資格で検索..." oninput="searchTable(this.value,'workerBody')">
+    <span class="kt-spacer-sm"></span>
+    <span class="rec-count">全 ${WORKERS.length} 件 ${expiring>0?`<span style="color:#e65100;font-weight:700">（資格期限注意 ${expiring}名）</span>`:''}
+    </span>
+  </div>
+  <div class="kt-list-area">
+    ${expiring>0?`<div class="alert-box">⚠️ 資格の期限切れ・更新推奨の作業員が ${expiring}名 います。</div>`:''}
+    <table class="kt-table">
+      <thead><tr><th>氏名</th><th>役職</th><th>部署</th><th>担当工事</th><th>主要資格</th><th>資格状況</th><th>入社年</th></tr></thead>
+      <tbody id="workerBody">
+        ${WORKERS.map(w=>{
+          const hasIssue=w.certs.some(c=>!c.ok);
+          return `<tr onclick="goDetail('${w.id}')">
+            <td>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div class="w-avatar-sm" style="background:${w.color}">${w.name[0]}</div>
+                <span class="nm">${w.name}</span>
+              </div>
+            </td>
+            <td>${w.role}</td>
+            <td>${w.dept}</td>
+            <td><span class="tag tag-blue" style="cursor:pointer;font-size:11px" onclick="event.stopPropagation();goKojiDetail('${w.assigned}')">${pname(w.assigned).slice(0,12)}…</span></td>
+            <td style="font-size:11px">${w.certs[0].name}</td>
+            <td>${hasIssue?`<span class="cert-badge cert-exp">⚠ 要更新</span>`:`<span class="cert-badge cert-ok">✓ 有効</span>`}</td>
+            <td>${w.join.split('-')[0]}年</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function filterWorkerByRole(v){
+  document.querySelectorAll('#workerBody tr').forEach(r=>{
+    const cells=[...r.querySelectorAll('td')];
+    r.style.display=(!v||cells[1]?.textContent===v)?'':'none';
+  });
+}
+
+function renderWorkerDetail(){
+  const w=WORKERS.find(x=>x.id===state.id);
+  if(!w)return '<div class="empty-state"><div>データが見つかりません</div></div>';
+  const assignedProj=PROJECTS.find(p=>p.id===w.assigned);
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">✏️ 編集</button>
+    <button class="kt-btn">🖨 印刷</button>
+  </div>
+  <div class="sub-detail">
+    <div class="sub-rec-card">
+      <div class="sub-rec-head" style="background:linear-gradient(90deg,${w.color},${w.color}cc)">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="w-avatar" style="background:rgba(255,255,255,0.25);width:56px;height:56px;font-size:20px">${w.name[0]}</div>
+          <div>
+            <div class="sub-rec-title">${w.name} <span style="font-size:13px;font-weight:400;opacity:0.85">（${w.kana}）</span></div>
+            <div style="font-size:12px;opacity:0.8;margin-top:3px">${w.role} / ${w.dept}</div>
+          </div>
+        </div>
+        ${w.certs.some(c=>!c.ok)?`<span style="background:#e65100;color:#fff;padding:4px 12px;border-radius:10px;font-size:11px;font-weight:700">⚠ 資格要更新</span>`:''}
+      </div>
+      <div class="sub-rec-body">
+        <div class="field-grid">
+          <div class="field-label">氏名</div><div class="field-value hi">${w.name}</div>
+          <div class="field-label">役職</div><div class="field-value">${w.role}</div>
+          <div class="field-label">部署</div><div class="field-value">${w.dept}</div>
+          <div class="field-label">年齢</div><div class="field-value">${w.age}歳</div>
+          <div class="field-label">入社日</div><div class="field-value">${w.join}</div>
+          <div class="field-label">血液型</div><div class="field-value">${w.blood}型</div>
+          <div class="field-label">携帯電話</div><div class="field-value">${w.phone}</div>
+          <div class="field-label">緊急連絡先</div><div class="field-value">${w.emergency}</div>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;font-weight:700;color:#666;margin-bottom:8px">🛠 スキル</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${w.skills.map(s=>`<span class="tag tag-blue">${s}</span>`).join('')}
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;font-weight:700;color:#666;margin-bottom:8px">📜 保有資格</div>
+          <table class="related-table">
+            <thead><tr><th>資格名</th><th>有効期限</th><th>状況</th></tr></thead>
+            <tbody>
+              ${w.certs.map(c=>`
+                <tr>
+                  <td>${c.name}</td>
+                  <td>${c.exp}</td>
+                  <td>${c.ok?`<span class="cert-badge cert-ok">✓ 有効</span>`:`<span class="cert-badge cert-exp">⚠ 期限切れ・要更新</span>`}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;font-weight:700;color:#666;margin-bottom:8px">🏗 現在の担当工事</div>
+          ${assignedProj?`
+          <div style="background:#f0f6ff;border:1px solid #dbe8f5;border-radius:6px;padding:12px;cursor:pointer" onclick="goKojiDetail('${assignedProj.id}')">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-weight:700;color:#1565c0">${assignedProj.name}</div>
+                <div style="font-size:11px;color:#888;margin-top:3px">${assignedProj.s} 〜 ${assignedProj.e}</div>
+              </div>
+              <span class="chip ${CHIP[assignedProj.status]}">${SL[assignedProj.status]}</span>
+            </div>
+            <div style="margin-top:8px">
+              <div class="prog-wrap" style="width:100%;max-width:100%;display:block;height:8px"><div class="prog-fill" style="width:${assignedProj.prog}%;background:#2e7d32"></div></div>
+              <div style="font-size:11px;color:#888;margin-top:2px">進捗 ${assignedProj.prog}%</div>
+            </div>
+          </div>`:'<span style="color:#aaa">なし</span>'}
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;font-weight:700;color:#666;margin-bottom:8px">📋 過去の工事経歴</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${w.history.map(h=>`<span class="tag tag-gray" style="cursor:pointer" onclick="goKojiDetail('${h}')">${h}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="comment-box">
+          <div class="comment-head">💬 管理メモ</div>
+          <div class="comment-item"><div class="comment-avatar">管</div>
+            <div class="comment-body-wrap"><div class="comment-body">${w.certs.some(c=>!c.ok)?`⚠ 資格更新が必要です。${w.certs.filter(c=>!c.ok).map(c=>c.name).join('、')}の更新手続きを行ってください。`:'良好。引き続きよろしくお願いします。'}</div><div class="comment-meta">管理者 · 2026/03/23</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  資材管理
+// ════════════════════════════════════════
+function renderShizaiList(){
+  const lowItems=MATERIALS.filter(m=>m.status==='low'||m.status==='critical');
+  const orderedItems=MATERIALS.filter(m=>m.status==='ordered');
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">＋ 資材登録</button>
+    <button class="kt-btn">📥 CSV出力</button>
+    <select class="kt-filter-select" onchange="filterShizaiByStatus(this.value)">
+      <option value="">全ステータス</option>
+      <option value="ok">在庫あり</option>
+      <option value="low">在庫不足</option>
+      <option value="ordered">発注中</option>
+    </select>
+    <select class="kt-filter-select" onchange="filterByProject(this.value,'shizaiBody')">
+      <option value="">全工事</option>
+      ${[...new Set(MATERIALS.map(m=>m.project))].map(id=>`<option value="${id}">${id==='共通'?'共通':pname(id).slice(0,14)+'…'}</option>`).join('')}
+    </select>
+    <input class="kt-search" type="text" placeholder="資材名・仕入先で検索..." oninput="searchTable(this.value,'shizaiBody')">
+    <span class="kt-spacer-sm"></span>
+    <span class="rec-count">全 ${MATERIALS.length} 件 ${lowItems.length>0?`<span style="color:#c62828;font-weight:700">（不足 ${lowItems.length}件）</span>`:''}
+    </span>
+  </div>
+  <div class="kt-list-area">
+    ${lowItems.length>0?`<div class="alert-box red">🚨 在庫不足の資材が ${lowItems.length}件 あります。特に KJ-2026-003 の遅延原因となっています。</div>`:''}
+    ${orderedItems.length>0?`<div class="alert-box">📦 ${orderedItems.length}件 の発注中資材があります。入荷を確認してください。</div>`:''}
+    <table class="kt-table">
+      <thead><tr><th>資材名</th><th>分類</th><th>在庫</th><th>最小数</th><th>在庫バー</th><th>発注中</th><th>担当工事</th><th>仕入先</th><th>ステータス</th></tr></thead>
+      <tbody id="shizaiBody">
+        ${MATERIALS.map(m=>{
+          const pct=m.min>0?Math.min(m.stock/m.min*100,200):100;
+          const barColor=m.status==='ok'||m.stock>m.min?'#2e7d32':m.status==='ordered'?'#1565c0':'#c62828';
+          return `<tr onclick="goDetail('${m.id}')">
+            <td class="nm">${m.name} ${m.status==='low'||m.status==='critical'?'⚠️':''}</td>
+            <td>${m.cat}</td>
+            <td style="font-weight:700;color:${m.status==='low'?'#e65100':m.status==='critical'?'#c62828':'#333'}">${m.stock}</td>
+            <td style="color:#888">${m.min}</td>
+            <td>
+              <div class="stock-wrap">
+                <div class="stock-bar-bg"><div class="stock-bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div>
+              </div>
+            </td>
+            <td style="color:${m.ordered>0?'#1565c0':'#aaa'}">${m.ordered>0?m.ordered+'${m.unit}':'—'}</td>
+            <td><span class="tag tag-blue" style="cursor:pointer;font-size:11px" onclick="event.stopPropagation();${m.project==='共通'?'':` goKojiDetail('${m.project}')`}">${m.project==='共通'?'共通':pname(m.project).slice(0,12)+'…'}</span></td>
+            <td style="font-size:12px">${m.supplier}</td>
+            <td><span class="chip chip-${m.status==='ok'?'ok':m.status==='low'||m.status==='critical'?'delayed':'ordered'}">${STOCKLABEL[m.status]||m.status}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function filterShizaiByStatus(v){
+  document.querySelectorAll('#shizaiBody tr').forEach(r=>{
+    const chip=r.querySelector('.chip');
+    if(!chip)return;
+    if(!v){r.style.display='';return;}
+    const label={ok:'在庫あり',low:'在庫不足',ordered:'発注中'}[v];
+    r.style.display=chip.textContent===label?'':'none';
+  });
+}
+
+function renderShizaiDetail(){
+  const m=MATERIALS.find(x=>x.id===state.id);
+  if(!m)return '<div class="empty-state"><div>データが見つかりません</div></div>';
+  const p=PROJECTS.find(x=>x.id===m.project);
+  const pct=m.min>0?Math.min(Math.round(m.stock/m.min*100),200):100;
+  const barColor=m.status==='ok'?'#2e7d32':m.status==='ordered'?'#1565c0':'#c62828';
+  const isIssue=m.status==='low'||m.status==='critical'||m.status==='ordered';
+  return `
+  ${renderBreadcrumb()}
+  <div class="kt-viewbar">
+    <button class="kt-btn primary">✏️ 編集</button>
+    <button class="kt-btn">🛒 発注する</button>
+    ${p?`<button class="kt-btn" onclick="goKojiDetail('${p.id}')">🏗 工事詳細を見る</button>`:''}
+  </div>
+  <div class="sub-detail">
+    <div class="sub-rec-card">
+      <div class="sub-rec-head" style="background:linear-gradient(90deg,#004d40,#00695c)">
+        <div>
+          <div class="sub-rec-title">📦 ${m.name}</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:3px">${m.cat} / ${m.supplier}</div>
+        </div>
+        <span class="chip chip-${m.status==='ok'?'ok':m.status==='low'||m.status==='critical'?'delayed':'ordered'}">${STOCKLABEL[m.status]}</span>
+      </div>
+      <div class="sub-rec-body">
+        ${isIssue?`<div class="alert-box ${m.status==='low'||m.status==='critical'?'red':''}">
+          ${m.status==='low'?'⚠️ 在庫が最小数を下回っています。':m.status==='ordered'?'📦 発注済み。入荷をご確認ください。':'🚨 在庫がありません。'} ${m.note}
+        </div>`:''}
+        <div class="field-grid">
+          <div class="field-label">資材名</div><div class="field-value hi">${m.name}</div>
+          <div class="field-label">分類</div><div class="field-value">${m.cat}</div>
+          <div class="field-label">単価</div><div class="field-value">${m.price.toLocaleString()}円/${m.unit}</div>
+          <div class="field-label">仕入先</div><div class="field-value">${m.supplier}</div>
+          <div class="field-label">現在庫</div>
+          <div class="field-value ${m.status==='low'?'warn':m.status==='critical'?'danger':''}">
+            <span style="font-size:22px;font-weight:900">${m.stock}</span><span style="margin-left:4px">${m.unit}</span>
+          </div>
+          <div class="field-label">最小在庫数</div><div class="field-value">${m.min} ${m.unit}</div>
+          <div class="field-label">在庫比率</div>
+          <div class="field-value" style="flex-direction:column;align-items:flex-start;gap:4px;">
+            <div class="prog-detail">
+              <div class="prog-detail-bar"><div class="prog-detail-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div>
+              <span class="prog-detail-num" style="color:${barColor}">${pct}%</span>
+            </div>
+          </div>
+          <div class="field-label">発注数量</div><div class="field-value ${m.ordered>0?'hi':''}">${m.ordered>0?m.ordered+' '+m.unit:'—'}</div>
+          <div class="field-label">最終発注日</div><div class="field-value">${m.lastOrder}</div>
+          <div class="field-label">担当工事</div>
+          <div class="field-value">${p?`<span class="tag tag-blue" style="cursor:pointer" onclick="goKojiDetail('${p.id}')">${p.name}</span>`:'共通'}</div>
+          <div class="field-label">備考</div><div class="field-value">${m.note}</div>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;font-weight:700;color:#666;margin-bottom:10px">📋 入出庫履歴</div>
+          <div class="order-timeline">
+            ${m.lastOrder!=='—'?`<div class="order-item"><div class="order-dot done"></div><div class="order-line"><div class="order-label">入庫 ${m.stock}${m.unit}（前回）</div><div class="order-sub">${m.lastOrder} / ${m.supplier}</div></div></div>`:''}
+            ${m.ordered>0?`<div class="order-item"><div class="order-dot pending"></div><div class="order-line"><div class="order-label">発注中 ${m.ordered}${m.unit}</div><div class="order-sub">${m.supplier} / 入荷待ち</div></div></div>`:''}
+            ${m.status==='low'||m.status==='critical'?`<div class="order-item"><div class="order-dot warn"></div><div class="order-line"><div class="order-label warn" style="color:#e65100">⚠ 在庫不足アラート</div><div class="order-sub">2026/03/23 システム自動通知</div></div></div>`:''}
+          </div>
+        </div>
+
+        <div class="comment-box">
+          <div class="comment-head">💬 管理コメント</div>
+          <div class="comment-item"><div class="comment-avatar">管</div>
+            <div class="comment-body-wrap"><div class="comment-body">${m.note}</div><div class="comment-meta">資材担当 · 2026/03/23</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  UTILITY
+// ════════════════════════════════════════
+function toggleSec(head){
   const body=head.nextElementSibling;
-  const tog=head.querySelector('.section-toggle, .related-toggle');
+  const tog=head.querySelector('.section-tog, .related-toggle');
   if(body.style.display==='none'){body.style.display='';if(tog)tog.textContent='▼';}
   else{body.style.display='none';if(tog)tog.textContent='▶';}
 }
 
+function searchTable(q,bodyId){
+  document.querySelectorAll(`#${bodyId} tr`).forEach(r=>{
+    r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none';
+  });
+}
+
+function filterByProject(v,bodyId){
+  document.querySelectorAll(`#${bodyId} tr`).forEach(r=>{
+    r.style.display=(!v||r.textContent.includes(v)||r.textContent.includes(pname(v)))?'':'none';
+  });
+}
+
 // Init
+updateSidebar();
 renderMain();
 </script>
 </body>
