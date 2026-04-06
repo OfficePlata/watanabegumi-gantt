@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工事進捗管理 - kintoneモックアップ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .kintone-header { background-color: #F7D43F; }
+        .kintone-blue { color: #3498db; }
+        .kintone-row:hover { background-color: #E3F2FD; cursor: pointer; } 
+        .kintone-highlight { background-color: #FFF9C4; border-left: 4px solid #FBC02D; } 
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col h-screen font-sans text-gray-800">
+
+    <!-- グローバルヘッダー (kintone風) + 戻るボタン -->
+    <header class="kintone-header h-14 flex items-center justify-between px-4 shadow-sm z-10 flex-shrink-0">
+        <div class="flex items-center space-x-4">
+            <div class="bg-white px-2 py-0.5 rounded shadow-sm text-xs font-bold text-gray-700">cybozu</div>
+            <div class="flex items-center text-gray-800 font-bold text-sm">
+                ポータル
+            </div>
+            <!-- ホワイトボードに戻るためのボタン -->
+            <a href="index.html" class="ml-4 flex items-center bg-white text-blue-700 border-2 border-blue-600 hover:bg-blue-50 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm transition-all">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                ホワイトボードに戻る
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative hidden sm:block">
+                <input type="text" placeholder="kintone内を検索" class="bg-white border border-gray-300 rounded px-3 py-1.5 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div class="w-8 h-8 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center font-bold text-sm border border-blue-200 cursor-pointer">
+                社
+            </div>
+        </div>
+    </header>
+
+    <!-- アプリ領域 -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- 左サイドバー -->
+        <aside class="w-56 bg-white border-r border-gray-200 flex-col hidden md:flex flex-shrink-0">
+            <div class="p-4 flex-1">
+                <h2 class="font-bold text-gray-700 mb-4 flex items-center text-sm">
+                    <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                    アプリ
+                </h2>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="#" class="block px-2 py-1.5 rounded bg-blue-50 text-blue-700 font-bold">工事一覧 (すべて)</a></li>
+                    <li><a href="#" class="block px-2 py-1.5 rounded text-gray-600 hover:bg-gray-100">進行中案件</a></li>
+                    <li><a href="#" class="block px-2 py-1.5 rounded text-gray-600 hover:bg-gray-100">遅延案件</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="flex-1 flex flex-col overflow-hidden bg-white">
+            <div class="px-6 py-4 border-b border-gray-200 flex flex-col justify-center bg-white flex-shrink-0">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-500 rounded flex items-center justify-center text-white shadow-sm">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-800">工事進捗管理DB</h1>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full" id="count-display">全 12 件を表示</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- テーブル領域 -->
+            <div class="flex-1 overflow-auto bg-white p-6">
+                <div class="border border-gray-300 rounded shadow-sm overflow-hidden">
+                    <table class="w-full text-left border-collapse min-w-max">
+                        <thead class="bg-gray-100 border-b border-gray-300 text-gray-700 text-xs font-bold sticky top-0 shadow-sm z-10">
+                            <tr>
+                                <th class="p-3 border-r border-gray-300 w-12 text-center"></th>
+                                <th class="p-3 border-r border-gray-300">工事番号</th>
+                                <th class="p-3 border-r border-gray-300">工事名</th>
+                                <th class="p-3 border-r border-gray-300">担当者名</th>
+                                <th class="p-3 border-r border-gray-300">工期</th>
+                                <th class="p-3 border-r border-gray-300">進捗率</th>
+                                <th class="p-3">ステータス</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kintone-tbody" class="text-sm text-gray-800">
+                            <!-- JSでデータを描画 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ホワイトボードと同じデータを定義
+        const tableData = [
+          { id:"12731001", name:"〇〇工事 (株)〇〇", mgr:"田中 一郎 (一土)", s:"2026-01-10", e:"2027-03-31", prog:10, status:"施工中" },
+          { id:"12731002", name:"〇〇工事 (株)〇〇", mgr:"鈴木 二郎 (一土)", s:"2026-01-10", e:"2027-03-31", prog:12, status:"施工中" },
+          { id:"12731003", name:"〇〇工事 (株)〇〇", mgr:"佐藤 三郎 (一土)", s:"2026-04-10", e:"2027-03-31", prog:0, status:"予定" },
+          { id:"12731004", name:"〇〇工事 (株)〇〇", mgr:"鈴木 四郎 (二土)", s:"2026-01-10", e:"2027-03-31", prog:5, status:"施工中" },
+          { id:"12731005", name:"△△ビル 新築工事", mgr:"高橋 健太", s:"2026-02-01", e:"2026-08-31", prog:25, status:"施工中" },
+          { id:"12731006", name:"国道〇号線 舗装補修", mgr:"渡辺 裕子", s:"2026-01-15", e:"2026-03-20", prog:85, status:"遅延" },
+          { id:"12731007", name:"〇〇市民体育館 耐震補強", mgr:"伊藤 大輔", s:"2026-03-05", e:"2026-10-31", prog:5, status:"施工中" },
+          { id:"12731008", name:"(仮称)〇〇商業施設 新築", mgr:"山本 誠", s:"2026-04-15", e:"2027-02-28", prog:0, status:"予定" },
+          { id:"12731009", name:"〇〇川 護岸工事", mgr:"中村 美咲", s:"2025-11-01", e:"2026-05-31", prog:60, status:"施工中" },
+          { id:"12731010", name:"〇〇小学校 空調設備改修", mgr:"小林 剛", s:"2025-12-01", e:"2026-02-28", prog:100, status:"完了" },
+          { id:"12731011", name:"△△地区 下水道管渠布設", mgr:"加藤 修", s:"2026-01-20", e:"2026-06-30", prog:40, status:"施工中" },
+          { id:"12731012", name:"〇〇公園 遊具更新工事", mgr:"吉田 恵", s:"2026-03-25", e:"2026-04-30", prog:0, status:"予定" }
+        ];
+
+        // URLパラメータの取得 (?工事番号=12731001)
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('工事番号');
+
+        const tbody = document.getElementById('kintone-tbody');
+
+        tableData.forEach(item => {
+            const tr = document.createElement('tr');
+            
+            // 対象のIDの場合はハイライトクラスを付与
+            const isTarget = item.id === targetId;
+            tr.className = `border-b border-gray-200 kintone-row transition-colors ${isTarget ? 'kintone-highlight' : ''}`;
+            
+            tr.innerHTML = `
+                <td class="p-3 border-r border-gray-200 text-center">
+                    <button class="text-gray-400 hover:text-blue-500">
+                        <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </td>
+                <td class="p-3 border-r border-gray-200 text-blue-600 font-bold">${item.id}</td>
+                <td class="p-3 border-r border-gray-200 font-bold text-gray-800">${item.name}</td>
+                <td class="p-3 border-r border-gray-200">${item.mgr}</td>
+                <td class="p-3 border-r border-gray-200 text-xs font-mono">${item.s} ~ ${item.e}</td>
+                <td class="p-3 border-r border-gray-200">
+                    <div class="flex items-center">
+                        <div class="w-24 bg-gray-200 rounded-full h-2.5 mr-2">
+                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${item.prog}%"></div>
+                        </div>
+                        <span class="text-xs text-gray-700 font-bold">${item.prog}%</span>
+                    </div>
+                </td>
+                <td class="p-3">
+                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs border border-gray-300 font-bold">
+                        ${item.status}
+                    </span>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            // 対象の行にスクロール
+            if (isTarget) {
+                setTimeout(() => {
+                    tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
