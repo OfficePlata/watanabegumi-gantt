@@ -601,6 +601,123 @@
     from { transform: translateY(100%); opacity: 0; }
     to   { transform: translateY(0);    opacity: 1; }
   }
+
+  /* ══ 現場カメラボタン ══ */
+  .cam-btn {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: #c62828;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    padding: 0;
+  }
+  .cam-btn:hover {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 2px 10px rgba(198,40,40,0.5);
+  }
+  /* 赤いパルスリング（ライブ中感） */
+  .cam-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid #e53935;
+    animation: camPulse 1.8s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes camPulse {
+    0%   { transform: scale(1);   opacity: 0.9; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* ══ 現場カメラ モーダル ══ */
+  .cam-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease forwards;
+  }
+  .cam-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    cursor: pointer;
+  }
+  .cam-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(900px, 96vw);
+    background: #111;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+    animation: popIn 0.25s ease forwards;
+  }
+  .cam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: linear-gradient(90deg, #b71c1c, #c62828);
+    color: #fff;
+  }
+  .cam-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .cam-live-dot {
+    width: 8px; height: 8px;
+    background: #ff5252;
+    border-radius: 50%;
+    animation: camPulse 1.2s ease-out infinite;
+    flex-shrink: 0;
+  }
+  .cam-close {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .cam-close:hover { background: rgba(255,255,255,0.35); }
+  .cam-frame-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+  .cam-frame-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -657,6 +774,23 @@
 <!-- Tooltip -->
 <div class="tip" id="tip"></div>
 
+<!-- 現場カメラ モーダル -->
+<div class="cam-modal" id="camModal" style="display:none" role="dialog" aria-modal="true">
+  <div class="cam-backdrop" id="camBackdrop"></div>
+  <div class="cam-dialog">
+    <div class="cam-header">
+      <div class="cam-header-left">
+        <div class="cam-live-dot"></div>
+        <span id="camTitle">現場ライブカメラ</span>
+      </div>
+      <button class="cam-close" id="camClose" title="閉じる (Esc)">✕</button>
+    </div>
+    <div class="cam-frame-wrap">
+      <iframe id="camFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══ Data ═══
 const P = [
@@ -664,42 +798,50 @@ const P = [
     status:"active", s:"2026-02-10", e:"2026-05-30", prog:45,
     budget:158000000, spent:68500000, cat:"公共建築", loc:"鹿児島市山下町11-1", wk:24,
     notes:"2F〜4Fの内装改修。3月末までに2F完了予定。",
-    ms:["2F完了 (3/31)","3F完了 (4/30)","検査 (5/25)"] },
+    ms:["2F完了 (3/31)","3F完了 (4/30)","検査 (5/25)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-002", name:"天文館通り 道路拡幅工事", client:"鹿児島県", mgr:"山田 花子",
     status:"active", s:"2026-01-15", e:"2026-04-15", prog:68,
     budget:92000000, spent:61200000, cat:"土木", loc:"鹿児島市千日町", wk:18,
     notes:"夜間工事区間あり（22:00-5:00）。騒音対策実施中。",
-    ms:["路盤完了 (3/15)","舗装 (4/01)","開放 (4/15)"] },
+    ms:["路盤完了 (3/15)","舗装 (4/01)","開放 (4/15)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-003", name:"桜島フェリーターミナル 耐震補強", client:"鹿児島市船舶部", mgr:"佐藤 健一",
     status:"delayed", s:"2025-11-01", e:"2026-03-31", prog:52,
     budget:245000000, spent:142000000, cat:"港湾", loc:"鹿児島市桜島横山町", wk:32,
     notes:"⚠ 資材調達遅延により2週間の工期遅れ。完了予定4/14に変更。",
-    ms:["基礎完了 (1/31)","上部工 (3/15)","完了予定 (4/14)"] },
+    ms:["基礎完了 (1/31)","上部工 (3/15)","完了予定 (4/14)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-004", name:"城山展望台 休憩施設新築", client:"鹿児島市観光課", mgr:"中村 美咲",
     status:"upcoming", s:"2026-04-01", e:"2026-08-31", prog:0,
     budget:78000000, spent:0, cat:"建築", loc:"鹿児島市城山町", wk:0,
     notes:"4月着工予定。景観審査は3月に承認済み。",
-    ms:["着工 (4/01)","上棟 (6/15)","竣工 (8/31)"] },
+    ms:["着工 (4/01)","上棟 (6/15)","竣工 (8/31)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-005", name:"甲突川 護岸修繕工事", client:"鹿児島県土木部", mgr:"鈴木 一郎",
     status:"active", s:"2026-03-01", e:"2026-06-30", prog:18,
     budget:64000000, spent:9800000, cat:"河川", loc:"鹿児島市甲突町", wk:12,
     notes:"渇水期に合わせた施工。梅雨前の完了を目指す。",
-    ms:["仮締切 (3/10)","本体工 (5/01)","撤去 (6/25)"] },
+    ms:["仮締切 (3/10)","本体工 (5/01)","撤去 (6/25)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-006", name:"鴨池運動公園 照明LED化", client:"鹿児島市", mgr:"高橋 誠",
     status:"completed", s:"2025-12-01", e:"2026-02-28", prog:100,
     budget:35000000, spent:33200000, cat:"電気設備", loc:"鹿児島市与次郎2丁目", wk:0,
     notes:"全灯具のLED化完了。検査合格済み。",
-    ms:["野球場完了 (1/15)","陸上競技場 (2/10)","検査 (2/25)"] },
+    ms:["野球場完了 (1/15)","陸上競技場 (2/10)","検査 (2/25)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-007", name:"谷山駅前 再開発ビル基礎工事", client:"谷山駅前再開発組合", mgr:"伊藤 大輔",
     status:"active", s:"2026-01-20", e:"2026-07-31", prog:30,
     budget:420000000, spent:118000000, cat:"建築", loc:"鹿児島市谷山中央1丁目", wk:45,
     notes:"杭打ち完了。地下躯体工事に移行中。",
-    ms:["杭完了 (3/01)","地下躯体 (5/15)","1F床 (7/31)"] },
+    ms:["杭完了 (3/01)","地下躯体 (5/15)","1F床 (7/31)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" },
   { id:"KJ-2026-008", name:"指宿スカイライン 法面補修", client:"NEXCO西日本", mgr:"渡辺 裕子",
     status:"upcoming", s:"2026-04-15", e:"2026-06-15", prog:0,
     budget:52000000, spent:0, cat:"道路", loc:"鹿児島市田上8丁目", wk:0,
     notes:"片側交互通行規制あり。夜間作業主体。",
-    ms:["着手 (4/15)","モルタル吹付 (5/20)","完了 (6/15)"] }
+    ms:["着手 (4/15)","モルタル吹付 (5/20)","完了 (6/15)"],
+    cam:"https://www.youtube.com/embed/Hmmk0eYn0cw?autoplay=1" }
 ];
 
 const SL={active:'施工中',upcoming:'着工予定',delayed:'遅延',completed:'完了'};
@@ -798,6 +940,16 @@ function render() {
       tl.className = 'today-line';
       tl.style.left = `${(today.getDate() - 0.5) * dayWidth}%`;
       row.appendChild(tl);
+    }
+
+    // 現場カメラボタン
+    if (p.cam) {
+      const cb = document.createElement('button');
+      cb.className = 'cam-btn';
+      cb.title = `${p.name}　現場ライブカメラ`;
+      cb.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg>';
+      cb.onclick = (ev) => { ev.stopPropagation(); openCam(p.cam, p.name); };
+      row.appendChild(cb);
     }
 
     container.appendChild(row);
@@ -941,6 +1093,27 @@ function tick() {
   document.getElementById('clock').textContent =
     `${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
 }
+
+// ═══ 現場カメラ ═══
+function openCam(url, name) {
+  document.getElementById('camTitle').textContent = name + '　現場ライブカメラ';
+  document.getElementById('camFrame').src = url;
+  const modal = document.getElementById('camModal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCam() {
+  document.getElementById('camModal').style.display = 'none';
+  document.getElementById('camFrame').src = ''; // 動画停止
+  document.body.style.overflow = '';
+}
+
+document.getElementById('camClose').addEventListener('click', closeCam);
+document.getElementById('camBackdrop').addEventListener('click', closeCam);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCam();
+});
 
 // ═══ 全画面切替 ═══
 function getFsElement() {
